@@ -34,33 +34,48 @@ We hypothesize will be able to develop a parsimonious risk prediction model amon
 4.We will compare risk models based on established metrics of fit to other published models of mortality in ICUs
  
 # Data Sources
+
 We will use the Philips eICU dataset to develop our risk model. The eICU database comprises 200,859 patient unit encounters for 139,367 unique patients admitted between 2014 and 2015. Patients were admitted to one of 335 units at 208 hospitals located throughout the US. The approximate number of patients that meet the definition of cardiogenic shock is not available in the database summary.
+
 We will then use the MICIC dataset to externally validate our model. MIMIC-III contains data associated with 53,423 distinct hospital admissions for adult patients (aged 16 years or above) admitted to critical care units between 2001 and 2012. MIMIC-III integrates deidentiﬁed, comprehensive clinical data of patients admitted to the Beth Israel Deaconess Medical Center. The approximate number of patients that meet the definition of cardiogenic shock is not available in the database summary.
 
 # Study Population
+
 We will include all patients enrolled in cardiac ICUs in cardiogenic shock who meet SCAI Shock C criteria or greater at admission.
 The only exclusion criteria expected are: readmissions and duplicates.
 
 
 
 # Study Outcomes
+
 The primary outcome will be in hospital mortality. The secondary outcome will be cardiac ICU mortality.
  
 # Covariates of interest
+
 We will include all demographic characteristics (Age, Sex, Race), comorbidities as defined by diagnosis codes (MI, CHF, Stroke, CKD, DM, Cancer, Pulmonary disease, Dialysis) and admission diagnoses (ACS, Acute CHF, Cardiac Arrest, Shock, Respiratory Failure)
+
 We will include vital signs, advanced hemodynamic information (via arterial line, PA line), labs (including BNP, pro-calcitonin), CICU therapies (vasoactive medications, ventilatory support, mechanical support, dialysis) and severity of illness scores (qSOFA, APACHE, etc.) upon admission to the ICU and at 24 hours of ICU admission. 
+
 All included variables will need to be present for at least 75% of all patients.
+
 We will identify the most important predictors using backward selection for the logistic regression component of our predictive model. 
 
 # Confounders
+
 The main confounders expected are the following :
-Missing variable bias. We might encounter variables that are unobserved or missing in > 25% of patients that will therefore not be included in our prediction model.
-Identifying the patients meeting a strict definition of cardiogenic shock might be difficult. Patients in shock in the ICU represent a heterogenous group and it will be important to distinguish cardiogenic shock from SIRS and septic shock. 
-Additionally, we suspect that mechanical therapies can significantly the primary outcome and the subgroup of patients receiving them will be important to identify. 
-Additional analysis
+
+1. Missing variable bias. We might encounter variables that are unobserved or missing in > 25% of patients that will therefore not be included in our prediction model.
+
+2. Identifying the patients meeting a strict definition of cardiogenic shock might be difficult. Patients in shock in the ICU represent a heterogenous group and it will be important to distinguish cardiogenic shock from SIRS and septic shock. 
+
+3. Additionally, we suspect that mechanical therapies can significantly the primary outcome and the subgroup of patients receiving them will be important to identify. 
+
+# Additional analysis
+
 We will repeat the aforementioned analysis by limiting our cohort to those meeting the IABP-SHOCK II trial inclusion criteria. This will provide an additional benchmark for the SCAI Shock C criteria as they have never been validated in a clinical study yet. 
 
 # Acknowledgements:
+
 We would like to thank the MIT-HST 953 team without whom this project would not have been possible. 
 
 # References:
