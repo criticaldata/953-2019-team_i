@@ -1,6 +1,5 @@
-# Project Title : Predicting mortality in patients with cardiogenic shock
-
-
+# Predicting mortality in patients with cardiogenic shock
+Eric Yamga, Sheekar Mantena,  Nitinraja Singh, Daren Rosen, Neel Butala
 
 # Background
 
