@@ -79,7 +79,7 @@ We would like to thank the MIT-HST 953 team without whom this project would not 
 
 7. Kohsaka, Shun, Venu Menon, April M. Lowe, Michael Lange, Vladimir Dzavik, Lynn A. Sleeper, and Judith S. Hochman. “Systemic Inflammatory Response Syndrome After Acute Myocardial Infarction Complicated by Cardiogenic Shock.” Archives of Internal Medicine 165, no. 14 (July 25, 2005): 1643–50. https://doi.org/10.1001/archinte.165.14.1643.
 
-8.Muller, Grégoire, Erwan Flecher, Guillaume Lebreton, Charles-Edouard Luyt, Jean-Louis Trouillet, Nicolas Bréchot, Matthieu Schmidt, et al. “The ENCOURAGE Mortality Risk Score and Analysis of Long-Term Outcomes after VA-ECMO for Acute Myocardial Infarction with Cardiogenic Shock.” Intensive Care Medicine 42, no. 3 (March 2016): 370–78. https://doi.org/10.1007/s00134-016-4223-9.
+8. Muller, Grégoire, Erwan Flecher, Guillaume Lebreton, Charles-Edouard Luyt, Jean-Louis Trouillet, Nicolas Bréchot, Matthieu Schmidt, et al. “The ENCOURAGE Mortality Risk Score and Analysis of Long-Term Outcomes after VA-ECMO for Acute Myocardial Infarction with Cardiogenic Shock.” Intensive Care Medicine 42, no. 3 (March 2016): 370–78. https://doi.org/10.1007/s00134-016-4223-9.
 
 9. Ouweneel, Dagmar M., Erlend Eriksen, Melchior Seyfarth, and José P. S. Henriques. “Percutaneous Mechanical Circulatory Support Versus Intra-Aortic Balloon Pump for Treating Cardiogenic Shock: Meta-Analysis.” Journal of the American College of Cardiology 69, no. 3 (January 24, 2017): 358–60. https://doi.org/10.1016/j.jacc.2016.10.026.
 
