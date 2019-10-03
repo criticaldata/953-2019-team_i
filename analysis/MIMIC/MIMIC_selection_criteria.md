@@ -97,13 +97,14 @@ Organisms : ORG_ITEMID,ORG_NAME  (null if negative)
 **Vital signs**
 
 
-1) CHARTEVENTS
+1) CHARTEVENTS 
 Identifiers : SUBJECT_ID, HADM_ID, ICUSTAY_ID
 Item of interest : ITEMID
 Value of if item : VALUE, VALUENUM
 Time of item : CHARTTIME
 
-
+NB : Most important table. 
+Contain GCS and other important material
 
 2) D_ITEMS
 NB - A lot of duplicates because to distinct databases
