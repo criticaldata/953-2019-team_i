@@ -7,7 +7,7 @@ This file intends to systematically indicate the filters that have been used to 
 5 different ICU units but only one that is relative to coronary care (which differs in that regards to eICU) 
 CCU unit
 
-##Tables that will serve to select :
+## Tables that will serve to select :
 
 **Determining ICU unit type**
 
