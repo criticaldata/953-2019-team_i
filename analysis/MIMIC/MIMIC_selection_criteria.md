@@ -16,7 +16,7 @@ Identifiers : SUBJECT_ID, HADM_ID, ICUSTAY_ID
 LOS (for one ICU stay)
 FIRST_CAREUNIT
 
-Determining age of patients and genders
+**Determining age of patients and genders**
 
 1)PATIENTS
 Identifiers : SUBJECT_ID (alone)
