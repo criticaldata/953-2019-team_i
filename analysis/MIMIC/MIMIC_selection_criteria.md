@@ -7,7 +7,7 @@ This file intends to systematically indicate the filters that have been used to 
 5 different ICU units but only one that is relative to coronary care (which differs in that regards to eICU) 
 CCU unit
 
-##Tables that will serve to select :
+## Tables that will serve to select :
 
 **Determining ICU unit type**
 
@@ -16,7 +16,7 @@ Identifiers : SUBJECT_ID, HADM_ID, ICUSTAY_ID
 LOS (for one ICU stay)
 FIRST_CAREUNIT
 
-Determining age of patients and genders
+**Determining age of patients and genders**
 
 1)PATIENTS
 Identifiers : SUBJECT_ID (alone)
