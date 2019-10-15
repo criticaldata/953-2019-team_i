@@ -1,6 +1,6 @@
 # Predicting mortality in patients with cardiogenic shock
 
-Eric Yamga, Sheekar Mantena,  Nitinraja Singh, Daren Rosen, Neel Butala
+Eric Yamga, Sreekar Mantena,  Nitinraja Singh, Daren Rosen, Neel Butala
 
 # Background
 
