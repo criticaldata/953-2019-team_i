@@ -184,9 +184,55 @@ ORDER BY pvt.uniquepid, pvt.patienthealthsystemstayid, pvt.patientunitstayid;
 "
 )
 
-ccu_vitals1 <- run_query(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ccu_vitals <- run_query(
   "
-  with nc as
+SELECT patientunitstayid
+, min(heartrate) as HeartRate_Min
+, max(heartrate) as HeartRate_Max
+, avg(heartrate) as HeartRate_Mean
+, min(nibp_systolic) as SysBP_Min
+, max(nibp_systolic) as SysBP_Max
+, min(nibp_diastolic) as DiasBP_Min
+, max(nibp_diastolic) as DiasBP_Max
+, avg(nibp_diastolic) as DiasBP_Mean
+, min(nibp_mean) as MeanBP_Min
+, max(nibp_mean) as MeanBP_Max
+, avg(nibp_mean) as MeanBP_Mean
+, min(RespiratoryRate) as RespRate_Min
+, max(RespiratoryRate) as RespRate_Max
+, avg(RespiratoryRate) as RespRate_Mean
+, min(temperature) as TempC_Min
+, max(temperature) as TempC_Max
+, avg(temperature) as TempC_Mean
+, min(spo2) as SpO2_Min
+, max(spo2) as SpO2_Max
+, avg(spo2) as SpO2_Mean
+
+
+FROM
+
+(with nc as
   (
     select
     patientunitstayid
@@ -323,10 +369,13 @@ ccu_vitals1 <- run_query(
   OR ibp_systolic IS NOT NULL
   OR ibp_diastolic IS NOT NULL
   OR ibp_mean IS NOT NULL
+  AND patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY   patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
   group by patientunitstayid, nursingchartoffset, nursingchartentryoffset
-  order by patientunitstayid, nursingchartoffset, nursingchartentryoffset;
-  "
-)
+  order by patientunitstayid, nursingchartoffset, nursingchartentryoffset)
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  GROUP by patientunitstayid
+  order by patientunitstayid
+  " )
 
 
 
