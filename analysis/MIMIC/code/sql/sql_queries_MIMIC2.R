@@ -1,8 +1,8 @@
 #SQL databases queries for MIMIC-III
 
 #Loading of libraries
-source(".code/library_load.R")
-source(".code/sql/sql_access.R")
+source("./code/library_load.R")
+source("./code/sql/sql_access.R")
 
 ##CCU query
 
@@ -26,10 +26,8 @@ ccu_patients_id_los <- run_query(ccu_query)
 
 ##Comoborbidities
 
-ccu_query_1 <- "SELECT d.hadm_id, d.subject_id, e.short_title, e.long_title
+ccu_query_1 <- "SELECT d.hadm_id, d.subject_id, ICD9_code
 FROM `physionet-data.mimiciii_clinical.diagnoses_icd` d
-LEFT JOIN `physionet-data.mimiciii_clinical.d_icd_diagnoses` e
-ON d.icd9_code = e.icd9_code
 WHERE hadm_id in 
 (
 SELECT hadm_id
@@ -41,10 +39,42 @@ FROM (
 x
 WHERE rn = 1
 )
+
 "
 
-# Contains  hadm_id, short_title, long_title
+# Contains  hadm_id, subject_id and icd9 codes for all CCU patients
 ccu_diagnoses <- run_query(ccu_query_1)
+
+# CCS classification dictionary table to ease ICD9 codes grouping (level 3 and level 4)
+ccsicd <- read_csv("./data/ccsicd.csv")
+ccsicd$ICD9 <- gsub("'","\\1", ccsicd$ICD9)
+ccsicd$ICD9 <- str_trim(ccsicd$ICD9)
+ccsicd$CCS <- gsub("\\[.*","\\1", ccsicd$CCS)
+ccsicd$CCS <- str_trim(ccsicd$CCS)
+
+# List to visualize all the ICD9 diagnosis of the CCU patients
+dxlist <- sort(unique(ccu_diagnoses$CCS))
+
+# Final diagnoses table
+ccu_diagnoses <- left_join(ccu_diagnoses, ccsicd, by=c("ICD9_code"="ICD9")) %>%
+  filter(CCS%in%c("Diabetes mellitus", "Anemia", "Acute myocardial infarction", "Acute Renal Failure", "Acute cerebrovascular disease", "Atrial fibrillation","Blood Malignancy", 
+                  "Chronic obstructive pulmonary disease and bronchiectasis","Coronary atherosclerosis", "Chronic kidney disease", "Diabetes mellitus",
+                  "Heart valve disorders", "Hypertension","Neoplasms", "Shock", "Septicemia"))%>%
+  select(-c("ICD9_code","hadm_id"))%>%
+  #This ensure that duplicates of values are only counted once
+  group_by(subject_id, CCS)%>%
+  summarise()
+
+# Function that cadds count of each dx in the
+get_counts <-function(dataset){       
+  summary <- dataset %>% group_by(subject_id,CCS) %>% dplyr::summarise(count=n())%>% arrange(desc(count))%>%ungroup(subject_id) 
+  return(summary)
+}
+
+# Final wide dx table 
+# 0 : no diagnosis 1: diagnosis
+narrow_ccu_dx <- get_counts(ccu_diagnoses)
+wide_ccu_dx <- narrow_ccu_dx%>%spread(CCS, count, fill=0)
 
 
 ##Demographics
@@ -64,7 +94,7 @@ WHERE rn = 1
 
 # Contains  subject_id(NOT HADM), dob, dod, gender, and flag for death (flag includes outside of hospital death)
 ccu_demographics_dob_gender_death <- run_query(ccu_query_2)
-
+ccu_demographics_dob_gender_death <- ccu_demographics_dob_gender_death%>%select("subject_id","gender")
 
 ## First 24 hours labs
 
@@ -375,10 +405,125 @@ GROUP BY pvt.subject_id, pvt.hadm_id, pvt.icustay_id
 ORDER BY pvt.subject_id, pvt.hadm_id, pvt.icustay_id;
 
  " 
+vitalsfull <- "SELECT pvt.hadm_id, pvt.subject_id, pvt.icustay_id
+
+-- Easier names
+, min(case when VitalID = 1 then valuenum else null end) as HeartRate_Min
+, max(case when VitalID = 1 then valuenum else null end) as HeartRate_Max
+, avg(case when VitalID = 1 then valuenum else null end) as HeartRate_Mean
+, min(case when VitalID = 2 then valuenum else null end) as SysBP_Min
+, max(case when VitalID = 2 then valuenum else null end) as SysBP_Max
+, avg(case when VitalID = 2 then valuenum else null end) as SysBP_Mean
+, min(case when VitalID = 3 then valuenum else null end) as DiasBP_Min
+, max(case when VitalID = 3 then valuenum else null end) as DiasBP_Max
+, avg(case when VitalID = 3 then valuenum else null end) as DiasBP_Mean
+, min(case when VitalID = 4 then valuenum else null end) as MeanBP_Min
+, max(case when VitalID = 4 then valuenum else null end) as MeanBP_Max
+, avg(case when VitalID = 4 then valuenum else null end) as MeanBP_Mean
+, min(case when VitalID = 5 then valuenum else null end) as RespRate_Min
+, max(case when VitalID = 5 then valuenum else null end) as RespRate_Max
+, avg(case when VitalID = 5 then valuenum else null end) as RespRate_Mean
+, min(case when VitalID = 6 then valuenum else null end) as TempC_Min
+, max(case when VitalID = 6 then valuenum else null end) as TempC_Max
+, avg(case when VitalID = 6 then valuenum else null end) as TempC_Mean
+, min(case when VitalID = 7 then valuenum else null end) as SpO2_Min
+, max(case when VitalID = 7 then valuenum else null end) as SpO2_Max
+, avg(case when VitalID = 7 then valuenum else null end) as SpO2_Mean
+, min(case when VitalID = 8 then valuenum else null end) as Glucose_Min
+, max(case when VitalID = 8 then valuenum else null end) as Glucose_Max
+, avg(case when VitalID = 8 then valuenum else null end) as Glucose_Mean
+
+FROM  (
+  select ie.subject_id, ie.hadm_id, ie.icustay_id
+  , case
+  when itemid in (211,220045) and valuenum > 0 and valuenum < 300 then 1 -- HeartRate
+  when itemid in (51,442,455,6701,220179,220050) and valuenum > 0 and valuenum < 400 then 2 -- SysBP
+  when itemid in (8368,8440,8441,8555,220180,220051) and valuenum > 0 and valuenum < 300 then 3 -- DiasBP
+  when itemid in (456,52,6702,443,220052,220181,225312) and valuenum > 0 and valuenum < 300 then 4 -- MeanBP
+  when itemid in (615,618,220210,224690) and valuenum > 0 and valuenum < 70 then 5 -- RespRate
+  when itemid in (223761,678) and valuenum > 70 and valuenum < 120  then 6 -- TempF, converted to degC in valuenum call
+  when itemid in (223762,676) and valuenum > 10 and valuenum < 50  then 6 -- TempC
+  when itemid in (646,220277) and valuenum > 0 and valuenum <= 100 then 7 -- SpO2
+  when itemid in (807,811,1529,3745,3744,225664,220621,226537) and valuenum > 0 then 8 -- Glucose
+  
+  else null end as VitalID
+  -- convert F to C
+  , case when itemid in (223761,678) then (valuenum-32)/1.8 else valuenum end as valuenum
+  
+  from `physionet-data.mimiciii_clinical.icustays` ie
+  left join `physionet-data.mimiciii_clinical.chartevents` ce
+  on ie.subject_id = ce.subject_id and ie.hadm_id = ce.hadm_id and ie.icustay_id = ce.icustay_id
+  AND DATETIME_DIFF (ce.charttime, ie.intime, DAY) < 1.01
+  -- exclude rows marked as error # DISTINCT FROM 1 is not supported in BigQuery
+  WHERE ce.error != 1 OR ce.error IS NULL
+  AND ce.itemid in
+  
+  (
+    -- HEART RATE
+    211, --Heart Rate
+    220045, --Heart Rate
     
+    -- Systolic/diastolic
+    
+    51, --	Arterial BP [Systolic]
+    442, --	Manual BP [Systolic]
+    455, --	NBP [Systolic]
+    6701, --	Arterial BP #2 [Systolic]
+    220179, --	Non Invasive Blood Pressure systolic
+    220050, --	Arterial Blood Pressure systolic
+    
+    8368, --	Arterial BP [Diastolic]
+    8440, --	Manual BP [Diastolic]
+    8441, --	NBP [Diastolic]
+    8555, --	Arterial BP #2 [Diastolic]
+    220180, --	Non Invasive Blood Pressure diastolic
+    220051, --	Arterial Blood Pressure diastolic
+    
+    
+    -- MEAN ARTERIAL PRESSURE
+    456, --NBP Mean
+    52, --Arterial BP Mean
+    6702, --	Arterial BP Mean #2
+    443, --	Manual BP Mean(calc)
+    220052, --Arterial Blood Pressure mean
+    220181, --Non Invasive Blood Pressure mean
+    225312, --ART BP mean
+    
+    -- RESPIRATORY RATE
+    618,--	Respiratory Rate
+    615,--	Resp Rate (Total)
+    220210,--	Respiratory Rate
+    224690, --	Respiratory Rate (Total)
+    
+    
+    -- SPO2, peripheral
+    646, 220277,
+    
+    -- GLUCOSE, both lab and fingerstick
+    807,--	Fingerstick Glucose
+    811,--	Glucose (70-105)
+    1529,--	Glucose
+    3745,--	BloodGlucose
+    3744,--	Blood Glucose
+    225664,--	Glucose finger stick
+    220621,--	Glucose (serum)
+    226537,--	Glucose (whole blood)
+    
+    -- TEMPERATURE
+    223762, -- Temperature Celsius
+    676,	-- Temperature C
+    223761, -- Temperature Fahrenheit
+    678 --	Temperature F
+    
+  )
+) 
+pvt
+
+GROUP BY pvt.subject_id, pvt.hadm_id, pvt.icustay_id
+ORDER BY pvt.subject_id, pvt.hadm_id, pvt.icustay_id;"
+
 # VS including BP, HR, T, Glucose, Sat, RR, MUST merge table
 ccu_vitals <- run_query(ccu_query_4)
-
 
 # First 24 hours urinary output
 ccu_query_5 <- "SELECT * FROM `physionet-data.mimiciii_derived.uofirstday`
@@ -462,19 +607,53 @@ ccu_vent <- run_query(ccu_query_8)
 ### table of each
 ### NB duplicates of individuals in all table because drug was stopped and restarted in short periods
 
-# adds duration, adds pressor type col + filters out patients who have not received pressors in the first 24 hours
-# function to specify when how ealy the pressor must have been started, we will use this to stratify the SCAI stages
+# adds duration, adds pressor type col + filters out patients who have received pressors in the first 24 hours
+# function to specify when how early the pressor must have been started, we will use this to stratify the SCAI stages
 optimize_pressor <- function(df, nameofpressor, hours){
   df <- df %>% mutate(pressor_type = nameofpressor) %>% 
-    mutate(duration_minutes=df$endtime-df$starttime) %>% 
+    mutate(duration_hours=difftime(endtime, starttime, units = "hours")) %>% 
     left_join(ccu_patients_id_los, by.x="hadm_id", by.y="hadm_id") %>%
     filter(starttime < intime + lubridate::hours(hours)) %>%
-    rename("duration_minutes"="duration_hours")%>%
     select(-c('intime',"outtime",'los'))
+  #second part of function and MERGING
+  #function that merges pressors dose into one if close in time and removes pressors administration of less than an hours
+  df <- df %>% arrange(icustay_id,starttime) %>% 
+    group_by(icustay_id) %>% 
+    mutate(pause = difftime(starttime, lag(endtime), units = "hours")) %>% 
+    replace_na(list(pause = 0)) %>% 
+    mutate(vaso_id = cumsum(pause >= 1))%>%
+    group_by(subject_id,icustay_id, hadm_id, pressor_type, vaso_id) %>% 
+    summarise(
+      starttime = min(starttime), 
+      endtime = max(endtime),
+      duration_hours = sum(duration_hours),
+      vaso_rate = mean(vaso_rate),
+      vaso_amount = sum(vaso_amount))
   return (df)
 }
 
-#  
+# Same function for milrinone because the milrinone data table is different
+
+optimize_pressorm <- function(df, nameofpressor, hours){
+  df <- df %>% mutate(pressor_type = nameofpressor) %>% 
+    mutate(duration_hours=difftime(endtime, starttime, units = "hours")) %>% 
+    left_join(ccu_patients_id_los, by.x="hadm_id", by.y="hadm_id") %>%
+    filter(starttime < intime + lubridate::hours(hours)) %>%
+    select(-c('intime',"outtime",'los'))
+  #second part of function and MERGING
+  #function that merges pressors dose into one if close in time and removes pressors administration of less than an hours
+  df <- df %>% arrange(icustay_id,starttime) %>% 
+    group_by(icustay_id) %>% 
+    mutate(pause = difftime(starttime, lag(endtime), units = "hours")) %>% 
+    replace_na(list(pause = 0)) %>% 
+    mutate(vaso_id = cumsum(pause >= 1))%>%
+    group_by(subject_id,icustay_id, hadm_id, pressor_type, vaso_id) %>% 
+    summarise(
+      starttime = min(starttime), 
+      endtime = max(endtime),
+      duration_hours = sum(duration_hours))
+  return (df)
+}
 
 # Dobutamine
 
@@ -561,7 +740,8 @@ WHERE rn = 1
 )"
 
 ## NO DOSAGE For milrinone... should not be processed with this function....
-milri_ccu_24 <- optimize_pressor(run_query(ccu_query_13), "milrinone", 24)
+milri_ccu_24 <- optimize_pressorm(run_query(ccu_query_13), "milrinone", 24)
+
 
 
 #Phenyl
@@ -580,7 +760,7 @@ WHERE rn = 1
 
 phenyl_ccu_24 <- optimize_pressor(run_query(ccu_query_14), "phenyl", 24)
 
-#Vasopressin
+# Vasopressin
 
 ccu_query_15 <- "SELECT * FROM `physionet-data.mimiciii_derived.vasopressin_dose`
 WHERE icustay_id in 
@@ -597,7 +777,9 @@ WHERE rn = 1
 
 vasopressin_ccu_24 <- optimize_pressor(run_query(ccu_query_15), "vasopressin", 24)
 
-# Total number
+
+
+#  Query of number of all pressors
 
 ccu_query_16 <- "SELECT * FROM `physionet-data.mimiciii_derived.vasopressordurations`
 WHERE icustay_id in 
@@ -612,16 +794,47 @@ x
 WHERE rn = 1
 )"
 
-allpressors <- optimize_pressor(run_query(ccu_query_16), "all", 24)
-allpressors <- allpressors %>% group_by(subject_id) %>% summarise(count=n())
 
-# Merged tables
+# Merged tables by HST, not really useful
 # Before must remove duplicates from table above
 # Must also coutain a col with number of pressors for an individual patient
 
+allpressors <- run_query(ccu_query_16)
+
+### allpressors <- optimize_pressor(run_query(ccu_query_16), "all", 24) - function not designed for this table
 
 
 
+# CUSTOM table with merged pressors for all CCU patients with associated column featuring total number of pressors per patient
+# In this table : less granularity -> no distinction with start and stop time
+# This is a filtered table, no start,endtime. Only the type of pressor.
+# NB
+
+mergedpressors <- bind_rows(dobutamine_ccu_24 , dopamine_ccu_24, epi_ccu_24, milri_ccu_24, norepi_ccu_24, vasopressin_ccu_24, phenyl_ccu_24)%>%
+  group_by(subject_id,icustay_id, hadm_id, pressor_type) %>% 
+  summarise(
+    starttime = min(starttime), 
+    endtime = max(endtime),
+    duration_hours = sum(duration_hours),
+    vaso_rate = mean(vaso_rate),
+    vaso_amount = sum(vaso_amount))%>%
+  select(-c("starttime","endtime","duration_hours","vaso_rate","vaso_amount"))
+
+# Function that adds a count to each pressor, that will facilitate the spread of the table
+get_counts2 <-function(dataset){       
+  summary <- dataset %>% group_by(hadm_id,subject_id,icustay_id,pressor_type) %>% dplyr::summarise(count=n())%>% arrange(desc(count))%>%ungroup(subject_id) 
+  return(summary)
+}
+
+
+# Long table with each pressor per patient
+mergedpressors <- get_counts2(mergedpressors)
+
+# Pressors table widened + 2 additionnal columns : (1) any pressor (2) total number of pressors
+
+wide_pressors <- mergedpressors%>%spread(pressor_type, count, fill=0)%>% 
+  mutate(total_pressors = rowSums(.[4:10]))%>%
+  mutate(any_pressor = ifelse(total_pressors>= 1, 1, 0))
 
 # CCU procedures 1 : ECMO, IABP, IMPELLA and charttime
 
@@ -699,29 +912,44 @@ table2 as
 (
 SELECT label, subject_id, hadm_id, icustay_id, charttime
 FROM table1
-WHERE label = 'ECMO' OR label='IABP' OR label='IMPELLA' AND icustay_id in 
-  (
-    SELECT icustay_id
-      FROM (
-      SELECT subject_id, hadm_id, intime, icustay_id, outtime, los, ROW_NUMBER() OVER(PARTITION BY subject_id ORDER BY intime) rn
-      FROM `physionet-data.mimiciii_clinical.icustays`
-      WHERE first_careunit = 'CCU'
-    ) 
-x
-WHERE rn = 1
+WHERE label = 'ECMO' OR label='IABP' OR label='IMPELLA' 
 )
-)
-SELECT * FROM
-(
-  SELECT subject_id, hadm_id, label, icustay_id, charttime, ROW_NUMBER() OVER(PARTITION BY subject_id ORDER BY charttime) rn
-  FROM table2
-) 
-x
-WHERE rn = 1
+SELECT label, subject_id, hadm_id, icustay_id, MIN(charttime) as charttime FROM table2
+GROUP BY label, subject_id, hadm_id, icustay_id
 "
+  
+### Contains All identifiers, Charttime, procedures (IABP, IMPELLA, ECMO) BUT  not PCI or CABG among all ICU patients
+### In this form all entries of the same event are counted must therefore summarize
 
-### Contains All identifiers, Charttime, procedures (IABP, IMPELLA, ECMO) BUT  not PCI or CABG
-ccu_procedures <- run_query(ccu_query_17) %>% select(-rn)
+ccu_procedures <- run_query(ccu_query_17) 
+
+
+### Only procedures having occured in the first 24 hours
+
+ccu_procedures_24 <- ccu_procedures %>%
+  inner_join(ccu_patients_id_los, by=c("hadm_id"))%>%
+  filter(charttime < intime + lubridate::hours(24))%>%
+  select(c("label","subject_id.x","hadm_id","icustay_id.x"))%>%
+  rename(
+    "subject_id"="subject_id.x",
+    "icustay_id"="icustay_id.x"
+  )
+
+
+# Adding count number for each procedure to facilitate widening
+
+get_counts3 <-function(dataset){       
+  summary <- dataset %>% group_by(subject_id,label) %>% dplyr::summarise(count=n())%>% arrange(desc(count))%>%ungroup(subject_id) 
+  return(summary)
+}
+
+mergedprocedures <- get_counts3(ccu_procedures_24)
+
+# Final procedures table, only subject id
+# 0 : no diagnosis 1: diagnosis
+wide_procedures_24<- mergedprocedures%>%spread(label, count, fill=0)
+
+
 
 
 ### Mortality
@@ -751,25 +979,50 @@ WHERE rn = 1
 ## Mortality table in ICU, in-hospital, 30 day, 1 year.
 ## NB this table contains NULL value for 30 day and 1 year mortality ONLY. 
 ## also contains AGE from admission -> but a lot > 300 ?!? Weird.
-## Must add age group by stratification of 10 
+## Must add age group by stratification of 10
+
 ccu_mortality <- run_query(ccu_query_18)
-ccu_mortality2 <- ccu_mortality %>%
+
+
+
+### CCU motality table (ICU, hospital, 30 day) with subject_id only
+ccu_mortality <- ccu_mortality %>%
   left_join(y=ccu_patients_id_los, by=c("hadm_id"="hadm_id")) %>%
   mutate(
     icu_mortality = ifelse(deathtime <= outtime, 0, 1),
     icu_mortality = coalesce(icu_mortality, 0),
     hospital_mortality = ifelse(!is.null(deathtime), 1, 0),
     thirty_day_mortality = ifelse(dod < admittime + lubridate::days(30), 1, 0),
-    oneyear_mortality = ifelse(dod < admittime + lubridate::years(1),1 ,0),
     survival_days = difftime(dod,admittime, units='days'),
     age = time_length(difftime(admittime,dob), "years")
     ) %>%
   select(
-    -c("admittime","dischtime","deathtime","dod", "dob","intime", "outtime")
+    -c("admittime","dischtime","deathtime","dod", "dob","intime", "outtime", "hadm_id", "icustay_id", "los", "survival_days")
   )
   
 
-##
+### CCU mortality wide table with additional age groups
+ccu_mortality <- ccu_mortality %>%
+  mutate(
+    age = ifelse(age > 200, NA_character_ , age),
+    age_group = case_when(
+      age < 11 ~ "< 11",
+      age < 20 ~ "11-20",
+      age < 30 ~ "20-29",
+      age < 40 ~ "30-39",
+      age < 50 ~ "40-49",
+      age < 60 ~ "50-59",
+      age < 70 ~ "60-69",
+      age < 80 ~ "70-79",
+      age < 90 ~ "80-89",
+      age < 100 ~ "90-99",
+      age < 120 ~ "100+",
+      age == NA_character_ ~ NA_character_ 
+      )
+    )
+
+
+
 
 ccu_query_19 <- "SELECT * FROM `physionet-data.mimiciii_derived.gcsfirstday`
 WHERE hadm_id in 
@@ -790,7 +1043,8 @@ ccu_gcs <- run_query(ccu_query_19)
 ccu_gcs <- ccu_gcs %>% 
   select("SUBJECT_ID", "HADM_ID", "ICUSTAY_ID", "MinGCS") %>%
   clean_names("snake") %>%
-  rename("GCS"="min_gcs")
+  rename("GCS"="min_gcs") %>%
+  select(subject_id, GCS)
 
 
 ## SOFA at 24 hours for CCU patients
@@ -809,13 +1063,13 @@ WHERE rn = 1
 )"
 
 ccu_sofa <- run_query(ccu_query_20)
-ccu_sofa <- ccu_gcs %>% 
-  select("subject_id", "SOFA", "hadm_id", "icustay_id") 
+ccu_sofa <- ccu_sofa %>% 
+  select("subject_id", "SOFA") 
 
 
 ## OASIS  score at 24 hours for CCU patients
 
-ccu_query21 <- "SELECT  subject_id, icustay_id, hadm_id, ICUSTAY_AGE_GROUP, OASIS FROM `physionet-data.mimiciii_derived.oasis`
+ccu_query_21 <- "SELECT  subject_id, icustay_id, hadm_id, ICUSTAY_AGE_GROUP, OASIS FROM `physionet-data.mimiciii_derived.oasis`
 WHERE icustay_id in 
   (
     SELECT icustay_id
@@ -828,8 +1082,10 @@ x
 WHERE rn = 1
 )"
 
-ccu_oasis <- run_query(ccu_query_21)
+ccu_oasis <- run_query(ccu_query_21) %>%select("subject_id", "OASIS") 
 
+
+# Patients who had PCI OR CABG during stay
 
 ccu_query22 <- "WITH PCI AS
 (
@@ -841,7 +1097,8 @@ SELECT *, CASE
   FROM `physionet-data.mimiciii_clinical.procedures_icd`
 )
 SELECT subject_id, hadm_id, diagnosis FROM PCI 
-WHERE diagnosis = 'PCI' OR diagnosis = 'CABG' AND hadm_id in 
+WHERE diagnosis = 'PCI' OR diagnosis = 'CABG' 
+AND hadm_id in 
   (
     SELECT hadm_id
       FROM (
@@ -852,8 +1109,26 @@ WHERE diagnosis = 'PCI' OR diagnosis = 'CABG' AND hadm_id in
 x
 WHERE rn = 1
 )
-GROUP BY subject_id, hadm_id, diagnosis "
+GROUP BY hadm_id, subject_id, diagnosis
 
-ccu_cabg_pci <- run_query(ccu_query22)
+"
+
+# CCU patients with CABG : hadm_IM, subject_id, diagnosis with value CABG or PCI"
+ccu_cabg_pci <- run_query(ccu_query22)%>%
+  filter(hadm_id %in% ccu_patients_id_los$hadm_id)
+
+# Wide transformation 
+
+get_counts4 <-function(dataset){       
+  summary <- dataset %>% group_by(subject_id,diagnosis) %>% dplyr::summarise(count=n())%>% arrange(desc(count))%>%ungroup(subject_id) 
+  return(summary)
+}
+
+# Final wide PCI/CABG table  for each CCU patient
+# 0 : no diagnosis 1: diagnosis
+# Must note that : not sure if all new interventions OR BEFORE because found in ICD9 procedures table and NO CHARTTIME available
+ccu_cabg_pci <- get_counts4(ccu_cabg_pci)
+wide_cabg_pci <- ccu_cabg_pci%>%spread(diagnosis, count, fill=0)
+
 
 
