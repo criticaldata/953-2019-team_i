@@ -206,7 +206,7 @@ ORDER BY pvt.uniquepid, pvt.patienthealthsystemstayid, pvt.patientunitstayid;
 
 
 ccu_vitals <- run_query(
-  "
+ "
 SELECT patientunitstayid
 , min(heartrate) as HeartRate_Min
 , max(heartrate) as HeartRate_Max
@@ -377,7 +377,7 @@ FROM
   order by patientunitstayid
   " )
 
-
+#Add in code to sort out everything after 24 hrs.
 
 
 
@@ -527,5 +527,5 @@ order by patientunitstayid, labresultoffset;
 
 
 
-
+write.csv(ccu_labs1, file = "MyData.csv")
 
