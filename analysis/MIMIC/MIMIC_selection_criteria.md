@@ -158,3 +158,8 @@ Hemodynamics
 
 Septic shock
 Remove patients with positive blood cultures our on antibiotics within 24hours?
+
+
+## Procedures
+ICD9 codes for mechanical circulatory support:
+IABP (ICD-9: 37.61), Impella/TandemHeart (ICD-9: 37.68), nonpercutaneous devices (ICD-9: 37.60, 37.62, 37.65), extracorporeal membraneoxygenation (ECMO) (ICD-9: 39.65), and percutaneous cardiopulmonary support (ICD-9: 39.66).

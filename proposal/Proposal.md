@@ -1,5 +1,6 @@
 # Predicting mortality in patients with cardiogenic shock
-Eric Yamga, Sheekar Mantena,  Nitinraja Singh, Daren Rosen, Neel Butala
+
+Eric Yamga, Sreekar Mantena,  Nitinraja Singh, Daren Rosen, Neel Butala
 
 # Background
 
@@ -16,39 +17,77 @@ Most well-established predictive mortality models for patients in the intensive 
 
 Existing predictive mortality scores for cardiogenic shock have variable robustness and most models with good discrimination are concerning for lack of generalizability. Some have been derived from specific regions of the world which may differ in clinical practice or population genetics, which may affect overall cardiac risk and patient complexity. Others have evaluated mortality in the setting of specific interventions such as mechanical support with ECMO.
 
-This project will use large real-world databases, MIMIC-III and eICU, to develop a mortality prediction model among patients in cardiogenic shock in the cardiac ICU defined as SCAI class C. By leveraging the Philips eICU database, which includes patients from over 200 US hospitals, we aim to create a predictive model that will be generalizable and robust for predicting mortality in this population. The results of this study can not only be used to guide treatment decisions among patients, but can also inform clinical trials for development of therapies for patients in cardiogenic shock in the future.
+This project will use large real-world databases, MIMIC-III and eICU, to develop a mortality prediction model among patients in cardiogenic shock in the cardiac ICU defined as SCAI class C. 
+
+We aim to create a predictive model that will be generalizable and robust for predicting mortality in this population. The results of this study can not only be used to guide treatment decisions among patients, but can also inform clinical trials for development of therapies for patients in cardiogenic shock in the future.
+
  
 # Research Hypothesis
+
 We hypothesize will be able to develop a parsimonious risk prediction model among patients with cardiogenic shock in the cardiac ICU. Moreever, we hypothesize that this model will be able to achieve better discrimination than existing models.
 
 
 
 # Objectives
 
-1.We will use traditional logistic regression methods to develop a parsimonious prediction model for in-hospital mortality among patients with cardiogenic shock (defined as SCAI Shock C or greater) admitted to the cardiac ICU. We will quantify discrimination by calculating the area under the receiver operator characteristic curve. 
+1. We will use traditional logistic regression methods to develop a parsimonious prediction model for in-hospital mortality among patients with cardiogenic shock (defined as SCAI Shock C or greater) admitted to the cardiac ICU. We will quantify discrimination by calculating the area under the receiver operator characteristic curve. 
 
-2.We will use unstructured machine learning methods to develop a parsimonious prediction model for in-hospital mortality among patients with cardiogenic shock (defined as SCAI Shock C or greater) admitted to the cardiac ICU
+2. We will use other supervised machine learning methods (KNN classifier, LDA, QDA) to similarly predict  in-hospital mortality among patients with cardiogenic shock (defined as SCAI Shock C or greater) admitted to the cardiac ICU. 
 
-3.We will use similar methods to develop prediction models among patients based on characteristics at 24 hours of ICU admission.
+3. We will train our model using the MIMIC database and validate it using EICU.  
 
-4.We will compare risk models based on established metrics of fit to other published models of mortality in ICUs
+4. We will finally compare our risk models based on established metrics of fit to other published models of mortality in cardiac ICUs.
+
  
 # Data Sources
 
 We will use the Philips eICU dataset to develop our risk model. The eICU database comprises 200,859 patient unit encounters for 139,367 unique patients admitted between 2014 and 2015. Patients were admitted to one of 335 units at 208 hospitals located throughout the US. The approximate number of patients that meet the definition of cardiogenic shock is not available in the database summary.
 
+The study is exempt from institutional review board approval due to the retrospective design, lack of direct patient intervention, and the security schema, for which the re-identification risk was certified as meeting safe harbor standards by an independent privacy expert (Privacert, Cambridge, MA) (Health Insurance Portability and Accountability Act Certification no. 1031219-2).
+
 We will then use the MICIC dataset to externally validate our model. MIMIC-III contains data associated with 53,423 distinct hospital admissions for adult patients (aged 16 years or above) admitted to critical care units between 2001 and 2012. MIMIC-III integrates deidentiﬁed, comprehensive clinical data of patients admitted to the Beth Israel Deaconess Medical Center. The approximate number of patients that meet the definition of cardiogenic shock is not available in the database summary.
+
+The data in MIMIC-III and MIMIC-CXR has been de-identified, and the institutional review boards of the Massachusetts Institute of Technology (No. 0403000206) and Beth Israel Deaconess Medical Center (2001-P-001699/14) both approved the use of the database for research.
+
 
 # Study Population
 
 We will include all patients enrolled in cardiac ICUs in cardiogenic shock who meet SCAI Shock C criteria or greater at admission.
-The only exclusion criteria expected are: readmissions and duplicates.
 
+Our design cohort will focus on the ICU patients from the MIMIC 3 database who have cardiogenic shock meeting criteria for SCAI Stages C, D, or E. 
+
+The specific criteria that will be used to stratify patients cardiogenic shock stage are the following :
+
+SCAI Shock class C (any of):
+- Admission lactate >2 mmol/l  
+- Urine output <720 ml during the ﬁrst 24 h  
+- Creatinine increased by 0.3 mg/dl during ﬁrst 24 h
+
+SCAI Shock class D (any of):
+- Maximum lactate > admission lactate  
+- Number of vasoactives during the ﬁrst 24 h > Number of vasoactives during ﬁrst 1 h  
+- Maximum VIS* during ﬁrst 24 h > VIS during ﬁrst hour 
+- Maximum NEE* during the ﬁrst 24 h > NEE during ﬁrst hour
+
+SCAI Shock class E (any of):
+- Mean systolic BP during ﬁrst 1 h <80 and on vasoactives  
+- Mean systolic MAP during ﬁrst 1 h <50 and on vasoactives  
+- Number of vasoactives during ﬁrst 1 h >2  
+- Number of vasoactives during ﬁrst 1 h >1 and IABP during the ﬁrst 24 h  
+- Admission lactate >10 mmol/l
+
+*VIS : VIS ¼ dobutamine þ dopamine þ (10 * phenylephrine þ milrinone) þ (100 * [epinephrine þ norepinephrine]) þ (10,000 * units/kg/min vasopressin).
+
+*NEE :  NEE is calculated using the dose equivalency as follows: 0.1 mg/kg/min norepinephrine ¼ 0.1 mg/kg/min epinephrine ¼ 15 mg/kg/min dopamine ¼ 1 mg/kg/ min phenylephrine ¼ 0.04 U/min vasopressin	
+
+Our external validation cohort will be comprised of patients from the Philips eICU database in the cardiac ICU or CVICU who similarly meet criteria for SCAI stages C-E.
+The only exclusion criteria expected are: readmissions (we will only consider patient’s first MIMIC admission) and duplicates.
 
 
 # Study Outcomes
 
-The primary outcome will be in hospital mortality. The secondary outcome will be cardiac ICU mortality.
+The primary outcome will be in hospital mortality. 
+The secondary outcome will be cardiac ICU mortality.
  
 # Covariates of interest
 
@@ -58,7 +97,7 @@ We will include vital signs, advanced hemodynamic information (via arterial line
 
 All included variables will need to be present for at least 75% of all patients.
 
-We will identify the most important predictors using backward selection for the logistic regression component of our predictive model. 
+
 
 # Confounders
 
@@ -70,13 +109,10 @@ The main confounders expected are the following :
 
 3. Additionally, we suspect that mechanical therapies can significantly the primary outcome and the subgroup of patients receiving them will be important to identify. 
 
-# Additional analysis
-
-We will repeat the aforementioned analysis by limiting our cohort to those meeting the IABP-SHOCK II trial inclusion criteria. This will provide an additional benchmark for the SCAI Shock C criteria as they have never been validated in a clinical study yet. 
 
 # Acknowledgements:
 
-We would like to thank the MIT-HST 953 team without whom this project would not have been possible. 
+The project was conceived, designed and conducted during the 2019 fall course HST.953 Collaborative Data Science in Medicine at the Harvard-MIT Division of Health Science and Technology.
 
 # References:
 
