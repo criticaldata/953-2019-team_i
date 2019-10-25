@@ -57,7 +57,7 @@ dxlist <- sort(unique(ccu_diagnoses$CCS))
 
 # Final diagnoses table
 ccu_diagnoses <- left_join(ccu_diagnoses, ccsicd, by=c("ICD9_code"="ICD9")) %>%
-  filter(CCS%in%c("Diabetes mellitus", "Anemia", "STEMI", "NSTEMI", "Acute Renal Failure", "Acute cerebrovascular disease", "Atrial fibrillation","Blood Malignancy", 
+  filter(CCS%in%c("Diabetes mellitus", "Anemia", "STEMI", "NSTEMI", "Acute renal failure", "Acute cerebrovascular disease", "Atrial fibrillation","Blood Malignancy", 
                   "Chronic obstructive pulmonary disease and bronchiectasis","Coronary atherosclerosis", "Chronic kidney disease", "Diabetes mellitus",
                   "Heart valve disorders", "Hypertension","Neoplasms", "Shock NOS", "Shock Cardiogenic", "Shock Septic", "Septicemia"))%>%
   select(-c("ICD9_code","hadm_id"))%>%
@@ -678,6 +678,7 @@ WHERE rn = 1
 )"
 
 dobutamine_ccu_24 <- optimize_pressor(run_query(ccu_query_9), "dobutamine", 24)
+dobutamine_ccu_1 <- optimize_pressor(run_query(ccu_query_9), "dobutamine", 1)
 
 
 # Dopamine
@@ -696,7 +697,7 @@ WHERE rn = 1
 )"
 
 dopamine_ccu_24 <- optimize_pressor(run_query(ccu_query_10), "dopamine", 24)
-
+dopamine_ccu_1 <- optimize_pressor(run_query(ccu_query_10), "dopamine", 1)
 
 # epinephrine
 
@@ -714,7 +715,7 @@ WHERE rn = 1
 )"
 
 epi_ccu_24 <- optimize_pressor(run_query(ccu_query_11), "epinephrine", 24)
-
+epi_ccu_1 <- optimize_pressor(run_query(ccu_query_11), "epinephrine", 1)
 
 #
 
@@ -732,6 +733,7 @@ WHERE rn = 1
 )"
 
 norepi_ccu_24 <- optimize_pressor(run_query(ccu_query_12), "norepinephrine", 24)
+norepi_ccu_1 <- optimize_pressor(run_query(ccu_query_12), "norepinephrine", 1)
 
 ccu_query_13 <- "SELECT * FROM `physionet-data.mimiciii_derived.milrinonedurations`
 WHERE icustay_id in 
@@ -748,7 +750,7 @@ WHERE rn = 1
 
 ## NO DOSAGE For milrinone... should not be processed with this function....
 milri_ccu_24 <- optimize_pressorm(run_query(ccu_query_13), "milrinone", 24)
-
+milri_ccu_1 <- optimize_pressorm(run_query(ccu_query_13), "milrinone", 1)
 
 
 #Phenyl
@@ -766,7 +768,7 @@ WHERE rn = 1
 )"
 
 phenyl_ccu_24 <- optimize_pressor(run_query(ccu_query_14), "phenyl", 24)
-
+phenyl_ccu_1 <- optimize_pressor(run_query(ccu_query_14), "phenyl", 1)
 # Vasopressin
 
 ccu_query_15 <- "SELECT * FROM `physionet-data.mimiciii_derived.vasopressin_dose`
@@ -783,7 +785,7 @@ WHERE rn = 1
 )"
 
 vasopressin_ccu_24 <- optimize_pressor(run_query(ccu_query_15), "vasopressin", 24)
-
+vasopressin_ccu_1 <- optimize_pressor(run_query(ccu_query_15), "vasopressin", 1)
 
 
 #  Query of number of all pressors
@@ -815,7 +817,8 @@ allpressors <- run_query(ccu_query_16)
 # CUSTOM table with merged pressors for all CCU patients with associated column featuring total number of pressors per patient
 # In this table : less granularity -> no distinction with start and stop time
 # This is a filtered table, no start,endtime. Only the type of pressor.
-# NB
+
+### This is the table for first 24 hours
 
 mergedpressors <- bind_rows(dobutamine_ccu_24 , dopamine_ccu_24, epi_ccu_24, milri_ccu_24, norepi_ccu_24, vasopressin_ccu_24, phenyl_ccu_24)%>%
   group_by(subject_id,icustay_id, hadm_id, pressor_type) %>% 
@@ -827,6 +830,23 @@ mergedpressors <- bind_rows(dobutamine_ccu_24 , dopamine_ccu_24, epi_ccu_24, mil
     vaso_amount = sum(vaso_amount))%>%
   select(-c("starttime","endtime","duration_hours","vaso_rate","vaso_amount"))
 
+
+### This the merged table for pressors received in the first hour
+### I removed the amount and rate from the table but if we wanted more granularity, it would be easy to add them back in.
+
+mergedpressors_firsthour <- bind_rows(dobutamine_ccu_1 , dopamine_ccu_1, epi_ccu_1, milri_ccu_1, norepi_ccu_1, vasopressin_ccu_1, phenyl_ccu_1)%>%
+  group_by(subject_id,icustay_id, hadm_id, pressor_type) %>% 
+  summarise(
+    starttime = min(starttime), 
+    endtime = max(endtime),
+    duration_hours = sum(duration_hours),
+    vaso_rate = mean(vaso_rate),
+    vaso_amount = sum(vaso_amount))%>%
+  select(-c("starttime","endtime","duration_hours","vaso_rate","vaso_amount"))
+
+
+
+
 # Function that adds a count to each pressor, that will facilitate the spread of the table
 get_counts2 <-function(dataset){       
   summary <- dataset %>% group_by(hadm_id,subject_id,icustay_id,pressor_type) %>% dplyr::summarise(count=n())%>% arrange(desc(count))%>%ungroup(subject_id) 
@@ -836,12 +856,21 @@ get_counts2 <-function(dataset){
 
 # Long table with each pressor per patient
 mergedpressors <- get_counts2(mergedpressors)
+mergedpressors_firsthour <- get_counts2(mergedpressors_firsthour)
 
 # Pressors table widened + 2 additionnal columns : (1) any pressor (2) total number of pressors
 
 wide_pressors <- mergedpressors%>%spread(pressor_type, count, fill=0)%>% 
   mutate(total_pressors = rowSums(.[4:10]))%>%
   mutate(any_pressor = ifelse(total_pressors>= 1, 1, 0))
+
+
+wide_pressors_firsthour <- mergedpressors_firsthour%>%spread(pressor_type, count, fill=0)%>% 
+  mutate(total_pressors_first_hour = rowSums(.[4:10]))%>%
+  mutate(any_pressor_first_hour = ifelse(total_pressors_first_hour>= 1, 1, 0))
+
+colnames(wide_pressors_firsthour)[4:10]<- paste(colnames(wide_pressors_firsthour)[4:10], "first_hour", sep = "_")
+
 
 # CCU procedures 1 : ECMO, IABP, IMPELLA and charttime
 
@@ -998,18 +1027,19 @@ ccu_mortality <- ccu_mortality %>%
   mutate(
     icu_mortality = ifelse(deathtime <= outtime, 0, 1),
     icu_mortality = coalesce(icu_mortality, 0),
-    hospital_mortality = ifelse(!is.null(deathtime), 1, 0),
+    hospital_mortality = ifelse(!is.na(deathtime), 1, 0),
     thirty_day_mortality = ifelse(dod < admittime + lubridate::days(30), 1, 0),
     survival_days = difftime(dod,admittime, units='days'),
-    age = time_length(difftime(admittime,dob), "years")
+    age = as.integer(time_length(difftime(admittime,dob), "years"))
     ) %>%
   select(
     -c("admittime","dischtime","deathtime","dod", "dob","intime", "outtime", "hadm_id", "icustay_id", "los", "survival_days")
   )
   
-# if (any(is.na(ccu_mortality2$deathtime))){return 0}
-
 ### CCU mortality wide table with additional age groups
+
+# Transforming all aberrant values of age to NULL and creating age_group
+
 ccu_mortality <- ccu_mortality %>%
   mutate(
     age = ifelse(age > 200, NA_character_ , age),
@@ -1028,7 +1058,6 @@ ccu_mortality <- ccu_mortality %>%
       age == NA_character_ ~ NA_character_ 
       )
     )
-
 
 
 

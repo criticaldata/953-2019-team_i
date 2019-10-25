@@ -1,12 +1,11 @@
 source("./code/sql/sql_queries_MIMIC2.R")
 
-tablelist <- list(ccu_vitals, ccu_patients_id_los, wide_ccu_dx, ccu_demographics_dob_gender_death, 
-                  ccu_labs, ccu_uo_24h, 
-                  ccu_RRT, ccu_RRT24h, ccu_vent, wide_procedures_24, ccu_mortality,ccu_gcs, 
-                  ccu_sofa, ccu_oasis, wide_cabg_pci)
+tablelist <- list(wide_ccu_dx, ccu_vitals, ccu_labs, ccu_patients_id_los, ccu_demographics_dob_gender_death,
+                  ccu_uo_24h, ccu_RRT24h, ccu_vent, wide_procedures_24, wide_pressors, wide_pressors_firsthour,
+                  ccu_gcs, ccu_sofa, ccu_oasis, wide_cabg_pci, ccu_mortality)
 
 
-remove_unecessary_index <- function(dflist){
+#remove_unecessary_index <- function(dflist){
   dflist2 <- list(c())
   j <- 1
   for (i in dflist){
@@ -21,77 +20,86 @@ remove_unecessary_index <- function(dflist){
   }
   return(dflist2)
 }
-tablelist2 <- remove_unecessary_index(tablelist)
+#tablelist2 <- remove_unecessary_index(tablelist)
 
 
 
-## Automated approach
-ccu_analysis_table_test <- tablelist2 %>% purrr::reduce (inner_join, by = "subject_id")
+## Automated merge approach
+library(purrr)
+ccu_analysis_table <- tablelist %>% purrr::reduce (left_join, by = "subject_id")
 
-replace_na()
 
-### Manual approach 
-ccu_analysis2 <- wide_ccu_dx%>%
-  left_join(ccu_vitals, by="subject_id")%>%
-  left_join(ccu_patients_id_los, by="subject_id")%>%
-  left_join(ccu_demographics_dob_gender_death, by="subject_id")%>%
-  left_join(ccu_labs, by="subject_id")%>%
-  left_join(ccu_uo_24h, by="subject_id")%>%
-  left_join(ccu_RRT, by="subject_id")%>%
-  left_join(ccu_RRT24h, by="subject_id")%>%
-  left_join(ccu_vent, by="subject_id")%>%
-  left_join(wide_procedures_24, by="subject_id")%>%
-  left_join(ccu_mortality, by="subject_id")%>%
-  left_join(ccu_gcs, by="subject_id")%>%
-  left_join(ccu_sofa, by="subject_id")%>%
-  left_join(ccu_oasis, by="subject_id")%>%
-  left_join(wide_cabg_pci, by="subject_id")
+### Manual merge approach 
+#ccu_analysis2 <- wide_ccu_dx%>%
+  #left_join(ccu_vitals, by="subject_id")%>%
+ # left_join(ccu_patients_id_los, by="subject_id")%>%
+  #left_join(ccu_demographics_dob_gender_death, by="subject_id")%>%
+  #left_join(ccu_labs, by="subject_id")%>%
+ # left_join(ccu_uo_24h, by="subject_id")%>%
+  #we removed RRT of hospital stay not relevant 
+  #left_join(ccu_RRT, by="subject_id")%>%
+ # left_join(ccu_RRT24h, by="subject_id")%>%
+ # left_join(ccu_vent, by="subject_id")%>%
+  #left_join(wide_procedures_24, by="subject_id")%>%
+ # left_join(ccu_mortality, by="subject_id")%>%
+  #left_join(ccu_gcs, by="subject_id")%>%
+ # left_join(ccu_sofa, by="subject_id")%>%
+#  left_join(ccu_oasis, by="subject_id")%>%
+ # left_join(wide_cabg_pci, by="subject_id")%>$%
+ # left_join(wide_pressors, by="subject_id")%>$%
+#left_join(wide_pressors_firsthour, by="subject_id")
 
-ccu_analysis2 <- ccu_analysis2%>%
-  select(-c("hadm_id","hadm_id.x","hadm_id.x.x", 
-            "hadm_id.x.x.x","hadm_id.y","hadm_id.y.y","hadm_id.y.y.y","icustay_id",
-            "icustay_id.x.x","icustay_id.x.x.x","icustay_id.y", "icustay_id.y.y","icustay_id.y.y.y"))%>%
-  rename("RRT_total_stay"="RRT.x")%>%
-  rename("RRT24"="RRT.y")
+### FINAL CLEANING
+# Removing identifiers
+# Removing duplicates caused by the merge
+# Transform appropriate variables to good format
 
-#Replacing NaN by 0 in appropriate sections only
+ccu_analysis2<- ccu_analysis_table%>%
+  select(-c("hadm_id.x","hadm_id.x.x", "hadm_id.x.x.x","hadm_id.x.x.x.x",
+            "hadm_id.y","hadm_id.y.y","hadm_id.y.y.y","hadm_id.y.y.y.y",
+            "icustay_id.x.x","icustay_id.x.x.x",
+            "icustay_id.y", "icustay_id.y.y","icustay_id.y.y.y", "icustay_id.y.y.y.y"))%>%
+  distinct(subject_id, .keep_all=TRUE)%>%
+  clean_names(case="snake")
 
-ccu_analysis2$RRT_total_stay <- replace_na(ccu_analysis2$RRT_total_stay, 0)
-ccu_analysis2$RRT24 <- replace_na(ccu_analysis2$RRT24, 0)
+
+#Replacing NaN by 0 in appropriate sections only *** WE KEPT ALL THE NAN in places where we did not have the data
+
+ccu_analysis2$rrt <- replace_na(ccu_analysis2$rrt, 0)
 ccu_analysis2$vent <- replace_na(ccu_analysis2$vent, 0)
-ccu_analysis2$ECMO <- replace_na(ccu_analysis2$ECMO, 0)
-ccu_analysis2$IMPELLA <- replace_na(ccu_analysis2$IMPELLA, 0)
-ccu_analysis2$CABG <- replace_na(ccu_analysis2$CABG, 0)
-ccu_analysis2$PCI <- replace_na(ccu_analysis2$PCI, 0)
+ccu_analysis2$ecmo <- replace_na(ccu_analysis2$ecmo, 0)
+ccu_analysis2$impella <- replace_na(ccu_analysis2$impella, 0)
+ccu_analysis2$cabg <- replace_na(ccu_analysis2$cabg, 0)
+ccu_analysis2$pci <- replace_na(ccu_analysis2$pci, 0)
+ccu_analysis2$iabp <- replace_na(ccu_analysis2$iabp, 0)
+ccu_analysis2$dobutamine <- replace_na(ccu_analysis2$dobutamine, 0)
+ccu_analysis2$dopamine <- replace_na(ccu_analysis2$dopamine, 0)
+ccu_analysis2$epinephrine <- replace_na(ccu_analysis2$epinephrine, 0)
+ccu_analysis2$milrinone <- replace_na(ccu_analysis2$milrinone, 0)
+ccu_analysis2$norepinephrine <- replace_na(ccu_analysis2$norepinephrine, 0)
+ccu_analysis2$vasopressin <- replace_na(ccu_analysis2$vasopressin, 0)
+ccu_analysis2$total_pressors <- replace_na(ccu_analysis2$total_pressors, 0)
+ccu_analysis2$any_pressor <- replace_na(ccu_analysis2$any_pressor, 0)
+ccu_analysis2$dobutamine_first_hour <- replace_na(ccu_analysis2$dobutamine_first_hour, 0)
+ccu_analysis2$dopamine_first_hour <- replace_na(ccu_analysis2$dopamine_first_hour, 0)
+ccu_analysis2$epinephrine_first_hour<- replace_na(ccu_analysis2$epinephrine_first_hour, 0)
+ccu_analysis2$milrinone_first_hour <- replace_na(ccu_analysis2$milrinone_first_hour, 0)
+ccu_analysis2$norepinephrine_first_hour <- replace_na(ccu_analysis2$norepinephrine_first_hour, 0)
+ccu_analysis2$vasopressin_first_hour <- replace_na(ccu_analysis2$vasopressin_first_hour, 0)
+ccu_analysis2$total_pressors_first_hour <- replace_na(ccu_analysis2$total_pressors_first_hour, 0)
+ccu_analysis2$any_pressor_first_hour <- replace_na(ccu_analysis2$any_pressor_first_hour, 0)
+ccu_analysis2$phenyl<- replace_na(ccu_analysis2$phenyl, 0)
+ccu_analysis2$phenyl_first_hour<- replace_na(ccu_analysis2$phenyl_first_hour, 0)
 
-# Removing duplicates
-# There is something wrong, we should have 6548 patients as we started the left join on wide_ccu_dx table
-# Must verify the join thing
+# Last check of patient
 
-ccu_analysis2 <- distinct(ccu_analysis2)
+str(ccu_analysis2, list.len = 150)
+ccu_analysis2 <- ccu_analysis2%>%select(-c("icustay_id_x_x_x_x", "icustay_id_x"))
 
+
+
+## Table is final for all MIMIC CCU patients
 write.csv(ccu_analysis2, file="MIMIC_all_CCU_patients")
 
 
 
-
-#Check point, total unique CCU patients = 6802
-  
-#Here I will mention the tables that do not contain the 3 IDs
-#1.ccu_demographics_dob_gender_death- only subject_id
-#2. wide_procedures only subject_id
-#3. ccu_mortality only subject_id
-#4. ccu_gcs only subject_id
-#5. ccu_sofa only subject_id
-#6. ccu_oasis only subject_id
-#7. wide_cabg_pci only subject_id
-
-#Other notes
-# ccu_vitals might be the initial table because contains only 6700 vs 6800 patients
-# ccu_procedures could me precised by charttime, here only procedures having occured during stay
-
-
-###### TO DO
-## 1. Age correction
-## 2. Filter by cardiogenic shock SCAI stage and add that to table
-## 3. Correct duplicates
