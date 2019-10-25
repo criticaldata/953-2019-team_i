@@ -57,9 +57,9 @@ dxlist <- sort(unique(ccu_diagnoses$CCS))
 
 # Final diagnoses table
 ccu_diagnoses <- left_join(ccu_diagnoses, ccsicd, by=c("ICD9_code"="ICD9")) %>%
-  filter(CCS%in%c("Diabetes mellitus", "Anemia", "Acute myocardial infarction", "Acute Renal Failure", "Acute cerebrovascular disease", "Atrial fibrillation","Blood Malignancy", 
+  filter(CCS%in%c("Diabetes mellitus", "Anemia", "STEMI", "NSTEMI", "Acute Renal Failure", "Acute cerebrovascular disease", "Atrial fibrillation","Blood Malignancy", 
                   "Chronic obstructive pulmonary disease and bronchiectasis","Coronary atherosclerosis", "Chronic kidney disease", "Diabetes mellitus",
-                  "Heart valve disorders", "Hypertension","Neoplasms", "Shock", "Septicemia"))%>%
+                  "Heart valve disorders", "Hypertension","Neoplasms", "Shock NOS", "Shock Cardiogenic", "Shock Septic", "Septicemia"))%>%
   select(-c("ICD9_code","hadm_id"))%>%
   #This ensure that duplicates of values are only counted once
   group_by(subject_id, CCS)%>%
@@ -75,6 +75,10 @@ get_counts <-function(dataset){
 # 0 : no diagnosis 1: diagnosis
 narrow_ccu_dx <- get_counts(ccu_diagnoses)
 wide_ccu_dx <- narrow_ccu_dx%>%spread(CCS, count, fill=0)
+
+## Making sure that patients do not have STEMI and non STEMI
+wide_ccu_dx <- wide_ccu_dx %>%
+  mutate(NSTEMI=replace(NSTEMI, NSTEMI==1 & STEMI==1, 0))
 
 
 ##Demographics
@@ -272,6 +276,9 @@ ORDER BY pvt.subject_id, pvt.hadm_id, pvt.icustay_id;"
 
 # hadm_id, short_title, long_title
 ccu_labs <- run_query(ccu_query_3)
+ccu_labs <- ccu_labs%>%
+  mutate(Delta_creat_0.3 = ifelse(abs(CREATININE_max-CREATININE_min) >= 0.3, 1, 0))
+
 
 ## CCU  24 hours vital signs
 
@@ -1000,6 +1007,7 @@ ccu_mortality <- ccu_mortality %>%
     -c("admittime","dischtime","deathtime","dod", "dob","intime", "outtime", "hadm_id", "icustay_id", "los", "survival_days")
   )
   
+# if (any(is.na(ccu_mortality2$deathtime))){return 0}
 
 ### CCU mortality wide table with additional age groups
 ccu_mortality <- ccu_mortality %>%

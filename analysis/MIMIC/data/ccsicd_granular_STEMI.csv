@@ -1225,121 +1225,121 @@ ICD9,CCS
 'V757 ',Immunizations and screening for infectious disease [10.]
 'V758 ',Immunizations and screening for infectious disease [10.]
 'V759 ',Immunizations and screening for infectious disease [10.]
-'1530 ',Cancer of colon [14.]
-'1531 ',Cancer of colon [14.]
-'1532 ',Cancer of colon [14.]
-'1533 ',Cancer of colon [14.]
-'1534 ',Cancer of colon [14.]
-'1535 ',Cancer of colon [14.]
-'1536 ',Cancer of colon [14.]
-'1537 ',Cancer of colon [14.]
-'1538 ',Cancer of colon [14.]
-'1539 ',Cancer of colon [14.]
-'1590 ',Cancer of colon [14.]
-'20910',Cancer of colon [14.]
-'20911',Cancer of colon [14.]
-'20912',Cancer of colon [14.]
-'20913',Cancer of colon [14.]
-'20914',Cancer of colon [14.]
-'20915',Cancer of colon [14.]
-'20916',Cancer of colon [14.]
-'2303 ',Cancer of colon [14.]
-'V1005',Cancer of colon [14.]
-'1540 ',Cancer of rectum and anus [15.]
-'1541 ',Cancer of rectum and anus [15.]
-'1542 ',Cancer of rectum and anus [15.]
-'1543 ',Cancer of rectum and anus [15.]
-'1548 ',Cancer of rectum and anus [15.]
-'20917',Cancer of rectum and anus [15.]
-'2304 ',Cancer of rectum and anus [15.]
-'2305 ',Cancer of rectum and anus [15.]
-'2306 ',Cancer of rectum and anus [15.]
-'79670',Cancer of rectum and anus [15.]
-'79671',Cancer of rectum and anus [15.]
-'79672',Cancer of rectum and anus [15.]
-'79673',Cancer of rectum and anus [15.]
-'79674',Cancer of rectum and anus [15.]
-'79676',Cancer of rectum and anus [15.]
-'V1006',Cancer of rectum and anus [15.]
-'1500 ',Cancer of esophagus [12.]
-'1501 ',Cancer of esophagus [12.]
-'1502 ',Cancer of esophagus [12.]
-'1503 ',Cancer of esophagus [12.]
-'1504 ',Cancer of esophagus [12.]
-'1505 ',Cancer of esophagus [12.]
-'1508 ',Cancer of esophagus [12.]
-'1509 ',Cancer of esophagus [12.]
-'2301 ',Cancer of esophagus [12.]
-'V1003',Cancer of esophagus [12.]
-'1510 ',Cancer of stomach [13.]
-'1511 ',Cancer of stomach [13.]
-'1512 ',Cancer of stomach [13.]
-'1513 ',Cancer of stomach [13.]
-'1514 ',Cancer of stomach [13.]
-'1515 ',Cancer of stomach [13.]
-'1516 ',Cancer of stomach [13.]
-'1518 ',Cancer of stomach [13.]
-'1519 ',Cancer of stomach [13.]
-'20923',Cancer of stomach [13.]
-'2302 ',Cancer of stomach [13.]
-'V1004',Cancer of stomach [13.]
-'1550 ',Cancer of liver and intrahepatic bile duct [16.]
-'1551 ',Cancer of liver and intrahepatic bile duct [16.]
-'1552 ',Cancer of liver and intrahepatic bile duct [16.]
-'2308 ',Cancer of liver and intrahepatic bile duct [16.]
-'V1007',Cancer of liver and intrahepatic bile duct [16.]
-'1570 ',Cancer of pancreas [17.]
-'1571 ',Cancer of pancreas [17.]
-'1572 ',Cancer of pancreas [17.]
-'1573 ',Cancer of pancreas [17.]
-'1574 ',Cancer of pancreas [17.]
-'1578 ',Cancer of pancreas [17.]
-'1579 ',Cancer of pancreas [17.]
-'1520 ',Cancer of other GI organs; peritoneum [18.]
-'1521 ',Cancer of other GI organs; peritoneum [18.]
-'1522 ',Cancer of other GI organs; peritoneum [18.]
-'1523 ',Cancer of other GI organs; peritoneum [18.]
-'1528 ',Cancer of other GI organs; peritoneum [18.]
-'1529 ',Cancer of other GI organs; peritoneum [18.]
-'1560 ',Cancer of other GI organs; peritoneum [18.]
-'1561 ',Cancer of other GI organs; peritoneum [18.]
-'1562 ',Cancer of other GI organs; peritoneum [18.]
-'1568 ',Cancer of other GI organs; peritoneum [18.]
-'1569 ',Cancer of other GI organs; peritoneum [18.]
-'1580 ',Cancer of other GI organs; peritoneum [18.]
-'1588 ',Cancer of other GI organs; peritoneum [18.]
-'1589 ',Cancer of other GI organs; peritoneum [18.]
-'1591 ',Cancer of other GI organs; peritoneum [18.]
-'1598 ',Cancer of other GI organs; peritoneum [18.]
-'1599 ',Cancer of other GI organs; peritoneum [18.]
-'20900',Cancer of other GI organs; peritoneum [18.]
-'20901',Cancer of other GI organs; peritoneum [18.]
-'20902',Cancer of other GI organs; peritoneum [18.]
-'20903',Cancer of other GI organs; peritoneum [18.]
-'2307 ',Cancer of other GI organs; peritoneum [18.]
-'2309 ',Cancer of other GI organs; peritoneum [18.]
-'V1000',Cancer of other GI organs; peritoneum [18.]
-'V1009',Cancer of other GI organs; peritoneum [18.]
-'1622 ',Cancer of bronchus; lung [19.]
-'1623 ',Cancer of bronchus; lung [19.]
-'1624 ',Cancer of bronchus; lung [19.]
-'1625 ',Cancer of bronchus; lung [19.]
-'1628 ',Cancer of bronchus; lung [19.]
-'1629 ',Cancer of bronchus; lung [19.]
-'20921',Cancer of bronchus; lung [19.]
-'2312 ',Cancer of bronchus; lung [19.]
-'V1011',Cancer of bronchus; lung [19.]
-'1720 ',Melanomas of skin [22.]
-'1721 ',Melanomas of skin [22.]
-'1722 ',Melanomas of skin [22.]
-'1723 ',Melanomas of skin [22.]
-'1724 ',Melanomas of skin [22.]
-'1725 ',Melanomas of skin [22.]
-'1726 ',Melanomas of skin [22.]
-'1727 ',Melanomas of skin [22.]
-'1728 ',Melanomas of skin [22.]
-'1729 ',Melanomas of skin [22.]
-'V1082',Melanomas of skin [22.]
+'1530 ',Neoplasms
+'1531 ',Neoplasms
+'1532 ',Neoplasms
+'1533 ',Neoplasms
+'1534 ',Neoplasms
+'1535 ',Neoplasms
+'1536 ',Neoplasms
+'1537 ',Neoplasms
+'1538 ',Neoplasms
+'1539 ',Neoplasms
+'1590 ',Neoplasms
+'20910',Neoplasms
+'20911',Neoplasms
+'20912',Neoplasms
+'20913',Neoplasms
+'20914',Neoplasms
+'20915',Neoplasms
+'20916',Neoplasms
+'2303 ',Neoplasms
+'V1005',Neoplasms
+'1540 ',Neoplasms
+'1541 ',Neoplasms
+'1542 ',Neoplasms
+'1543 ',Neoplasms
+'1548 ',Neoplasms
+'20917',Neoplasms
+'2304 ',Neoplasms
+'2305 ',Neoplasms
+'2306 ',Neoplasms
+'79670',Neoplasms
+'79671',Neoplasms
+'79672',Neoplasms
+'79673',Neoplasms
+'79674',Neoplasms
+'79676',Neoplasms
+'V1006',Neoplasms
+'1500 ',Neoplasms
+'1501 ',Neoplasms
+'1502 ',Neoplasms
+'1503 ',Neoplasms
+'1504 ',Neoplasms
+'1505 ',Neoplasms
+'1508 ',Neoplasms
+'1509 ',Neoplasms
+'2301 ',Neoplasms
+'V1003',Neoplasms
+'1510 ',Neoplasms
+'1511 ',Neoplasms
+'1512 ',Neoplasms
+'1513 ',Neoplasms
+'1514 ',Neoplasms
+'1515 ',Neoplasms
+'1516 ',Neoplasms
+'1518 ',Neoplasms
+'1519 ',Neoplasms
+'20923',Neoplasms
+'2302 ',Neoplasms
+'V1004',Neoplasms
+'1550 ',Neoplasms
+'1551 ',Neoplasms
+'1552 ',Neoplasms
+'2308 ',Neoplasms
+'V1007',Neoplasms
+'1570 ',Neoplasms
+'1571 ',Neoplasms
+'1572 ',Neoplasms
+'1573 ',Neoplasms
+'1574 ',Neoplasms
+'1578 ',Neoplasms
+'1579 ',Neoplasms
+'1520 ',Neoplasms
+'1521 ',Neoplasms
+'1522 ',Neoplasms
+'1523 ',Neoplasms
+'1528 ',Neoplasms
+'1529 ',Neoplasms
+'1560 ',Neoplasms
+'1561 ',Neoplasms
+'1562 ',Neoplasms
+'1568 ',Neoplasms
+'1569 ',Neoplasms
+'1580 ',Neoplasms
+'1588 ',Neoplasms
+'1589 ',Neoplasms
+'1591 ',Neoplasms
+'1598 ',Neoplasms
+'1599 ',Neoplasms
+'20900',Neoplasms
+'20901',Neoplasms
+'20902',Neoplasms
+'20903',Neoplasms
+'2307 ',Neoplasms
+'2309 ',Neoplasms
+'V1000',Neoplasms
+'V1009',Neoplasms
+'1622 ',Neoplasms
+'1623 ',Neoplasms
+'1624 ',Neoplasms
+'1625 ',Neoplasms
+'1628 ',Neoplasms
+'1629 ',Neoplasms
+'20921',Neoplasms
+'2312 ',Neoplasms
+'V1011',Neoplasms
+'1720 ',Neoplasms
+'1721 ',Neoplasms
+'1722 ',Neoplasms
+'1723 ',Neoplasms
+'1724 ',Neoplasms
+'1725 ',Neoplasms
+'1726 ',Neoplasms
+'1727 ',Neoplasms
+'1728 ',Neoplasms
+'1729 ',Neoplasms
+'V1082',Neoplasms
 '1730 ',Other non-epithelial cancer of skin [23.]
 '17300',Other non-epithelial cancer of skin [23.]
 '17301',Other non-epithelial cancer of skin [23.]
@@ -1407,669 +1407,669 @@ ICD9,CCS
 '2328 ',Other non-epithelial cancer of skin [23.]
 '2329 ',Other non-epithelial cancer of skin [23.]
 'V1083',Other non-epithelial cancer of skin [23.]
-'1740 ',Cancer of breast [24.]
-'1741 ',Cancer of breast [24.]
-'1742 ',Cancer of breast [24.]
-'1743 ',Cancer of breast [24.]
-'1744 ',Cancer of breast [24.]
-'1745 ',Cancer of breast [24.]
-'1746 ',Cancer of breast [24.]
-'1748 ',Cancer of breast [24.]
-'1749 ',Cancer of breast [24.]
-'1750 ',Cancer of breast [24.]
-'1759 ',Cancer of breast [24.]
-'2330 ',Cancer of breast [24.]
-'V103 ',Cancer of breast [24.]
-'179  ',Cancer of uterus [25.]
-'1820 ',Cancer of uterus [25.]
-'1821 ',Cancer of uterus [25.]
-'1828 ',Cancer of uterus [25.]
-'2332 ',Cancer of uterus [25.]
-'V1042',Cancer of uterus [25.]
-'1800 ',Cancer of cervix [26.]
-'1801 ',Cancer of cervix [26.]
-'1808 ',Cancer of cervix [26.]
-'1809 ',Cancer of cervix [26.]
-'2331 ',Cancer of cervix [26.]
-'7950 ',Cancer of cervix [26.]
-'79501',Cancer of cervix [26.]
-'79502',Cancer of cervix [26.]
-'79503',Cancer of cervix [26.]
-'79504',Cancer of cervix [26.]
-'79506',Cancer of cervix [26.]
-'V1041',Cancer of cervix [26.]
-'1830 ',Cancer of ovary [27.]
-'V1043',Cancer of ovary [27.]
-'181  ',Cancer of other female genital organs [28.]
-'1832 ',Cancer of other female genital organs [28.]
-'1833 ',Cancer of other female genital organs [28.]
-'1834 ',Cancer of other female genital organs [28.]
-'1835 ',Cancer of other female genital organs [28.]
-'1838 ',Cancer of other female genital organs [28.]
-'1839 ',Cancer of other female genital organs [28.]
-'1840 ',Cancer of other female genital organs [28.]
-'1841 ',Cancer of other female genital organs [28.]
-'1842 ',Cancer of other female genital organs [28.]
-'1843 ',Cancer of other female genital organs [28.]
-'1844 ',Cancer of other female genital organs [28.]
-'1848 ',Cancer of other female genital organs [28.]
-'1849 ',Cancer of other female genital organs [28.]
-'2333 ',Cancer of other female genital organs [28.]
-'23330',Cancer of other female genital organs [28.]
-'23331',Cancer of other female genital organs [28.]
-'23332',Cancer of other female genital organs [28.]
-'23339',Cancer of other female genital organs [28.]
-'79516',Cancer of other female genital organs [28.]
-'V1040',Cancer of other female genital organs [28.]
-'V1044',Cancer of other female genital organs [28.]
-'185  ',Cancer of prostate [29.]
-'2334 ',Cancer of prostate [29.]
-'V1046',Cancer of prostate [29.]
-'1860 ',Cancer of testis [30.]
-'1869 ',Cancer of testis [30.]
-'V1047',Cancer of testis [30.]
-'1871 ',Cancer of other male genital organs [31.]
-'1872 ',Cancer of other male genital organs [31.]
-'1873 ',Cancer of other male genital organs [31.]
-'1874 ',Cancer of other male genital organs [31.]
-'1875 ',Cancer of other male genital organs [31.]
-'1876 ',Cancer of other male genital organs [31.]
-'1877 ',Cancer of other male genital organs [31.]
-'1878 ',Cancer of other male genital organs [31.]
-'1879 ',Cancer of other male genital organs [31.]
-'2335 ',Cancer of other male genital organs [31.]
-'2336 ',Cancer of other male genital organs [31.]
-'V1045',Cancer of other male genital organs [31.]
-'V1048',Cancer of other male genital organs [31.]
-'V1049',Cancer of other male genital organs [31.]
-'1880 ',Cancer of bladder [32.]
-'1881 ',Cancer of bladder [32.]
-'1882 ',Cancer of bladder [32.]
-'1883 ',Cancer of bladder [32.]
-'1884 ',Cancer of bladder [32.]
-'1885 ',Cancer of bladder [32.]
-'1886 ',Cancer of bladder [32.]
-'1887 ',Cancer of bladder [32.]
-'1888 ',Cancer of bladder [32.]
-'1889 ',Cancer of bladder [32.]
-'2337 ',Cancer of bladder [32.]
-'V1051',Cancer of bladder [32.]
-'1890 ',Cancer of kidney and renal pelvis [33.]
-'1891 ',Cancer of kidney and renal pelvis [33.]
-'20924',Cancer of kidney and renal pelvis [33.]
-'V1052',Cancer of kidney and renal pelvis [33.]
-'V1053',Cancer of kidney and renal pelvis [33.]
-'1892 ',Cancer of other urinary organs [34.]
-'1893 ',Cancer of other urinary organs [34.]
-'1894 ',Cancer of other urinary organs [34.]
-'1898 ',Cancer of other urinary organs [34.]
-'1899 ',Cancer of other urinary organs [34.]
-'2339 ',Cancer of other urinary organs [34.]
-'V1050',Cancer of other urinary organs [34.]
-'V1059',Cancer of other urinary organs [34.]
-'20100',Hodgkins disease [37.]
-'20101',Hodgkins disease [37.]
-'20102',Hodgkins disease [37.]
-'20103',Hodgkins disease [37.]
-'20104',Hodgkins disease [37.]
-'20105',Hodgkins disease [37.]
-'20106',Hodgkins disease [37.]
-'20107',Hodgkins disease [37.]
-'20108',Hodgkins disease [37.]
-'20110',Hodgkins disease [37.]
-'20111',Hodgkins disease [37.]
-'20112',Hodgkins disease [37.]
-'20113',Hodgkins disease [37.]
-'20114',Hodgkins disease [37.]
-'20115',Hodgkins disease [37.]
-'20116',Hodgkins disease [37.]
-'20117',Hodgkins disease [37.]
-'20118',Hodgkins disease [37.]
-'20120',Hodgkins disease [37.]
-'20121',Hodgkins disease [37.]
-'20122',Hodgkins disease [37.]
-'20123',Hodgkins disease [37.]
-'20124',Hodgkins disease [37.]
-'20125',Hodgkins disease [37.]
-'20126',Hodgkins disease [37.]
-'20127',Hodgkins disease [37.]
-'20128',Hodgkins disease [37.]
-'20140',Hodgkins disease [37.]
-'20141',Hodgkins disease [37.]
-'20142',Hodgkins disease [37.]
-'20143',Hodgkins disease [37.]
-'20144',Hodgkins disease [37.]
-'20145',Hodgkins disease [37.]
-'20146',Hodgkins disease [37.]
-'20147',Hodgkins disease [37.]
-'20148',Hodgkins disease [37.]
-'20150',Hodgkins disease [37.]
-'20151',Hodgkins disease [37.]
-'20152',Hodgkins disease [37.]
-'20153',Hodgkins disease [37.]
-'20154',Hodgkins disease [37.]
-'20155',Hodgkins disease [37.]
-'20156',Hodgkins disease [37.]
-'20157',Hodgkins disease [37.]
-'20158',Hodgkins disease [37.]
-'20160',Hodgkins disease [37.]
-'20161',Hodgkins disease [37.]
-'20162',Hodgkins disease [37.]
-'20163',Hodgkins disease [37.]
-'20164',Hodgkins disease [37.]
-'20165',Hodgkins disease [37.]
-'20166',Hodgkins disease [37.]
-'20167',Hodgkins disease [37.]
-'20168',Hodgkins disease [37.]
-'20170',Hodgkins disease [37.]
-'20171',Hodgkins disease [37.]
-'20172',Hodgkins disease [37.]
-'20173',Hodgkins disease [37.]
-'20174',Hodgkins disease [37.]
-'20175',Hodgkins disease [37.]
-'20176',Hodgkins disease [37.]
-'20177',Hodgkins disease [37.]
-'20178',Hodgkins disease [37.]
-'20190',Hodgkins disease [37.]
-'20191',Hodgkins disease [37.]
-'20192',Hodgkins disease [37.]
-'20193',Hodgkins disease [37.]
-'20194',Hodgkins disease [37.]
-'20195',Hodgkins disease [37.]
-'20196',Hodgkins disease [37.]
-'20197',Hodgkins disease [37.]
-'20198',Hodgkins disease [37.]
-'V1072',Hodgkins disease [37.]
-'20000',Non-Hodgkins lymphoma [38.]
-'20001',Non-Hodgkins lymphoma [38.]
-'20002',Non-Hodgkins lymphoma [38.]
-'20003',Non-Hodgkins lymphoma [38.]
-'20004',Non-Hodgkins lymphoma [38.]
-'20005',Non-Hodgkins lymphoma [38.]
-'20006',Non-Hodgkins lymphoma [38.]
-'20007',Non-Hodgkins lymphoma [38.]
-'20008',Non-Hodgkins lymphoma [38.]
-'20010',Non-Hodgkins lymphoma [38.]
-'20011',Non-Hodgkins lymphoma [38.]
-'20012',Non-Hodgkins lymphoma [38.]
-'20013',Non-Hodgkins lymphoma [38.]
-'20014',Non-Hodgkins lymphoma [38.]
-'20015',Non-Hodgkins lymphoma [38.]
-'20016',Non-Hodgkins lymphoma [38.]
-'20017',Non-Hodgkins lymphoma [38.]
-'20018',Non-Hodgkins lymphoma [38.]
-'20020',Non-Hodgkins lymphoma [38.]
-'20021',Non-Hodgkins lymphoma [38.]
-'20022',Non-Hodgkins lymphoma [38.]
-'20023',Non-Hodgkins lymphoma [38.]
-'20024',Non-Hodgkins lymphoma [38.]
-'20025',Non-Hodgkins lymphoma [38.]
-'20026',Non-Hodgkins lymphoma [38.]
-'20027',Non-Hodgkins lymphoma [38.]
-'20028',Non-Hodgkins lymphoma [38.]
-'20030',Non-Hodgkins lymphoma [38.]
-'20031',Non-Hodgkins lymphoma [38.]
-'20032',Non-Hodgkins lymphoma [38.]
-'20033',Non-Hodgkins lymphoma [38.]
-'20034',Non-Hodgkins lymphoma [38.]
-'20035',Non-Hodgkins lymphoma [38.]
-'20036',Non-Hodgkins lymphoma [38.]
-'20037',Non-Hodgkins lymphoma [38.]
-'20038',Non-Hodgkins lymphoma [38.]
-'20040',Non-Hodgkins lymphoma [38.]
-'20041',Non-Hodgkins lymphoma [38.]
-'20042',Non-Hodgkins lymphoma [38.]
-'20043',Non-Hodgkins lymphoma [38.]
-'20044',Non-Hodgkins lymphoma [38.]
-'20045',Non-Hodgkins lymphoma [38.]
-'20046',Non-Hodgkins lymphoma [38.]
-'20047',Non-Hodgkins lymphoma [38.]
-'20048',Non-Hodgkins lymphoma [38.]
-'20050',Non-Hodgkins lymphoma [38.]
-'20051',Non-Hodgkins lymphoma [38.]
-'20052',Non-Hodgkins lymphoma [38.]
-'20053',Non-Hodgkins lymphoma [38.]
-'20054',Non-Hodgkins lymphoma [38.]
-'20055',Non-Hodgkins lymphoma [38.]
-'20056',Non-Hodgkins lymphoma [38.]
-'20057',Non-Hodgkins lymphoma [38.]
-'20058',Non-Hodgkins lymphoma [38.]
-'20060',Non-Hodgkins lymphoma [38.]
-'20061',Non-Hodgkins lymphoma [38.]
-'20062',Non-Hodgkins lymphoma [38.]
-'20063',Non-Hodgkins lymphoma [38.]
-'20064',Non-Hodgkins lymphoma [38.]
-'20065',Non-Hodgkins lymphoma [38.]
-'20066',Non-Hodgkins lymphoma [38.]
-'20067',Non-Hodgkins lymphoma [38.]
-'20068',Non-Hodgkins lymphoma [38.]
-'20070',Non-Hodgkins lymphoma [38.]
-'20071',Non-Hodgkins lymphoma [38.]
-'20072',Non-Hodgkins lymphoma [38.]
-'20073',Non-Hodgkins lymphoma [38.]
-'20074',Non-Hodgkins lymphoma [38.]
-'20075',Non-Hodgkins lymphoma [38.]
-'20076',Non-Hodgkins lymphoma [38.]
-'20077',Non-Hodgkins lymphoma [38.]
-'20078',Non-Hodgkins lymphoma [38.]
-'20080',Non-Hodgkins lymphoma [38.]
-'20081',Non-Hodgkins lymphoma [38.]
-'20082',Non-Hodgkins lymphoma [38.]
-'20083',Non-Hodgkins lymphoma [38.]
-'20084',Non-Hodgkins lymphoma [38.]
-'20085',Non-Hodgkins lymphoma [38.]
-'20086',Non-Hodgkins lymphoma [38.]
-'20087',Non-Hodgkins lymphoma [38.]
-'20088',Non-Hodgkins lymphoma [38.]
-'20200',Non-Hodgkins lymphoma [38.]
-'20201',Non-Hodgkins lymphoma [38.]
-'20202',Non-Hodgkins lymphoma [38.]
-'20203',Non-Hodgkins lymphoma [38.]
-'20204',Non-Hodgkins lymphoma [38.]
-'20205',Non-Hodgkins lymphoma [38.]
-'20206',Non-Hodgkins lymphoma [38.]
-'20207',Non-Hodgkins lymphoma [38.]
-'20208',Non-Hodgkins lymphoma [38.]
-'20210',Non-Hodgkins lymphoma [38.]
-'20211',Non-Hodgkins lymphoma [38.]
-'20212',Non-Hodgkins lymphoma [38.]
-'20213',Non-Hodgkins lymphoma [38.]
-'20214',Non-Hodgkins lymphoma [38.]
-'20215',Non-Hodgkins lymphoma [38.]
-'20216',Non-Hodgkins lymphoma [38.]
-'20217',Non-Hodgkins lymphoma [38.]
-'20218',Non-Hodgkins lymphoma [38.]
-'20220',Non-Hodgkins lymphoma [38.]
-'20221',Non-Hodgkins lymphoma [38.]
-'20222',Non-Hodgkins lymphoma [38.]
-'20223',Non-Hodgkins lymphoma [38.]
-'20224',Non-Hodgkins lymphoma [38.]
-'20225',Non-Hodgkins lymphoma [38.]
-'20226',Non-Hodgkins lymphoma [38.]
-'20227',Non-Hodgkins lymphoma [38.]
-'20228',Non-Hodgkins lymphoma [38.]
-'20270',Non-Hodgkins lymphoma [38.]
-'20271',Non-Hodgkins lymphoma [38.]
-'20272',Non-Hodgkins lymphoma [38.]
-'20273',Non-Hodgkins lymphoma [38.]
-'20274',Non-Hodgkins lymphoma [38.]
-'20275',Non-Hodgkins lymphoma [38.]
-'20276',Non-Hodgkins lymphoma [38.]
-'20277',Non-Hodgkins lymphoma [38.]
-'20278',Non-Hodgkins lymphoma [38.]
-'20280',Non-Hodgkins lymphoma [38.]
-'20281',Non-Hodgkins lymphoma [38.]
-'20282',Non-Hodgkins lymphoma [38.]
-'20283',Non-Hodgkins lymphoma [38.]
-'20284',Non-Hodgkins lymphoma [38.]
-'20285',Non-Hodgkins lymphoma [38.]
-'20286',Non-Hodgkins lymphoma [38.]
-'20287',Non-Hodgkins lymphoma [38.]
-'20288',Non-Hodgkins lymphoma [38.]
-'20290',Non-Hodgkins lymphoma [38.]
-'20291',Non-Hodgkins lymphoma [38.]
-'20292',Non-Hodgkins lymphoma [38.]
-'20293',Non-Hodgkins lymphoma [38.]
-'20294',Non-Hodgkins lymphoma [38.]
-'20295',Non-Hodgkins lymphoma [38.]
-'20296',Non-Hodgkins lymphoma [38.]
-'20297',Non-Hodgkins lymphoma [38.]
-'20298',Non-Hodgkins lymphoma [38.]
-'V1071',Non-Hodgkins lymphoma [38.]
-'V1079',Non-Hodgkins lymphoma [38.]
-'20240',Leukemias [39.]
-'20241',Leukemias [39.]
-'20242',Leukemias [39.]
-'20243',Leukemias [39.]
-'20244',Leukemias [39.]
-'20245',Leukemias [39.]
-'20246',Leukemias [39.]
-'20247',Leukemias [39.]
-'20248',Leukemias [39.]
-'2031 ',Leukemias [39.]
-'20310',Leukemias [39.]
-'20311',Leukemias [39.]
-'20312',Leukemias [39.]
-'2040 ',Leukemias [39.]
-'20400',Leukemias [39.]
-'20401',Leukemias [39.]
-'20402',Leukemias [39.]
-'2041 ',Leukemias [39.]
-'20410',Leukemias [39.]
-'20411',Leukemias [39.]
-'20412',Leukemias [39.]
-'2042 ',Leukemias [39.]
-'20420',Leukemias [39.]
-'20421',Leukemias [39.]
-'20422',Leukemias [39.]
-'2048 ',Leukemias [39.]
-'20480',Leukemias [39.]
-'20481',Leukemias [39.]
-'20482',Leukemias [39.]
-'2049 ',Leukemias [39.]
-'20490',Leukemias [39.]
-'20491',Leukemias [39.]
-'20492',Leukemias [39.]
-'2050 ',Leukemias [39.]
-'20500',Leukemias [39.]
-'20501',Leukemias [39.]
-'20502',Leukemias [39.]
-'2051 ',Leukemias [39.]
-'20510',Leukemias [39.]
-'20511',Leukemias [39.]
-'20512',Leukemias [39.]
-'2052 ',Leukemias [39.]
-'20520',Leukemias [39.]
-'20521',Leukemias [39.]
-'20522',Leukemias [39.]
-'2053 ',Leukemias [39.]
-'20530',Leukemias [39.]
-'20531',Leukemias [39.]
-'20532',Leukemias [39.]
-'2058 ',Leukemias [39.]
-'20580',Leukemias [39.]
-'20581',Leukemias [39.]
-'20582',Leukemias [39.]
-'2059 ',Leukemias [39.]
-'20590',Leukemias [39.]
-'20591',Leukemias [39.]
-'20592',Leukemias [39.]
-'2060 ',Leukemias [39.]
-'20600',Leukemias [39.]
-'20601',Leukemias [39.]
-'20602',Leukemias [39.]
-'2061 ',Leukemias [39.]
-'20610',Leukemias [39.]
-'20611',Leukemias [39.]
-'20612',Leukemias [39.]
-'2062 ',Leukemias [39.]
-'20620',Leukemias [39.]
-'20621',Leukemias [39.]
-'20622',Leukemias [39.]
-'2068 ',Leukemias [39.]
-'20680',Leukemias [39.]
-'20681',Leukemias [39.]
-'20682',Leukemias [39.]
-'2069 ',Leukemias [39.]
-'20690',Leukemias [39.]
-'20691',Leukemias [39.]
-'20692',Leukemias [39.]
-'2070 ',Leukemias [39.]
-'20700',Leukemias [39.]
-'20701',Leukemias [39.]
-'20702',Leukemias [39.]
-'2071 ',Leukemias [39.]
-'20710',Leukemias [39.]
-'20711',Leukemias [39.]
-'20712',Leukemias [39.]
-'2072 ',Leukemias [39.]
-'20720',Leukemias [39.]
-'20721',Leukemias [39.]
-'20722',Leukemias [39.]
-'2078 ',Leukemias [39.]
-'20780',Leukemias [39.]
-'20781',Leukemias [39.]
-'20782',Leukemias [39.]
-'2080 ',Leukemias [39.]
-'20800',Leukemias [39.]
-'20801',Leukemias [39.]
-'20802',Leukemias [39.]
-'2081 ',Leukemias [39.]
-'20810',Leukemias [39.]
-'20811',Leukemias [39.]
-'20812',Leukemias [39.]
-'2082 ',Leukemias [39.]
-'20820',Leukemias [39.]
-'20821',Leukemias [39.]
-'20822',Leukemias [39.]
-'2088 ',Leukemias [39.]
-'20880',Leukemias [39.]
-'20881',Leukemias [39.]
-'20882',Leukemias [39.]
-'2089 ',Leukemias [39.]
-'20890',Leukemias [39.]
-'20891',Leukemias [39.]
-'20892',Leukemias [39.]
-'V1060',Leukemias [39.]
-'V1061',Leukemias [39.]
-'V1062',Leukemias [39.]
-'V1063',Leukemias [39.]
-'V1069',Leukemias [39.]
-'2030 ',Multiple myeloma [40.]
-'20300',Multiple myeloma [40.]
-'20301',Multiple myeloma [40.]
-'20302',Multiple myeloma [40.]
-'2038 ',Multiple myeloma [40.]
-'20380',Multiple myeloma [40.]
-'20381',Multiple myeloma [40.]
-'20382',Multiple myeloma [40.]
-'1400 ',Cancer of head and neck [11.]
-'1401 ',Cancer of head and neck [11.]
-'1403 ',Cancer of head and neck [11.]
-'1404 ',Cancer of head and neck [11.]
-'1405 ',Cancer of head and neck [11.]
-'1406 ',Cancer of head and neck [11.]
-'1408 ',Cancer of head and neck [11.]
-'1409 ',Cancer of head and neck [11.]
-'1410 ',Cancer of head and neck [11.]
-'1411 ',Cancer of head and neck [11.]
-'1412 ',Cancer of head and neck [11.]
-'1413 ',Cancer of head and neck [11.]
-'1414 ',Cancer of head and neck [11.]
-'1415 ',Cancer of head and neck [11.]
-'1416 ',Cancer of head and neck [11.]
-'1418 ',Cancer of head and neck [11.]
-'1419 ',Cancer of head and neck [11.]
-'1420 ',Cancer of head and neck [11.]
-'1421 ',Cancer of head and neck [11.]
-'1422 ',Cancer of head and neck [11.]
-'1428 ',Cancer of head and neck [11.]
-'1429 ',Cancer of head and neck [11.]
-'1430 ',Cancer of head and neck [11.]
-'1431 ',Cancer of head and neck [11.]
-'1438 ',Cancer of head and neck [11.]
-'1439 ',Cancer of head and neck [11.]
-'1440 ',Cancer of head and neck [11.]
-'1441 ',Cancer of head and neck [11.]
-'1448 ',Cancer of head and neck [11.]
-'1449 ',Cancer of head and neck [11.]
-'1450 ',Cancer of head and neck [11.]
-'1451 ',Cancer of head and neck [11.]
-'1452 ',Cancer of head and neck [11.]
-'1453 ',Cancer of head and neck [11.]
-'1454 ',Cancer of head and neck [11.]
-'1455 ',Cancer of head and neck [11.]
-'1456 ',Cancer of head and neck [11.]
-'1458 ',Cancer of head and neck [11.]
-'1459 ',Cancer of head and neck [11.]
-'1460 ',Cancer of head and neck [11.]
-'1461 ',Cancer of head and neck [11.]
-'1462 ',Cancer of head and neck [11.]
-'1463 ',Cancer of head and neck [11.]
-'1464 ',Cancer of head and neck [11.]
-'1465 ',Cancer of head and neck [11.]
-'1466 ',Cancer of head and neck [11.]
-'1467 ',Cancer of head and neck [11.]
-'1468 ',Cancer of head and neck [11.]
-'1469 ',Cancer of head and neck [11.]
-'1470 ',Cancer of head and neck [11.]
-'1471 ',Cancer of head and neck [11.]
-'1472 ',Cancer of head and neck [11.]
-'1473 ',Cancer of head and neck [11.]
-'1478 ',Cancer of head and neck [11.]
-'1479 ',Cancer of head and neck [11.]
-'1480 ',Cancer of head and neck [11.]
-'1481 ',Cancer of head and neck [11.]
-'1482 ',Cancer of head and neck [11.]
-'1483 ',Cancer of head and neck [11.]
-'1488 ',Cancer of head and neck [11.]
-'1489 ',Cancer of head and neck [11.]
-'1490 ',Cancer of head and neck [11.]
-'1491 ',Cancer of head and neck [11.]
-'1498 ',Cancer of head and neck [11.]
-'1499 ',Cancer of head and neck [11.]
-'1600 ',Cancer of head and neck [11.]
-'1601 ',Cancer of head and neck [11.]
-'1602 ',Cancer of head and neck [11.]
-'1603 ',Cancer of head and neck [11.]
-'1604 ',Cancer of head and neck [11.]
-'1605 ',Cancer of head and neck [11.]
-'1608 ',Cancer of head and neck [11.]
-'1609 ',Cancer of head and neck [11.]
-'1610 ',Cancer of head and neck [11.]
-'1611 ',Cancer of head and neck [11.]
-'1612 ',Cancer of head and neck [11.]
-'1613 ',Cancer of head and neck [11.]
-'1618 ',Cancer of head and neck [11.]
-'1619 ',Cancer of head and neck [11.]
-'1950 ',Cancer of head and neck [11.]
-'2300 ',Cancer of head and neck [11.]
-'2310 ',Cancer of head and neck [11.]
-'V1001',Cancer of head and neck [11.]
-'V1002',Cancer of head and neck [11.]
-'V1021',Cancer of head and neck [11.]
-'1620 ',Cancer; other respiratory and intrathoracic [20.]
-'1630 ',Cancer; other respiratory and intrathoracic [20.]
-'1631 ',Cancer; other respiratory and intrathoracic [20.]
-'1638 ',Cancer; other respiratory and intrathoracic [20.]
-'1639 ',Cancer; other respiratory and intrathoracic [20.]
-'1650 ',Cancer; other respiratory and intrathoracic [20.]
-'1658 ',Cancer; other respiratory and intrathoracic [20.]
-'1659 ',Cancer; other respiratory and intrathoracic [20.]
-'2311 ',Cancer; other respiratory and intrathoracic [20.]
-'2318 ',Cancer; other respiratory and intrathoracic [20.]
-'2319 ',Cancer; other respiratory and intrathoracic [20.]
-'V1012',Cancer; other respiratory and intrathoracic [20.]
-'V1020',Cancer; other respiratory and intrathoracic [20.]
-'V1022',Cancer; other respiratory and intrathoracic [20.]
-'1700 ',Cancer of bone and connective tissue [21.]
-'1701 ',Cancer of bone and connective tissue [21.]
-'1702 ',Cancer of bone and connective tissue [21.]
-'1703 ',Cancer of bone and connective tissue [21.]
-'1704 ',Cancer of bone and connective tissue [21.]
-'1705 ',Cancer of bone and connective tissue [21.]
-'1706 ',Cancer of bone and connective tissue [21.]
-'1707 ',Cancer of bone and connective tissue [21.]
-'1708 ',Cancer of bone and connective tissue [21.]
-'1709 ',Cancer of bone and connective tissue [21.]
-'1710 ',Cancer of bone and connective tissue [21.]
-'1712 ',Cancer of bone and connective tissue [21.]
-'1713 ',Cancer of bone and connective tissue [21.]
-'1714 ',Cancer of bone and connective tissue [21.]
-'1715 ',Cancer of bone and connective tissue [21.]
-'1716 ',Cancer of bone and connective tissue [21.]
-'1717 ',Cancer of bone and connective tissue [21.]
-'1718 ',Cancer of bone and connective tissue [21.]
-'1719 ',Cancer of bone and connective tissue [21.]
-'1910 ',Cancer of brain and nervous system [35.]
-'1911 ',Cancer of brain and nervous system [35.]
-'1912 ',Cancer of brain and nervous system [35.]
-'1913 ',Cancer of brain and nervous system [35.]
-'1914 ',Cancer of brain and nervous system [35.]
-'1915 ',Cancer of brain and nervous system [35.]
-'1916 ',Cancer of brain and nervous system [35.]
-'1917 ',Cancer of brain and nervous system [35.]
-'1918 ',Cancer of brain and nervous system [35.]
-'1919 ',Cancer of brain and nervous system [35.]
-'1920 ',Cancer of brain and nervous system [35.]
-'1921 ',Cancer of brain and nervous system [35.]
-'1922 ',Cancer of brain and nervous system [35.]
-'1923 ',Cancer of brain and nervous system [35.]
-'1928 ',Cancer of brain and nervous system [35.]
-'1929 ',Cancer of brain and nervous system [35.]
-'V1085',Cancer of brain and nervous system [35.]
-'V1086',Cancer of brain and nervous system [35.]
-'193  ',Cancer of thyroid [36.]
-'25802',Cancer of thyroid [36.]
-'25803',Cancer of thyroid [36.]
-'V1087',Cancer of thyroid [36.]
-'1640 ',Cancer; other and unspecified primary [41.]
-'1641 ',Cancer; other and unspecified primary [41.]
-'1642 ',Cancer; other and unspecified primary [41.]
-'1643 ',Cancer; other and unspecified primary [41.]
-'1648 ',Cancer; other and unspecified primary [41.]
-'1649 ',Cancer; other and unspecified primary [41.]
-'1760 ',Cancer; other and unspecified primary [41.]
-'1761 ',Cancer; other and unspecified primary [41.]
-'1762 ',Cancer; other and unspecified primary [41.]
-'1763 ',Cancer; other and unspecified primary [41.]
-'1764 ',Cancer; other and unspecified primary [41.]
-'1765 ',Cancer; other and unspecified primary [41.]
-'1768 ',Cancer; other and unspecified primary [41.]
-'1769 ',Cancer; other and unspecified primary [41.]
-'1900 ',Cancer; other and unspecified primary [41.]
-'1901 ',Cancer; other and unspecified primary [41.]
-'1902 ',Cancer; other and unspecified primary [41.]
-'1903 ',Cancer; other and unspecified primary [41.]
-'1904 ',Cancer; other and unspecified primary [41.]
-'1905 ',Cancer; other and unspecified primary [41.]
-'1906 ',Cancer; other and unspecified primary [41.]
-'1907 ',Cancer; other and unspecified primary [41.]
-'1908 ',Cancer; other and unspecified primary [41.]
-'1909 ',Cancer; other and unspecified primary [41.]
-'1940 ',Cancer; other and unspecified primary [41.]
-'1941 ',Cancer; other and unspecified primary [41.]
-'1943 ',Cancer; other and unspecified primary [41.]
-'1944 ',Cancer; other and unspecified primary [41.]
-'1945 ',Cancer; other and unspecified primary [41.]
-'1946 ',Cancer; other and unspecified primary [41.]
-'1948 ',Cancer; other and unspecified primary [41.]
-'1949 ',Cancer; other and unspecified primary [41.]
-'1951 ',Cancer; other and unspecified primary [41.]
-'1952 ',Cancer; other and unspecified primary [41.]
-'1953 ',Cancer; other and unspecified primary [41.]
-'1954 ',Cancer; other and unspecified primary [41.]
-'1955 ',Cancer; other and unspecified primary [41.]
-'1958 ',Cancer; other and unspecified primary [41.]
-'20230',Cancer; other and unspecified primary [41.]
-'20231',Cancer; other and unspecified primary [41.]
-'20232',Cancer; other and unspecified primary [41.]
-'20233',Cancer; other and unspecified primary [41.]
-'20234',Cancer; other and unspecified primary [41.]
-'20235',Cancer; other and unspecified primary [41.]
-'20236',Cancer; other and unspecified primary [41.]
-'20237',Cancer; other and unspecified primary [41.]
-'20238',Cancer; other and unspecified primary [41.]
-'20250',Cancer; other and unspecified primary [41.]
-'20251',Cancer; other and unspecified primary [41.]
-'20252',Cancer; other and unspecified primary [41.]
-'20253',Cancer; other and unspecified primary [41.]
-'20254',Cancer; other and unspecified primary [41.]
-'20255',Cancer; other and unspecified primary [41.]
-'20256',Cancer; other and unspecified primary [41.]
-'20257',Cancer; other and unspecified primary [41.]
-'20258',Cancer; other and unspecified primary [41.]
-'20260',Cancer; other and unspecified primary [41.]
-'20261',Cancer; other and unspecified primary [41.]
-'20262',Cancer; other and unspecified primary [41.]
-'20263',Cancer; other and unspecified primary [41.]
-'20264',Cancer; other and unspecified primary [41.]
-'20265',Cancer; other and unspecified primary [41.]
-'20266',Cancer; other and unspecified primary [41.]
-'20267',Cancer; other and unspecified primary [41.]
-'20268',Cancer; other and unspecified primary [41.]
-'20922',Cancer; other and unspecified primary [41.]
-'20925',Cancer; other and unspecified primary [41.]
-'20926',Cancer; other and unspecified primary [41.]
-'20927',Cancer; other and unspecified primary [41.]
-'2340 ',Cancer; other and unspecified primary [41.]
-'2348 ',Cancer; other and unspecified primary [41.]
-'2349 ',Cancer; other and unspecified primary [41.]
-'7951 ',Cancer; other and unspecified primary [41.]
-'79510',Cancer; other and unspecified primary [41.]
-'79511',Cancer; other and unspecified primary [41.]
-'79512',Cancer; other and unspecified primary [41.]
-'79513',Cancer; other and unspecified primary [41.]
-'79514',Cancer; other and unspecified primary [41.]
-'V1029',Cancer; other and unspecified primary [41.]
-'V1081',Cancer; other and unspecified primary [41.]
-'V1084',Cancer; other and unspecified primary [41.]
-'V1088',Cancer; other and unspecified primary [41.]
-'V1089',Cancer; other and unspecified primary [41.]
-'V109 ',Cancer; other and unspecified primary [41.]
-'V1090',Cancer; other and unspecified primary [41.]
-'V1091',Cancer; other and unspecified primary [41.]
-'V711 ',Cancer; other and unspecified primary [41.]
+'1740 ',Neoplasms
+'1741 ',Neoplasms
+'1742 ',Neoplasms
+'1743 ',Neoplasms
+'1744 ',Neoplasms
+'1745 ',Neoplasms
+'1746 ',Neoplasms
+'1748 ',Neoplasms
+'1749 ',Neoplasms
+'1750 ',Neoplasms
+'1759 ',Neoplasms
+'2330 ',Neoplasms
+'V103 ',Neoplasms
+'179  ',Neoplasms
+'1820 ',Neoplasms
+'1821 ',Neoplasms
+'1828 ',Neoplasms
+'2332 ',Neoplasms
+'V1042',Neoplasms
+'1800 ',Neoplasms
+'1801 ',Neoplasms
+'1808 ',Neoplasms
+'1809 ',Neoplasms
+'2331 ',Neoplasms
+'7950 ',Neoplasms
+'79501',Neoplasms
+'79502',Neoplasms
+'79503',Neoplasms
+'79504',Neoplasms
+'79506',Neoplasms
+'V1041',Neoplasms
+'1830 ',Neoplasms
+'V1043',Neoplasms
+'181  ',Neoplasms
+'1832 ',Neoplasms
+'1833 ',Neoplasms
+'1834 ',Neoplasms
+'1835 ',Neoplasms
+'1838 ',Neoplasms
+'1839 ',Neoplasms
+'1840 ',Neoplasms
+'1841 ',Neoplasms
+'1842 ',Neoplasms
+'1843 ',Neoplasms
+'1844 ',Neoplasms
+'1848 ',Neoplasms
+'1849 ',Neoplasms
+'2333 ',Neoplasms
+'23330',Neoplasms
+'23331',Neoplasms
+'23332',Neoplasms
+'23339',Neoplasms
+'79516',Neoplasms
+'V1040',Neoplasms
+'V1044',Neoplasms
+'185  ',Neoplasms
+'2334 ',Neoplasms
+'V1046',Neoplasms
+'1860 ',Neoplasms
+'1869 ',Neoplasms
+'V1047',Neoplasms
+'1871 ',Neoplasms
+'1872 ',Neoplasms
+'1873 ',Neoplasms
+'1874 ',Neoplasms
+'1875 ',Neoplasms
+'1876 ',Neoplasms
+'1877 ',Neoplasms
+'1878 ',Neoplasms
+'1879 ',Neoplasms
+'2335 ',Neoplasms
+'2336 ',Neoplasms
+'V1045',Neoplasms
+'V1048',Neoplasms
+'V1049',Neoplasms
+'1880 ',Neoplasms
+'1881 ',Neoplasms
+'1882 ',Neoplasms
+'1883 ',Neoplasms
+'1884 ',Neoplasms
+'1885 ',Neoplasms
+'1886 ',Neoplasms
+'1887 ',Neoplasms
+'1888 ',Neoplasms
+'1889 ',Neoplasms
+'2337 ',Neoplasms
+'V1051',Neoplasms
+'1890 ',Neoplasms
+'1891 ',Neoplasms
+'20924',Neoplasms
+'V1052',Neoplasms
+'V1053',Neoplasms
+'1892 ',Neoplasms
+'1893 ',Neoplasms
+'1894 ',Neoplasms
+'1898 ',Neoplasms
+'1899 ',Neoplasms
+'2339 ',Neoplasms
+'V1050',Neoplasms
+'V1059',Neoplasms
+'20100',Blood Malignancy
+'20101',Blood Malignancy
+'20102',Blood Malignancy
+'20103',Blood Malignancy
+'20104',Blood Malignancy
+'20105',Blood Malignancy
+'20106',Blood Malignancy
+'20107',Blood Malignancy
+'20108',Blood Malignancy
+'20110',Blood Malignancy
+'20111',Blood Malignancy
+'20112',Blood Malignancy
+'20113',Blood Malignancy
+'20114',Blood Malignancy
+'20115',Blood Malignancy
+'20116',Blood Malignancy
+'20117',Blood Malignancy
+'20118',Blood Malignancy
+'20120',Blood Malignancy
+'20121',Blood Malignancy
+'20122',Blood Malignancy
+'20123',Blood Malignancy
+'20124',Blood Malignancy
+'20125',Blood Malignancy
+'20126',Blood Malignancy
+'20127',Blood Malignancy
+'20128',Blood Malignancy
+'20140',Blood Malignancy
+'20141',Blood Malignancy
+'20142',Blood Malignancy
+'20143',Blood Malignancy
+'20144',Blood Malignancy
+'20145',Blood Malignancy
+'20146',Blood Malignancy
+'20147',Blood Malignancy
+'20148',Blood Malignancy
+'20150',Blood Malignancy
+'20151',Blood Malignancy
+'20152',Blood Malignancy
+'20153',Blood Malignancy
+'20154',Blood Malignancy
+'20155',Blood Malignancy
+'20156',Blood Malignancy
+'20157',Blood Malignancy
+'20158',Blood Malignancy
+'20160',Blood Malignancy
+'20161',Blood Malignancy
+'20162',Blood Malignancy
+'20163',Blood Malignancy
+'20164',Blood Malignancy
+'20165',Blood Malignancy
+'20166',Blood Malignancy
+'20167',Blood Malignancy
+'20168',Blood Malignancy
+'20170',Blood Malignancy
+'20171',Blood Malignancy
+'20172',Blood Malignancy
+'20173',Blood Malignancy
+'20174',Blood Malignancy
+'20175',Blood Malignancy
+'20176',Blood Malignancy
+'20177',Blood Malignancy
+'20178',Blood Malignancy
+'20190',Blood Malignancy
+'20191',Blood Malignancy
+'20192',Blood Malignancy
+'20193',Blood Malignancy
+'20194',Blood Malignancy
+'20195',Blood Malignancy
+'20196',Blood Malignancy
+'20197',Blood Malignancy
+'20198',Blood Malignancy
+'V1072',Blood Malignancy
+'20000',Blood Malignancy
+'20001',Blood Malignancy
+'20002',Blood Malignancy
+'20003',Blood Malignancy
+'20004',Blood Malignancy
+'20005',Blood Malignancy
+'20006',Blood Malignancy
+'20007',Blood Malignancy
+'20008',Blood Malignancy
+'20010',Blood Malignancy
+'20011',Blood Malignancy
+'20012',Blood Malignancy
+'20013',Blood Malignancy
+'20014',Blood Malignancy
+'20015',Blood Malignancy
+'20016',Blood Malignancy
+'20017',Blood Malignancy
+'20018',Blood Malignancy
+'20020',Blood Malignancy
+'20021',Blood Malignancy
+'20022',Blood Malignancy
+'20023',Blood Malignancy
+'20024',Blood Malignancy
+'20025',Blood Malignancy
+'20026',Blood Malignancy
+'20027',Blood Malignancy
+'20028',Blood Malignancy
+'20030',Blood Malignancy
+'20031',Blood Malignancy
+'20032',Blood Malignancy
+'20033',Blood Malignancy
+'20034',Blood Malignancy
+'20035',Blood Malignancy
+'20036',Blood Malignancy
+'20037',Blood Malignancy
+'20038',Blood Malignancy
+'20040',Blood Malignancy
+'20041',Blood Malignancy
+'20042',Blood Malignancy
+'20043',Blood Malignancy
+'20044',Blood Malignancy
+'20045',Blood Malignancy
+'20046',Blood Malignancy
+'20047',Blood Malignancy
+'20048',Blood Malignancy
+'20050',Blood Malignancy
+'20051',Blood Malignancy
+'20052',Blood Malignancy
+'20053',Blood Malignancy
+'20054',Blood Malignancy
+'20055',Blood Malignancy
+'20056',Blood Malignancy
+'20057',Blood Malignancy
+'20058',Blood Malignancy
+'20060',Blood Malignancy
+'20061',Blood Malignancy
+'20062',Blood Malignancy
+'20063',Blood Malignancy
+'20064',Blood Malignancy
+'20065',Blood Malignancy
+'20066',Blood Malignancy
+'20067',Blood Malignancy
+'20068',Blood Malignancy
+'20070',Blood Malignancy
+'20071',Blood Malignancy
+'20072',Blood Malignancy
+'20073',Blood Malignancy
+'20074',Blood Malignancy
+'20075',Blood Malignancy
+'20076',Blood Malignancy
+'20077',Blood Malignancy
+'20078',Blood Malignancy
+'20080',Blood Malignancy
+'20081',Blood Malignancy
+'20082',Blood Malignancy
+'20083',Blood Malignancy
+'20084',Blood Malignancy
+'20085',Blood Malignancy
+'20086',Blood Malignancy
+'20087',Blood Malignancy
+'20088',Blood Malignancy
+'20200',Blood Malignancy
+'20201',Blood Malignancy
+'20202',Blood Malignancy
+'20203',Blood Malignancy
+'20204',Blood Malignancy
+'20205',Blood Malignancy
+'20206',Blood Malignancy
+'20207',Blood Malignancy
+'20208',Blood Malignancy
+'20210',Blood Malignancy
+'20211',Blood Malignancy
+'20212',Blood Malignancy
+'20213',Blood Malignancy
+'20214',Blood Malignancy
+'20215',Blood Malignancy
+'20216',Blood Malignancy
+'20217',Blood Malignancy
+'20218',Blood Malignancy
+'20220',Blood Malignancy
+'20221',Blood Malignancy
+'20222',Blood Malignancy
+'20223',Blood Malignancy
+'20224',Blood Malignancy
+'20225',Blood Malignancy
+'20226',Blood Malignancy
+'20227',Blood Malignancy
+'20228',Blood Malignancy
+'20270',Blood Malignancy
+'20271',Blood Malignancy
+'20272',Blood Malignancy
+'20273',Blood Malignancy
+'20274',Blood Malignancy
+'20275',Blood Malignancy
+'20276',Blood Malignancy
+'20277',Blood Malignancy
+'20278',Blood Malignancy
+'20280',Blood Malignancy
+'20281',Blood Malignancy
+'20282',Blood Malignancy
+'20283',Blood Malignancy
+'20284',Blood Malignancy
+'20285',Blood Malignancy
+'20286',Blood Malignancy
+'20287',Blood Malignancy
+'20288',Blood Malignancy
+'20290',Blood Malignancy
+'20291',Blood Malignancy
+'20292',Blood Malignancy
+'20293',Blood Malignancy
+'20294',Blood Malignancy
+'20295',Blood Malignancy
+'20296',Blood Malignancy
+'20297',Blood Malignancy
+'20298',Blood Malignancy
+'V1071',Blood Malignancy
+'V1079',Blood Malignancy
+'20240',Blood Malignancy
+'20241',Blood Malignancy
+'20242',Blood Malignancy
+'20243',Blood Malignancy
+'20244',Blood Malignancy
+'20245',Blood Malignancy
+'20246',Blood Malignancy
+'20247',Blood Malignancy
+'20248',Blood Malignancy
+'2031 ',Blood Malignancy
+'20310',Blood Malignancy
+'20311',Blood Malignancy
+'20312',Blood Malignancy
+'2040 ',Blood Malignancy
+'20400',Blood Malignancy
+'20401',Blood Malignancy
+'20402',Blood Malignancy
+'2041 ',Blood Malignancy
+'20410',Blood Malignancy
+'20411',Blood Malignancy
+'20412',Blood Malignancy
+'2042 ',Blood Malignancy
+'20420',Blood Malignancy
+'20421',Blood Malignancy
+'20422',Blood Malignancy
+'2048 ',Blood Malignancy
+'20480',Blood Malignancy
+'20481',Blood Malignancy
+'20482',Blood Malignancy
+'2049 ',Blood Malignancy
+'20490',Blood Malignancy
+'20491',Blood Malignancy
+'20492',Blood Malignancy
+'2050 ',Blood Malignancy
+'20500',Blood Malignancy
+'20501',Blood Malignancy
+'20502',Blood Malignancy
+'2051 ',Blood Malignancy
+'20510',Blood Malignancy
+'20511',Blood Malignancy
+'20512',Blood Malignancy
+'2052 ',Blood Malignancy
+'20520',Blood Malignancy
+'20521',Blood Malignancy
+'20522',Blood Malignancy
+'2053 ',Blood Malignancy
+'20530',Blood Malignancy
+'20531',Blood Malignancy
+'20532',Blood Malignancy
+'2058 ',Blood Malignancy
+'20580',Blood Malignancy
+'20581',Blood Malignancy
+'20582',Blood Malignancy
+'2059 ',Blood Malignancy
+'20590',Blood Malignancy
+'20591',Blood Malignancy
+'20592',Blood Malignancy
+'2060 ',Blood Malignancy
+'20600',Blood Malignancy
+'20601',Blood Malignancy
+'20602',Blood Malignancy
+'2061 ',Blood Malignancy
+'20610',Blood Malignancy
+'20611',Blood Malignancy
+'20612',Blood Malignancy
+'2062 ',Blood Malignancy
+'20620',Blood Malignancy
+'20621',Blood Malignancy
+'20622',Blood Malignancy
+'2068 ',Blood Malignancy
+'20680',Blood Malignancy
+'20681',Blood Malignancy
+'20682',Blood Malignancy
+'2069 ',Blood Malignancy
+'20690',Blood Malignancy
+'20691',Blood Malignancy
+'20692',Blood Malignancy
+'2070 ',Blood Malignancy
+'20700',Blood Malignancy
+'20701',Blood Malignancy
+'20702',Blood Malignancy
+'2071 ',Blood Malignancy
+'20710',Blood Malignancy
+'20711',Blood Malignancy
+'20712',Blood Malignancy
+'2072 ',Blood Malignancy
+'20720',Blood Malignancy
+'20721',Blood Malignancy
+'20722',Blood Malignancy
+'2078 ',Blood Malignancy
+'20780',Blood Malignancy
+'20781',Blood Malignancy
+'20782',Blood Malignancy
+'2080 ',Blood Malignancy
+'20800',Blood Malignancy
+'20801',Blood Malignancy
+'20802',Blood Malignancy
+'2081 ',Blood Malignancy
+'20810',Blood Malignancy
+'20811',Blood Malignancy
+'20812',Blood Malignancy
+'2082 ',Blood Malignancy
+'20820',Blood Malignancy
+'20821',Blood Malignancy
+'20822',Blood Malignancy
+'2088 ',Blood Malignancy
+'20880',Blood Malignancy
+'20881',Blood Malignancy
+'20882',Blood Malignancy
+'2089 ',Blood Malignancy
+'20890',Blood Malignancy
+'20891',Blood Malignancy
+'20892',Blood Malignancy
+'V1060',Blood Malignancy
+'V1061',Blood Malignancy
+'V1062',Blood Malignancy
+'V1063',Blood Malignancy
+'V1069',Blood Malignancy
+'2030 ',Blood Malignancy
+'20300',Blood Malignancy
+'20301',Blood Malignancy
+'20302',Blood Malignancy
+'2038 ',Blood Malignancy
+'20380',Blood Malignancy
+'20381',Blood Malignancy
+'20382',Blood Malignancy
+'1400 ',Neoplasms
+'1401 ',Neoplasms
+'1403 ',Neoplasms
+'1404 ',Neoplasms
+'1405 ',Neoplasms
+'1406 ',Neoplasms
+'1408 ',Neoplasms
+'1409 ',Neoplasms
+'1410 ',Neoplasms
+'1411 ',Neoplasms
+'1412 ',Neoplasms
+'1413 ',Neoplasms
+'1414 ',Neoplasms
+'1415 ',Neoplasms
+'1416 ',Neoplasms
+'1418 ',Neoplasms
+'1419 ',Neoplasms
+'1420 ',Neoplasms
+'1421 ',Neoplasms
+'1422 ',Neoplasms
+'1428 ',Neoplasms
+'1429 ',Neoplasms
+'1430 ',Neoplasms
+'1431 ',Neoplasms
+'1438 ',Neoplasms
+'1439 ',Neoplasms
+'1440 ',Neoplasms
+'1441 ',Neoplasms
+'1448 ',Neoplasms
+'1449 ',Neoplasms
+'1450 ',Neoplasms
+'1451 ',Neoplasms
+'1452 ',Neoplasms
+'1453 ',Neoplasms
+'1454 ',Neoplasms
+'1455 ',Neoplasms
+'1456 ',Neoplasms
+'1458 ',Neoplasms
+'1459 ',Neoplasms
+'1460 ',Neoplasms
+'1461 ',Neoplasms
+'1462 ',Neoplasms
+'1463 ',Neoplasms
+'1464 ',Neoplasms
+'1465 ',Neoplasms
+'1466 ',Neoplasms
+'1467 ',Neoplasms
+'1468 ',Neoplasms
+'1469 ',Neoplasms
+'1470 ',Neoplasms
+'1471 ',Neoplasms
+'1472 ',Neoplasms
+'1473 ',Neoplasms
+'1478 ',Neoplasms
+'1479 ',Neoplasms
+'1480 ',Neoplasms
+'1481 ',Neoplasms
+'1482 ',Neoplasms
+'1483 ',Neoplasms
+'1488 ',Neoplasms
+'1489 ',Neoplasms
+'1490 ',Neoplasms
+'1491 ',Neoplasms
+'1498 ',Neoplasms
+'1499 ',Neoplasms
+'1600 ',Neoplasms
+'1601 ',Neoplasms
+'1602 ',Neoplasms
+'1603 ',Neoplasms
+'1604 ',Neoplasms
+'1605 ',Neoplasms
+'1608 ',Neoplasms
+'1609 ',Neoplasms
+'1610 ',Neoplasms
+'1611 ',Neoplasms
+'1612 ',Neoplasms
+'1613 ',Neoplasms
+'1618 ',Neoplasms
+'1619 ',Neoplasms
+'1950 ',Neoplasms
+'2300 ',Neoplasms
+'2310 ',Neoplasms
+'V1001',Neoplasms
+'V1002',Neoplasms
+'V1021',Neoplasms
+'1620 ',Neoplasms
+'1630 ',Neoplasms
+'1631 ',Neoplasms
+'1638 ',Neoplasms
+'1639 ',Neoplasms
+'1650 ',Neoplasms
+'1658 ',Neoplasms
+'1659 ',Neoplasms
+'2311 ',Neoplasms
+'2318 ',Neoplasms
+'2319 ',Neoplasms
+'V1012',Neoplasms
+'V1020',Neoplasms
+'V1022',Neoplasms
+'1700 ',Neoplasms
+'1701 ',Neoplasms
+'1702 ',Neoplasms
+'1703 ',Neoplasms
+'1704 ',Neoplasms
+'1705 ',Neoplasms
+'1706 ',Neoplasms
+'1707 ',Neoplasms
+'1708 ',Neoplasms
+'1709 ',Neoplasms
+'1710 ',Neoplasms
+'1712 ',Neoplasms
+'1713 ',Neoplasms
+'1714 ',Neoplasms
+'1715 ',Neoplasms
+'1716 ',Neoplasms
+'1717 ',Neoplasms
+'1718 ',Neoplasms
+'1719 ',Neoplasms
+'1910 ',Neoplasms
+'1911 ',Neoplasms
+'1912 ',Neoplasms
+'1913 ',Neoplasms
+'1914 ',Neoplasms
+'1915 ',Neoplasms
+'1916 ',Neoplasms
+'1917 ',Neoplasms
+'1918 ',Neoplasms
+'1919 ',Neoplasms
+'1920 ',Neoplasms
+'1921 ',Neoplasms
+'1922 ',Neoplasms
+'1923 ',Neoplasms
+'1928 ',Neoplasms
+'1929 ',Neoplasms
+'V1085',Neoplasms
+'V1086',Neoplasms
+'193  ',Neoplasms
+'25802',Neoplasms
+'25803',Neoplasms
+'V1087',Neoplasms
+'1640 ',Neoplasms
+'1641 ',Neoplasms
+'1642 ',Neoplasms
+'1643 ',Neoplasms
+'1648 ',Neoplasms
+'1649 ',Neoplasms
+'1760 ',Neoplasms
+'1761 ',Neoplasms
+'1762 ',Neoplasms
+'1763 ',Neoplasms
+'1764 ',Neoplasms
+'1765 ',Neoplasms
+'1768 ',Neoplasms
+'1769 ',Neoplasms
+'1900 ',Neoplasms
+'1901 ',Neoplasms
+'1902 ',Neoplasms
+'1903 ',Neoplasms
+'1904 ',Neoplasms
+'1905 ',Neoplasms
+'1906 ',Neoplasms
+'1907 ',Neoplasms
+'1908 ',Neoplasms
+'1909 ',Neoplasms
+'1940 ',Neoplasms
+'1941 ',Neoplasms
+'1943 ',Neoplasms
+'1944 ',Neoplasms
+'1945 ',Neoplasms
+'1946 ',Neoplasms
+'1948 ',Neoplasms
+'1949 ',Neoplasms
+'1951 ',Neoplasms
+'1952 ',Neoplasms
+'1953 ',Neoplasms
+'1954 ',Neoplasms
+'1955 ',Neoplasms
+'1958 ',Neoplasms
+'20230',Neoplasms
+'20231',Neoplasms
+'20232',Neoplasms
+'20233',Neoplasms
+'20234',Neoplasms
+'20235',Neoplasms
+'20236',Neoplasms
+'20237',Neoplasms
+'20238',Neoplasms
+'20250',Neoplasms
+'20251',Neoplasms
+'20252',Neoplasms
+'20253',Neoplasms
+'20254',Neoplasms
+'20255',Neoplasms
+'20256',Neoplasms
+'20257',Neoplasms
+'20258',Neoplasms
+'20260',Neoplasms
+'20261',Neoplasms
+'20262',Neoplasms
+'20263',Neoplasms
+'20264',Neoplasms
+'20265',Neoplasms
+'20266',Neoplasms
+'20267',Neoplasms
+'20268',Neoplasms
+'20922',Neoplasms
+'20925',Neoplasms
+'20926',Neoplasms
+'20927',Neoplasms
+'2340 ',Neoplasms
+'2348 ',Neoplasms
+'2349 ',Neoplasms
+'7951 ',Neoplasms
+'79510',Neoplasms
+'79511',Neoplasms
+'79512',Neoplasms
+'79513',Neoplasms
+'79514',Neoplasms
+'V1029',Neoplasms
+'V1081',Neoplasms
+'V1084',Neoplasms
+'V1088',Neoplasms
+'V1089',Neoplasms
+'V109 ',Neoplasms
+'V1090',Neoplasms
+'V1091',Neoplasms
+'V711 ',Neoplasms
 '1960 ',Secondary malignancy of lymph nodes
 '1961 ',Secondary malignancy of lymph nodes
 '1962 ',Secondary malignancy of lymph nodes
@@ -2079,113 +2079,113 @@ ICD9,CCS
 '1968 ',Secondary malignancy of lymph nodes
 '1969 ',Secondary malignancy of lymph nodes
 '20971',Secondary malignancy of lymph nodes
-'1970 ',Secondary malignancy of lung
-'1977 ',Secondary malignancy of liver
-'20972',Secondary malignancy of liver
-'1983 ',Secondary malignancy of brain/spine
-'1985 ',Secondary malignancy of bone
-'20973',Secondary malignancy of bone
-'1971 ',Other secondary malignancy
-'1972 ',Other secondary malignancy
-'1973 ',Other secondary malignancy
-'1974 ',Other secondary malignancy
-'1975 ',Other secondary malignancy
-'1976 ',Other secondary malignancy
-'1978 ',Other secondary malignancy
-'1980 ',Other secondary malignancy
-'1981 ',Other secondary malignancy
-'1982 ',Other secondary malignancy
-'1984 ',Other secondary malignancy
-'1986 ',Other secondary malignancy
-'1987 ',Other secondary malignancy
-'19881',Other secondary malignancy
-'19882',Other secondary malignancy
-'19889',Other secondary malignancy
-'20974',Other secondary malignancy
-'51181',Other secondary malignancy
-'78951',Other secondary malignancy
-'1990 ',Malignant neoplasm without specification of site [43.]
-'1991 ',Malignant neoplasm without specification of site [43.]
-'1992 ',Malignant neoplasm without specification of site [43.]
-'20920',Malignant neoplasm without specification of site [43.]
-'20929',Malignant neoplasm without specification of site [43.]
-'20930',Malignant neoplasm without specification of site [43.]
-'20970',Malignant neoplasm without specification of site [43.]
-'20975',Malignant neoplasm without specification of site [43.]
-'20979',Malignant neoplasm without specification of site [43.]
-'2350 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2351 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2352 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2353 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2354 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2355 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2356 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2357 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2358 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2359 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2360 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2361 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2362 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2363 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2364 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2365 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2366 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2367 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23690',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23691',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23699',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2370 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2371 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2372 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2373 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2374 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2375 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2376 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2377 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23770',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23771',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23772',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23773',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23779',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2379 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2380 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2381 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2382 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2383 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2384 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2385 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2386 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2387 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23871',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23872',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23873',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23874',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23875',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23876',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23877',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23879',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2388 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2389 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2390 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2391 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2392 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2393 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2394 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2395 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2396 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2397 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2398 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23981',Neoplasms of unspecified nature or uncertain behavior [44.]
-'23989',Neoplasms of unspecified nature or uncertain behavior [44.]
-'2399 ',Neoplasms of unspecified nature or uncertain behavior [44.]
-'V580 ',Radiotherapy
-'V661 ',Radiotherapy
-'V671 ',Radiotherapy
-'V581 ',Chemotherapy
-'V5811',Chemotherapy
-'V5812',Chemotherapy
-'V662 ',Chemotherapy
-'V672 ',Chemotherapy
+'1970 ',Neoplasms
+'1977 ',Neoplasms
+'20972',Neoplasms
+'1983 ',Neoplasms
+'1985 ',Neoplasms
+'20973',Neoplasms
+'1971 ',Neoplasms
+'1972 ',Neoplasms
+'1973 ',Neoplasms
+'1974 ',Neoplasms
+'1975 ',Neoplasms
+'1976 ',Neoplasms
+'1978 ',Neoplasms
+'1980 ',Neoplasms
+'1981 ',Neoplasms
+'1982 ',Neoplasms
+'1984 ',Neoplasms
+'1986 ',Neoplasms
+'1987 ',Neoplasms
+'19881',Neoplasms
+'19882',Neoplasms
+'19889',Neoplasms
+'20974',Neoplasms
+'51181',Neoplasms
+'78951',Neoplasms
+'1990 ',Neoplasms
+'1991 ',Neoplasms
+'1992 ',Neoplasms
+'20920',Neoplasms
+'20929',Neoplasms
+'20930',Neoplasms
+'20970',Neoplasms
+'20975',Neoplasms
+'20979',Neoplasms
+'2350 ',Neoplasms
+'2351 ',Neoplasms
+'2352 ',Neoplasms
+'2353 ',Neoplasms
+'2354 ',Neoplasms
+'2355 ',Neoplasms
+'2356 ',Neoplasms
+'2357 ',Neoplasms
+'2358 ',Neoplasms
+'2359 ',Neoplasms
+'2360 ',Neoplasms
+'2361 ',Neoplasms
+'2362 ',Neoplasms
+'2363 ',Neoplasms
+'2364 ',Neoplasms
+'2365 ',Neoplasms
+'2366 ',Neoplasms
+'2367 ',Neoplasms
+'23690',Neoplasms
+'23691',Neoplasms
+'23699',Neoplasms
+'2370 ',Neoplasms
+'2371 ',Neoplasms
+'2372 ',Neoplasms
+'2373 ',Neoplasms
+'2374 ',Neoplasms
+'2375 ',Neoplasms
+'2376 ',Neoplasms
+'2377 ',Neoplasms
+'23770',Neoplasms
+'23771',Neoplasms
+'23772',Neoplasms
+'23773',Neoplasms
+'23779',Neoplasms
+'2379 ',Neoplasms
+'2380 ',Neoplasms
+'2381 ',Neoplasms
+'2382 ',Neoplasms
+'2383 ',Neoplasms
+'2384 ',Neoplasms
+'2385 ',Neoplasms
+'2386 ',Neoplasms
+'2387 ',Neoplasms
+'23871',Neoplasms
+'23872',Neoplasms
+'23873',Neoplasms
+'23874',Neoplasms
+'23875',Neoplasms
+'23876',Neoplasms
+'23877',Neoplasms
+'23879',Neoplasms
+'2388 ',Neoplasms
+'2389 ',Neoplasms
+'2390 ',Neoplasms
+'2391 ',Neoplasms
+'2392 ',Neoplasms
+'2393 ',Neoplasms
+'2394 ',Neoplasms
+'2395 ',Neoplasms
+'2396 ',Neoplasms
+'2397 ',Neoplasms
+'2398 ',Neoplasms
+'23981',Neoplasms
+'23989',Neoplasms
+'2399 ',Neoplasms
+'V580 ',Neoplasms
+'V661 ',Neoplasms
+'V671 ',Neoplasms
+'V581 ',Neoplasms
+'V5811',Neoplasms
+'V5812',Neoplasms
+'V662 ',Neoplasms
+'V672 ',Neoplasms
 '2180 ',Benign neoplasm of uterus [46.]
 '2181 ',Benign neoplasm of uterus [46.]
 '2182 ',Benign neoplasm of uterus [46.]
@@ -5237,46 +5237,46 @@ ICD9,CCS
 '4238 ',Other peri-; endo-; and myocarditis
 '4239 ',Other peri-; endo-; and myocarditis
 '4290 ',Other peri-; endo-; and myocarditis
-'4100 ',Acute myocardial infarction [100.]
-'41000',Acute myocardial infarction [100.]
-'41001',Acute myocardial infarction [100.]
-'41002',Acute myocardial infarction [100.]
-'4101 ',Acute myocardial infarction [100.]
-'41010',Acute myocardial infarction [100.]
-'41011',Acute myocardial infarction [100.]
-'41012',Acute myocardial infarction [100.]
-'4102 ',Acute myocardial infarction [100.]
-'41020',Acute myocardial infarction [100.]
-'41021',Acute myocardial infarction [100.]
-'41022',Acute myocardial infarction [100.]
-'4103 ',Acute myocardial infarction [100.]
-'41030',Acute myocardial infarction [100.]
-'41031',Acute myocardial infarction [100.]
-'41032',Acute myocardial infarction [100.]
-'4104 ',Acute myocardial infarction [100.]
-'41040',Acute myocardial infarction [100.]
-'41041',Acute myocardial infarction [100.]
-'41042',Acute myocardial infarction [100.]
-'4105 ',Acute myocardial infarction [100.]
-'41050',Acute myocardial infarction [100.]
-'41051',Acute myocardial infarction [100.]
-'41052',Acute myocardial infarction [100.]
-'4106 ',Acute myocardial infarction [100.]
-'41060',Acute myocardial infarction [100.]
-'41061',Acute myocardial infarction [100.]
-'41062',Acute myocardial infarction [100.]
-'4107 ',Acute myocardial infarction [100.]
-'41070',Acute myocardial infarction [100.]
-'41071',Acute myocardial infarction [100.]
-'41072',Acute myocardial infarction [100.]
-'4108 ',Acute myocardial infarction [100.]
-'41080',Acute myocardial infarction [100.]
-'41081',Acute myocardial infarction [100.]
-'41082',Acute myocardial infarction [100.]
-'4109 ',Acute myocardial infarction [100.]
-'41090',Acute myocardial infarction [100.]
-'41091',Acute myocardial infarction [100.]
-'41092',Acute myocardial infarction [100.]
+'4100 ',STEMI Anterior
+41000',STEMI Anterior
+'41001',STEMI Anterior
+'41002',STEMI Anterior
+'4101 ',STEMI Anterior
+'41010',STEMI Anterior
+'41011',STEMI Anterior
+'41012',STEMI Anterior
+'4102 ',STEMI Inferior
+'41020',STEMI Inferior
+'41021',STEMI Inferior
+'41022',STEMI Inferior
+'4103 ',STEMI Inferior
+'41030',STEMI Inferior
+'41031',STEMI Inferior
+'41032',STEMI Inferior
+'4104 ',STEMI Inferior
+'41040',STEMI Inferior
+'41041',STEMI Inferior
+'41042',STEMI Inferior
+'4105 ',STEMI Lateral
+'41050',STEMI Lateral
+'41051',STEMI Lateral
+'41052',STEMI Lateral
+'4106 ',STEMI Posterior
+'41060',STEMI Posterior
+'41061',STEMI Posterior
+'41062',STEMI Posterior
+'4107 ',NSTEMI
+'41070',NSTEMI
+'41071',NSTEMI
+'41072',NSTEMI
+'4108 ',STEMI NOS
+'41080',STEMI NOS
+'41081',STEMI NOS
+'41082',STEMI NOS
+4109 ',STEMI NOS
+'41090',STEMI NOS
+'41091',STEMI NOS
+'41092',STEMI NOS
 '41406',Coronary atherosclerosis
 '4130 ',Coronary atherosclerosis
 '4131 ',Coronary atherosclerosis
@@ -5293,28 +5293,28 @@ ICD9,CCS
 '4143 ',Coronary atherosclerosis
 '4144 ',Coronary atherosclerosis
 'V4582',Coronary atherosclerosis
-'412  ',Other forms of chronic heart disease
-'4148 ',Other forms of chronic heart disease
-'4149 ',Other forms of chronic heart disease
-'V4581',Other forms of chronic heart disease
+'412  ',Congestive heart failure
+'4148 ',Congestive heart failure
+'4149 ',Congestive heart failure
+'V4581',Congestive heart failure
 '78650',Nonspecific chest pain [102.]
 '78651',Nonspecific chest pain [102.]
 '78659',Nonspecific chest pain [102.]
-'4150 ',Pulmonary heart disease [103.]
-'4151 ',Pulmonary heart disease [103.]
-'41512',Pulmonary heart disease [103.]
-'41513',Pulmonary heart disease [103.]
-'41519',Pulmonary heart disease [103.]
-'4160 ',Pulmonary heart disease [103.]
-'4161 ',Pulmonary heart disease [103.]
-'4162 ',Pulmonary heart disease [103.]
-'4168 ',Pulmonary heart disease [103.]
-'4169 ',Pulmonary heart disease [103.]
-'4170 ',Pulmonary heart disease [103.]
-'4171 ',Pulmonary heart disease [103.]
-'4178 ',Pulmonary heart disease [103.]
-'4179 ',Pulmonary heart disease [103.]
-'V1255',Pulmonary heart disease [103.]
+'4150 ',Congestive heart failure
+'4151 ',Congestive heart failure
+'41512',Congestive heart failure
+'41513',Congestive heart failure
+'41519',Congestive heart failure
+'4160 ',Congestive heart failure
+'4161 ',Congestive heart failure
+'4162 ',Congestive heart failure
+'4168 ',Congestive heart failure
+'4169 ',Congestive heart failure
+'4170 ',Congestive heart failure
+'4171 ',Congestive heart failure
+'4178 ',Congestive heart failure
+'4179 ',Congestive heart failure
+'V1255',Congestive heart failure
 '41410',Other and ill-defined heart disease [104.]
 '41411',Other and ill-defined heart disease [104.]
 '41412',Other and ill-defined heart disease [104.]
@@ -5793,21 +5793,21 @@ ICD9,CCS
 '46450',Other and unspecified upper respiratory infections
 '46451',Other and unspecified upper respiratory infections
 '4650 ',Other and unspecified upper respiratory infections
-'4928 ',Emphysema
-'496  ',Chronic airway obstruction; not otherwise specified
-'4912 ',Obstructive chronic bronchitis
-'49120',Obstructive chronic bronchitis
-'49121',Obstructive chronic bronchitis
-'49122',Obstructive chronic bronchitis
-'490  ',Other chronic pulmonary disease
-'4910 ',Other chronic pulmonary disease
-'4911 ',Other chronic pulmonary disease
-'4918 ',Other chronic pulmonary disease
-'4919 ',Other chronic pulmonary disease
-'4920 ',Other chronic pulmonary disease
-'494  ',Other chronic pulmonary disease
-'4940 ',Other chronic pulmonary disease
-'4941 ',Other chronic pulmonary disease
+'4928 ',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'496  ',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'4912 ',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'49120',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'49121',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'49122',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'490  ',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'4910 ',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'4911 ',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'4918 ',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'4919 ',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'4920 ',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'494  ',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'4940 ',Chronic obstructive pulmonary disease and bronchiectasis [127.]
+'4941 ',Chronic obstructive pulmonary disease and bronchiectasis [127.]
 '49320',Chronic obstructive asthma without status asthmaticus or exacerbation
 '49321',Chronic obstructive asthma with status asthmaticus
 '49322',Chronic obstructive asthma with acute exacerbation
@@ -5840,51 +5840,51 @@ ICD9,CCS
 '51283',Empyema and pneumothorax
 '51284',Empyema and pneumothorax
 '51289',Empyema and pneumothorax
-'V462 ', 
-'51881',Respiratory failure
-'51884',Respiratory failure
-'5173 ',Other respiratory insufficiency
-'5185 ',Other respiratory insufficiency
-'51851',Other respiratory insufficiency
-'51852',Other respiratory insufficiency
-'51853',Other respiratory insufficiency
-'51882',Other respiratory insufficiency
-'51883',Other respiratory insufficiency
-'7991 ',Other respiratory insufficiency
-'V461 ',Other respiratory insufficiency
-'V4611',Other respiratory insufficiency
-'V4612',Other respiratory insufficiency
-'V4613',Other respiratory insufficiency
-'V4614',Other respiratory insufficiency
-'4950 ', 
-'4951 ', 
-'4952 ', 
-'4953 ', 
-'4954 ', 
-'4955 ', 
-'4956 ', 
-'4957 ', 
-'4958 ', 
-'4959 ', 
-'500  ', 
-'501  ', 
-'502  ', 
-'503  ', 
-'504  ', 
-'505  ', 
-'5060 ', 
-'5061 ', 
-'5062 ', 
-'5063 ', 
-'5064 ', 
-'5069 ', 
-'5071 ', 
-'5078 ', 
-'5080 ', 
-'5081 ', 
-'5082 ', 
-'5088 ', 
-'5089 ', 
+'V462 ',Respiratory failure; insufficiency; arrest (adult) [131.]
+'51881',Respiratory failure; insufficiency; arrest (adult) [131.]
+'51884',Respiratory failure; insufficiency; arrest (adult) [131.]
+'5173 ',Respiratory failure; insufficiency; arrest (adult) [131.]
+'5185 ',Respiratory failure; insufficiency; arrest (adult) [131.]
+'51851',Respiratory failure; insufficiency; arrest (adult) [131.]
+'51852',Respiratory failure; insufficiency; arrest (adult) [131.]
+'51853',Respiratory failure; insufficiency; arrest (adult) [131.]
+'51882',Respiratory failure; insufficiency; arrest (adult) [131.]
+'51883',Respiratory failure; insufficiency; arrest (adult) [131.]
+'7991 ',Respiratory failure; insufficiency; arrest (adult) [131.]
+'V461 ',Respiratory failure; insufficiency; arrest (adult) [131.]
+'V4611',Respiratory failure; insufficiency; arrest (adult) [131.]
+'V4612',Respiratory failure; insufficiency; arrest (adult) [131.]
+'V4613',Respiratory failure; insufficiency; arrest (adult) [131.]
+'V4614',Respiratory failure; insufficiency; arrest (adult) [131.]
+'4950 ',Lung disease due to external agents [132.]
+'4951 ',Lung disease due to external agents [132.]
+'4952 ',Lung disease due to external agents [132.]
+'4953 ',Lung disease due to external agents [132.]
+'4954 ',Lung disease due to external agents [132.]
+'4955 ',Lung disease due to external agents [132.]
+'4956 ',Lung disease due to external agents [132.]
+'4957 ',Lung disease due to external agents [132.]
+'4958 ',Lung disease due to external agents [132.]
+'4959 ',Lung disease due to external agents [132.]
+'500  ',Lung disease due to external agents [132.]
+'501  ',Lung disease due to external agents [132.]
+'502  ',Lung disease due to external agents [132.]
+'503  ',Lung disease due to external agents [132.]
+'504  ',Lung disease due to external agents [132.]
+'505  ',Lung disease due to external agents [132.]
+'5060 ',Lung disease due to external agents [132.]
+'5061 ',Lung disease due to external agents [132.]
+'5062 ',Lung disease due to external agents [132.]
+'5063 ',Lung disease due to external agents [132.]
+'5064 ',Lung disease due to external agents [132.]
+'5069 ',Lung disease due to external agents [132.]
+'5071 ',Lung disease due to external agents [132.]
+'5078 ',Lung disease due to external agents [132.]
+'5080 ',Lung disease due to external agents [132.]
+'5081 ',Lung disease due to external agents [132.]
+'5082 ',Lung disease due to external agents [132.]
+'5088 ',Lung disease due to external agents [132.]
+'5089 ',Lung disease due to external agents [132.]
 '515  ',Postinflammatory pulmonary fibrosis
 '78652',Painful respiration
 '5131 ',Other and unspecified lower respiratory disease

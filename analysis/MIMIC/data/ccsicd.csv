@@ -5237,46 +5237,46 @@ ICD9,CCS
 '4238 ',Other peri-; endo-; and myocarditis
 '4239 ',Other peri-; endo-; and myocarditis
 '4290 ',Other peri-; endo-; and myocarditis
-'4100 ',Acute myocardial infarction [100.]
-'41000',Acute myocardial infarction [100.]
-'41001',Acute myocardial infarction [100.]
-'41002',Acute myocardial infarction [100.]
-'4101 ',Acute myocardial infarction [100.]
-'41010',Acute myocardial infarction [100.]
-'41011',Acute myocardial infarction [100.]
-'41012',Acute myocardial infarction [100.]
-'4102 ',Acute myocardial infarction [100.]
-'41020',Acute myocardial infarction [100.]
-'41021',Acute myocardial infarction [100.]
-'41022',Acute myocardial infarction [100.]
-'4103 ',Acute myocardial infarction [100.]
-'41030',Acute myocardial infarction [100.]
-'41031',Acute myocardial infarction [100.]
-'41032',Acute myocardial infarction [100.]
-'4104 ',Acute myocardial infarction [100.]
-'41040',Acute myocardial infarction [100.]
-'41041',Acute myocardial infarction [100.]
-'41042',Acute myocardial infarction [100.]
-'4105 ',Acute myocardial infarction [100.]
-'41050',Acute myocardial infarction [100.]
-'41051',Acute myocardial infarction [100.]
-'41052',Acute myocardial infarction [100.]
-'4106 ',Acute myocardial infarction [100.]
-'41060',Acute myocardial infarction [100.]
-'41061',Acute myocardial infarction [100.]
-'41062',Acute myocardial infarction [100.]
-'4107 ',Acute myocardial infarction [100.]
-'41070',Acute myocardial infarction [100.]
-'41071',Acute myocardial infarction [100.]
-'41072',Acute myocardial infarction [100.]
-'4108 ',Acute myocardial infarction [100.]
-'41080',Acute myocardial infarction [100.]
-'41081',Acute myocardial infarction [100.]
-'41082',Acute myocardial infarction [100.]
-'4109 ',Acute myocardial infarction [100.]
-'41090',Acute myocardial infarction [100.]
-'41091',Acute myocardial infarction [100.]
-'41092',Acute myocardial infarction [100.]
+'4100 ',STEMI
+41000',STEMI
+'41001',STEMI
+'41002',STEMI
+'4101 ',STEMI
+'41010',STEMI
+'41011',STEMI
+'41012',STEMI
+'4102 ',STEMI
+'41020',STEMI
+'41021',STEMI
+'41022',STEMI
+'4103 ',STEMI
+'41030',STEMI
+'41031',STEMI
+'41032',STEMI
+'4104 ',STEMI
+'41040',STEMI
+'41041',STEMI
+'41042',STEMI
+'4105 ',STEMI
+'41050',STEMI
+'41051',STEMI
+'41052',STEMI
+'4106 ',STEMI
+'41060',STEMI
+'41061',STEMI
+'41062',STEMI
+'4107 ',NSTEMI
+'41070',NSTEMI
+'41071',NSTEMI
+'41072',NSTEMI
+'4108 ',STEMI
+'41080',STEMI
+'41081',STEMI
+'41082',STEMI
+4109 ',STEMI
+'41090',STEMI
+'41091',STEMI
+'41092',STEMI
 '41406',Coronary atherosclerosis
 '4130 ',Coronary atherosclerosis
 '4131 ',Coronary atherosclerosis
@@ -13090,10 +13090,10 @@ ICD9,CCS
 '7856 ',Lymphadenitis [247.]
 '44024',Gangrene [248.]
 '7854 ',Gangrene [248.]
-'78550',Shock [249.]
-'78551',Shock [249.]
-'78552',Shock [249.]
-'78559',Shock [249.]
+'78550',Shock NOS
+'78551',Shock Cardiogenic
+'78552',Shock Septic
+'78559',Shock NOS
 '7870 ',Nausea and vomiting [250.]
 '78701',Nausea and vomiting [250.]
 '78702',Nausea and vomiting [250.]
