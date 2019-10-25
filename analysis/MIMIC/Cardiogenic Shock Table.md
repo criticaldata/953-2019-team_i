@@ -2,27 +2,33 @@
 
 The purpose of this document is to facilitate data analysis for everyone who will be working with the dataset and avoid possible traps that one could easily fall into.
 
-# Summary
+## Summary
 
 The dataset contains only the patients meeting the definition of SCAI shock >= C Cardiogenic Shock criteria as per the Jentzer et al. Cardiogenic Shock Classiﬁcation to Predict Mortality in the Cardiac Intensive Care Unit paper.
 To access the dataset simply open the R file in : ./code/cardiogenic_shock_MIMIC.R
 
 The reason I did not export this final file as a CSV is because I wanted to give you the flexibility to change the inclusion criteria.
 
-# How did we define Shock ?
+##  How did we define Shock ?
 
-So we took all the CCU patients and stratified them as follow 
-1. Hypoperfusion (SCAI shock C)
+So we took all the CCU patients and stratified them as follow :
+
+#### 1. Hypoperfusion (SCAI shock C)
 Presence of any of the following criteria:
- Admission lactate >2 mmol/l  Urine output <720 ml during ﬁrst 24 h  Creatinine increased by 0.3 mg/dl during ﬁrst 24 h
 
-2. Deterioration (SCAI shock D)
- Number of vasoactives during ﬁrst 24 h > number of vasoactives during ﬁrst 1 h
- Patient on any pressor and meeting C [this is not a definition used on the paper, tell me if you agree..]
+a) Admission lactate >2 mmol/l 
+b) Urine output <720 ml during ﬁrst 24 h 
+c) Creatinine increased by 0.3 mg/dl during ﬁrst 24 h
 
-3. Refractory shock (SCAI shock E)
- Number of vasoactives during ﬁrst 1 h >2 
- IABP
+#### 2. Deterioration (SCAI shock D)
+
+a )Number of vasoactives during ﬁrst 24 h > number of vasoactives during ﬁrst 1 h
+b) Patient on any pressor and meeting C [this is not a definition used on the paper, tell me if you agree..]
+
+#### 3. Refractory shock (SCAI shock E)
+
+a) Number of vasoactives during ﬁrst 1 h >2 
+b) IABP
 
 You will notice that the paper has more criterias for class D and E but with MIMIC those criterias were the easiest to use.
 
@@ -34,14 +40,16 @@ D : 543
 E : 134
 
 
-# Columns
+##  Columns
 
 Those are the main groups of col of the dataset, total 127. 
 
-*Non-clinical data* 
+#### Non-clinical data
+
   [1] "subject_id" | Beware to exclude it when running any analysis, easy to forget
   
-*Diagnosis*   
+#### Diagnosis
+
   Those are ICD9 codes. 
   Unclear if we can interpret it as discharge diagnoses or as comorbidities
   
@@ -58,7 +66,7 @@ Those are the main groups of col of the dataset, total 127.
  [17] "shock_nos"                                                "shock_septic"  
  [19] "stemi"                                                    
 
-*Vital Signs and Labs*  
+#### Vital Signs and Labs
 
 All are available > 25%.
 Strangely enough, the only variable missings > 25% are : lactate (35%), bilirubin and troponins
@@ -101,13 +109,13 @@ Strangely enough, the only variable missings > 25% are : lactate (35%), bilirubi
  
  [93] "urine_output"   
   
-*Demographics*
+#### Demographics
 
  [89] "intime"                                                   "outtime"                                                 
  [91] "los"                                                      "gender"  
 [125] "age"                                                      "age_group"    
 
-*Mechanical Intervention*
+#### Mechanical Intervention
  
  All interventions occured in the first 24 hours except for PCI and CABG for which we only know they occured during admission.
  
@@ -117,7 +125,7 @@ Strangely enough, the only variable missings > 25% are : lactate (35%), bilirubi
       "cabg"                                                    
 [121] "pci"     
 
-*Medication*
+#### Medication
  
  The pressors were coded 0 or 1 for each patient. This will facilitate any regression-type of analysis.
  However the data is duplicated for first hour VS longer than 24 hours.
@@ -137,13 +145,13 @@ Strangely enough, the only variable missings > 25% are : lactate (35%), bilirubi
 [113] "phenyl_first_hour"                                        "vasopressin_first_hour"                                  
 [115] "total_pressors_first_hour"                                "any_pressor_first_hour"
 
-*Severity Scores*
+#### Severity Scores
 [117] "gcs"                                                                                                      
 [119] "oasis"    
       "sofa"                                            
 [127] "scai_shock" category  coded : "C", "D", "E"
 
-*Outcomes and response variable 
+#### Outcomes and response variable 
 
 3 mortality outcomes. They were coded 0 or 1.
 
