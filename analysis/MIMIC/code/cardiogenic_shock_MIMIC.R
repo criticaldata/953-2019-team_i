@@ -27,3 +27,4 @@ mimic <- mimic%>%mutate(
 mimic_shock <- mimic%>%filter(scai_shock%in%c("C","D","E"))
 
 # Analysis below
+
