@@ -1,31 +1,4 @@
-
-list.of.packages <- c("bigrquery","plotly","scales","RColorBrewer","data.table","dplyr","knitr","corrplot","Hmisc","stats")
-new.packages<-list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
-if(length(new.packages)>0)
-{install.packages(new.packages)}
-
-library(bigrquery)
-library(plotly)
-library(scales)
-library(RColorBrewer)
-library(data.table)
-library(dplyr)
-library(knitr)
-library(corrplot)
-library(Hmisc)
-library(stats)
-
-
-project_HST = "hst-953-2019"
-
-
-project_id <- "hst-953-2019"
-options(httr_oauth_cache=TRUE)
-run_query <- function(query){
-  data <- query_exec(query, project=project_id, use_legacy_sql = FALSE)
-  return(data)
-}
+source("./auth.R")
 
 #CTICU: Cardiothoracic Intensive Care Unit (CTICU) 
 # CICU: Cardiac Intensive Care Unit
@@ -406,6 +379,23 @@ FROM
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #Another way of doing the labs, there are mutiple rows per patient
 
 "
@@ -524,8 +514,45 @@ group by patientunitstayid, labresultoffset
 order by patientunitstayid, labresultoffset;
 "
 
+urine <- run_query(
+
+"
+SELECT *
+FROM `physionet-data.eicu_crd_derived.pivoted_uo`
+WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+AND chartoffset <= 1440
+"
+)
 
 
+gcs <- run_query(
+  "
+  SELECT min(gcs)as GCS_min, patientunitstayid
+  FROM `physionet-data.eicu_crd_derived.pivoted_score`
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  AND chartoffset <= 1440 
+  GROUP BY patientunitstayid
+  ORDER BY patientunitstayid
+  "
+)
 
-write.csv(ccu_labs1, file = "MyData.csv")
+raw_pressors <- run_query(
+  "
+  SELECT *
+  FROM `physionet-data.eicu_crd_derived.pivoted_med`
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  AND chartoffset <= 1440 
+  ORDER by patientunitstayid
+  
+  "
+  
+)
+
+wide_pressors <- raw_pressors%>%spread(pressor_type, count, fill=0)%>% 
+  mutate(total_pressors = rowSums(.[4:10]))%>%
+  mutate(any_pressor = ifelse(total_pressors>= 1, 1, 0))
+
+#What happens in chart offset is very negative?
+
+#write.csv(ccu_labs1, file = "MyData.csv")
 
