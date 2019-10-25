@@ -4,7 +4,8 @@ The purpose of this document is to facilitate data analysis for everyone who wil
 
 ## Summary
 
-The dataset contains only the patients meeting the definition of SCAI shock >= C Cardiogenic Shock criteria as per the Jentzer et al. Cardiogenic Shock Classiﬁcation to Predict Mortality in the Cardiac Intensive Care Unit paper.
+The dataset contains only the patients meeting the definition of SCAI shock >= C Cardiogenic Shock criteria as per the *Jentzer et al. Cardiogenic Shock Classiﬁcation to Predict Mortality in the Cardiac Intensive Care Unit paper*.
+
 To access the dataset simply open the R file in : ./code/cardiogenic_shock_MIMIC.R
 
 The reason I did not export this final file as a CSV is because I wanted to give you the flexibility to change the inclusion criteria.
@@ -55,8 +56,8 @@ Those are the main groups of col of the dataset, total 127.
   
   
   
-      "acute_cerebrovascular_disease"                           
-  [3] "acute_renal_failure"                                      "anemia"                                                  
+  [3] "acute_renal_failure"  
+      "acute_cerebrovascular_disease"                           "anemia"                                                  
   [5] "atrial_fibrillation"                                      "blood_malignancy"                                        
   [7] "chronic_kidney_disease"                                   "chronic_obstructive_pulmonary_disease_and_bronchiectasis"
   [9] "coronary_atherosclerosis"                                 "diabetes_mellitus"                                       
@@ -127,11 +128,17 @@ Strangely enough, the only variable missings > 25% are : lactate (35%), bilirubi
 
 #### Medication
  
- The pressors were coded 0 or 1 for each patient. This will facilitate any regression-type of analysis.
+ The pressors were coded 0 or 1 for each patient. 
+ 
+ This will facilitate any regression-type of analysis.
  However the data is duplicated for first hour VS longer than 24 hours.
+ 
  It is absolutely key that you remove all the _first_hour elements if you decide to only look at what was received in the first 24 hours of stay.
  
- Also, I created a category anypressor (if at least >= 1, value 1 otherwise 0) and total_pressors (which is the total number of different pressors received.
+ Also, I created a category :
+  anypressor (if at least >= 1, value 1 otherwise 0) 
+  and total_pressors (which is the total number of different pressors received.
+ 
  Once again, if any of those two categorical variables is used, the other pressors_related variables cannot be used.
  
  
@@ -153,8 +160,11 @@ Strangely enough, the only variable missings > 25% are : lactate (35%), bilirubi
 
 #### Outcomes and response variable 
 
-3 mortality outcomes. They were coded 0 or 1.
+Mortality outcomes were coded 0 or 1.
 
  "icu_mortality"                                           
 [123] "hospital_mortality"                                       
-"thirty_day_mortality"              
+"thirty_day_mortality"       
+
+
+Eric
