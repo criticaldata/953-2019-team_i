@@ -15,6 +15,7 @@ library(knitr)
 library(corrplot)
 library(Hmisc)
 library(stats)
+library(tidyverse)
 #Install if the package doesn't exist 
 #install.packages('DataExplorer')
 # library(DataExplorer)
