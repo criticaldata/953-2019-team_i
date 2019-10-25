@@ -1,31 +1,4 @@
-
-list.of.packages <- c("bigrquery","plotly","scales","RColorBrewer","data.table","dplyr","knitr","corrplot","Hmisc","stats")
-new.packages<-list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
-if(length(new.packages)>0)
-{install.packages(new.packages)}
-
-library(bigrquery)
-library(plotly)
-library(scales)
-library(RColorBrewer)
-library(data.table)
-library(dplyr)
-library(knitr)
-library(corrplot)
-library(Hmisc)
-library(stats)
-
-
-project_HST = "hst-953-2019"
-
-
-project_id <- "hst-953-2019"
-options(httr_oauth_cache=TRUE)
-run_query <- function(query){
-  data <- query_exec(query, project=project_id, use_legacy_sql = FALSE)
-  return(data)
-}
+source("./auth.R")
 
 #CTICU: Cardiothoracic Intensive Care Unit (CTICU) 
 # CICU: Cardiac Intensive Care Unit
@@ -544,5 +517,5 @@ order by patientunitstayid, labresultoffset;
 
 
 
-write.csv(ccu_labs1, file = "MyData.csv")
+#write.csv(ccu_labs1, file = "MyData.csv")
 
