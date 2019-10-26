@@ -28,3 +28,4 @@ mimic_shock <- mimic%>%filter(scai_shock%in%c("C","D","E"))
 
 # Analysis below
 
+write.csv(mimic_shock, file="mimic_cardiogenic_shock.csv")
