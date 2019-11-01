@@ -149,6 +149,8 @@ ccu_query_3 <- "SELECT
   , max(CASE WHEN label = 'TROPONIN T' THEN valuenum ELSE null end) as TropoT_max
   , min(CASE WHEN label = 'NTproBNP' THEN valuenum ELSE null end) as NTproBNP_min
   , max(CASE WHEN label = 'NTproBNP' THEN valuenum ELSE null end) as NTproBNP_max
+  , min(CASE WHEN label = 'PH' THEN valuenum ELSE null end) as PH_min
+  , max(CASE WHEN label = 'PH' THEN valuenum ELSE null end) as PH_max
 FROM
 ( -- begin query that extracts the data
   SELECT ie.subject_id, ie.hadm_id, ie.icustay_id
@@ -183,7 +185,8 @@ FROM
         WHEN itemid = 51301 THEN 'WBC'
         WHEN itemid = 51002 THEN 'TROPONIN I'
         WHEN itemid = 51003 THEN 'TROPONIN T'
-        WHEN itemid = 50963 THEn 'NTproBNP'
+        WHEN itemid = 50820 THEn 'PH'
+        WHEN itemid = 50831 THEn 'PH'
       ELSE null
     END AS label
   , -- add in some sanity checks on the values
@@ -255,7 +258,9 @@ FROM
       51300,  -- WBC COUNT | HEMATOLOGY | BLOOD | 2371
       51002,  -- TROPONIN I
       51003,  -- TROPONIN T
-      50963  -- NTproBNP
+      50963,  -- NTproBNP
+      50820, -- 'PH'
+      50831  --'PH'
     )
     AND valuenum IS NOT null AND valuenum > 0 -- lab values cannot be 0 and cannot be negative
 ) pvt

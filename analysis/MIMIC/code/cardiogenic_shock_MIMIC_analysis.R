@@ -1,10 +1,19 @@
+#setwd("~/Documents/Bioinformatics/Classes/FALL/HST.953/Git_Files_Cardiogenic/953-2019-team_i/analysis/MIMIC")
+
+
+
 #Library load
 
-#setwd("~/Documents/Bioinformatics/Classes/FALL/HST.953/Git_Files_Cardiogenic/953-2019-team_i/analysis/MIMIC")
+#install.packages("skimr")
+#install.packages("RANN")
 
 source("./code/library_load.R")
 library(caret)
 library(caretEnsemble)
+
+library(skimr)
+library(RANN) 
+
 ## Data loading 
 
 mimic <- read_csv("./data/MIMIC_all_CCU_patients.csv", col_names = TRUE) %>% select(-X1)
@@ -16,47 +25,66 @@ mimic <- read_csv("./data/MIMIC_all_CCU_patients.csv", col_names = TRUE) %>% sel
 
 mimic <- mimic%>%mutate(
   scai_shock = case_when(
-    
-    ###look at null values and remove lactate
-    lactate_max > 2 ~ "C",
+    lactate_max > 2 ~ "C", #| delta_creat_0_3 == 1 | urine_output < 720 ~ "C",
     any_pressor >= 1 | total_pressors > total_pressors_first_hour ~ "D",
     any_pressor_first_hour >= 2 | iabp == 1 ~ "E"
   )
 )
 
-# adding doubling creatinine
-mimic_shock <- mimic%>%filter(scai_shock%in%c("C","D","E"))
-
-table(mimic_shock$scai_shock)
 
 
-#table(mimic_shock$scai_shock)
+# All CCU patients table
 
 write.csv(mimic_shock, file="mimic_cardiogenic_shock.csv")
-
 
 ## Final dataset ready for analysis
 
 mimic_shock <- mimic%>%filter(scai_shock%in%c("C","D","E"))
 mimic_analysis <- mimic_shock%>%
-  select(-c("subject_id", "intime", "outtime", "los", "any_pressor", "dobutamine_first_hour", "dopamine_first_hour","epinephrine_first_hour", "milrinone_first_hour", 
+  select(-c("subject_id", "intime", "outtime", "los", "dobutamine_first_hour", "dopamine_first_hour","epinephrine_first_hour", "milrinone_first_hour", 
             "norepinephrine_first_hour","phenyl_first_hour","vasopressin_first_hour","total_pressors_first_hour",
-            "any_pressor_first_hour","icu_mortality", "thirty_day_mortality", "age"))
+            "any_pressor_first_hour", "thirty_day_mortality", "age_group"))
 
+
+# Cardiogenic shock table only
 
 write.csv(mimic_analysis, file="mimic_cardiogenic_shock_analysis.csv")
-# Creating samples
 
-mimic_analysis <- as_tibble(mimic_analysis)
+
+# Function to see descriptive statistics of all variables
+
+skimmed <- skim_to_wide(mimic_analysis)  
+
+
+# Some column deletion was done in EXCEL + column with NULL > 25%
+
+mimic_analysis <- read_csv("./data/mimic_cardiogenic_shock_analysis_2.csv", col_names = TRUE) %>% select(-X1)
+
+# Final NULL values cleaning pre-analytics
+
+# Create the knn imputation model on the dataset and replacing using KKN  
+preProcess_missingdata_model <- preProcess(mimic_analysis, method='knnImpute')
+mimic_analysis <- predict(preProcess_missingdata_model, newdata = mimic_analysis)
+
+#mimic_analysis <- replace_na(mimic_analysis, 0)
+
+# Creating training/test data sets
+
 mimic_analysis <- mimic_analysis %>% mutate(id = row_number()) 
-mimic_analysis <- replace_na(mimic_analysis, 0)
 train <- mimic_analysis %>% sample_frac(.70)
 test  <- anti_join(mimic_analysis, train, by = "id")
-train2 <- train%>%select(-"id")
-# Analysis below
+
+train <- train%>%select(-"id")
+test <- test%>%select(-"id")
+
+####-----------------------------------------------------------------------############
+
+###     Data analysis
 
 
-# Data analysis
+
+set.seed(100)
+
 
 trainControl <- trainControl(method="repeatedcv", 
                              number=10, 
@@ -83,11 +111,10 @@ fit <- train(hospital_mortality ~ .,
 
 
 
-###
 
 algorithmList <- c('regLogistic', 'gbm', 'qda', 'knn', 'svmRadial')
 
-set.seed(100)
+
 models <- caretList(hospital_mortality ~ ., data=train2, trControl=trainControl, methodList=algorithmList) 
 results <- resamples(models)
 summary(results)
