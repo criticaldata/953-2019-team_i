@@ -29,6 +29,6 @@ project_HST = "hst-953-2019"
 project_id <- "hst-953-2019"
 options(httr_oauth_cache=TRUE)
 run_query <- function(query){
-  data <- query_exec(query, project=project_id, use_legacy_sql = FALSE)
+  data <- query_exec(query, project=project_id, use_legacy_sql = FALSE, max_pages = Inf)
   return(data)
 }
