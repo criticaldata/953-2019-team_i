@@ -43,7 +43,7 @@ WHERE rn = 1
 "
 
 # Contains  hadm_id, subject_id and icd9 codes for all CCU patients
-ccu_diagnoses3 <- run_query(ccu_query_1)
+ccu_diagnoses <- run_query(ccu_query_1)
 
 # CCS classification dictionary table to ease ICD9 codes grouping (level 3 and level 4)
 ccsicd <- read_csv("./data/ccsicd.csv")
@@ -59,8 +59,8 @@ dxlist <- sort(unique(ccu_diagnoses$CCS))
 ccu_diagnoses <- left_join(ccu_diagnoses, ccsicd, by=c("ICD9_code"="ICD9")) %>%
   filter(CCS%in%c("Diabetes mellitus", "Anemia", "STEMI", "NSTEMI", "Acute renal failure", "Acute cerebrovascular disease", "Atrial fibrillation","Blood Malignancy", 
                   "Chronic obstructive pulmonary disease and bronchiectasis","Coronary atherosclerosis", "Chronic kidney disease", "Diabetes mellitus",
-                  "Heart valve disorders", "Hypertension","Neoplasms", "Shock NOS", "Shock Cardiogenic", "Shock Septic", "Septicemia"))%>%
-  select(-c("ICD9_code","hadm_id"))%>%
+                  "Heart valve disorders","Cardiac arrest and ventricular fibrillation", "Hypertension","Neoplasms", "Shock NOS", "Shock Cardiogenic", "Shock Septic", "Septicemia"))%>%
+  dplyr::select(-c("ICD9_code","hadm_id"))%>%
   #This ensure that duplicates of values are only counted once
   group_by(subject_id, CCS)%>%
   summarise()
@@ -1248,9 +1248,47 @@ mergedpressors2 <- mergedpressors2%>%mutate(
 # VIS score summed up for patients on many pressors
 vis_24h <- mergedpressors2%>%group_by(subject_id)%>%
   summarise(vis = sum(vis))
-  
+
+
+##### VIS at 1 hour
+
+mergedpressors_firsthour <- bind_rows(dobutamine_ccu_1 , dopamine_ccu_1, epi_ccu_1, milri_ccu_1, norepi_ccu_1, vasopressin_ccu_1, phenyl_ccu_1)%>%
+  group_by(subject_id,icustay_id, hadm_id, pressor_type) %>% 
+  summarise(
+    starttime = min(starttime), 
+    endtime = max(endtime),
+    duration_hours = sum(duration_hours),
+    vaso_rate = mean(vaso_rate),
+    vaso_amount = sum(vaso_amount))%>%
+  select(-c("starttime","endtime","duration_hours","vaso_rate","vaso_amount"))
+
+# Convert all vasopressin doses at same unit (some are in U/min and some in U/h)
+mergedpressors_firsthour[which(mergedpressors2$pressor_type=="vasopressin"),] <- mergedpressors_firsthour[which(mergedpressors_firsthour$pressor_type=="vasopressin"),]%>%
+  mutate(vaso_rate = ifelse(vaso_rate<= 0.2, vaso_rate*60, vaso_rate))
+
+# VIS score for each pressor
+# MIMIC does not have the rates for milrinone, thus the 0 value
+mergedpressors_firsthour2 <- mergedpressors_firsthour%>%mutate(
+  vis=case_when(
+    pressor_type == "phenyl" ~ vaso_rate*10,
+    pressor_type == "milrinone" ~ 0,
+    pressor_type == "dobutamine" ~ vaso_rate,
+    pressor_type == "dopamine" ~ vaso_rate,
+    pressor_type == "norepinephrine" ~ vaso_rate*100,
+    pressor_type == "epinephrine" ~ vaso_rate*100,
+    pressor_type == "vasopressin" ~ vaso_rate*10000/60 ## that seems way too high # if you copy this remove the division by 60 if U/min
+  )
+) 
+
+# VIS score summed up for patients on many pressors
+vis_first_hour <- mergedpressors_firsthour2%>%group_by(subject_id)%>%
+  summarise(vis = sum(vis))
+
+
+#NEE
+
 #NEE score at 24h
-mergedpressors2 <- bind_rows(dobutamine_ccu_24 , dopamine_ccu_24, epi_ccu_24, milri_ccu_24, norepi_ccu_24, vasopressin_ccu_24, phenyl_ccu_24)%>%
+mergedpressors3 <- bind_rows(dobutamine_ccu_24 , dopamine_ccu_24, epi_ccu_24, milri_ccu_24, norepi_ccu_24, vasopressin_ccu_24, phenyl_ccu_24)%>%
   select(-c("hadm_id", "icustay_id")) %>%
   group_by(subject_id, pressor_type) %>% 
   summarise(
@@ -1263,20 +1301,20 @@ mergedpressors2 <- bind_rows(dobutamine_ccu_24 , dopamine_ccu_24, epi_ccu_24, mi
 
 
 # Convert all vasopressin doses at same unit (some are in U/min and some in U/h)
-mergedpressors2[which(mergedpressors2$pressor_type=="vasopressin"),] <- mergedpressors2[which(mergedpressors2$pressor_type=="vasopressin"),]%>%
+mergedpressors3[which(mergedpressors2$pressor_type=="vasopressin"),] <- mergedpressors3[which(mergedpressors2$pressor_type=="vasopressin"),]%>%
   mutate(vaso_rate = ifelse(vaso_rate<= 0.2, vaso_rate*60, vaso_rate))
 
 # VIS score for each pressor
 # MIMIC does not have the rates for milrinone, thus the 0 value
 mergedpressors2 <- mergedpressors2%>%mutate(
   nee=case_when(
-    pressor_type == "phenyl" ~ vaso_rate*10,
-    pressor_type == "milrinone" ~ 0,
-    pressor_type == "dobutamine" ~ vaso_rate,
+    pressor_type == "phenyl" ~ vaso_rate*0.1
+    pressor_type == "milrinone" ~ 0, #data not available in MIMIC
+    pressor_type == "dobutamine" ~ vaso_rate*(0.1/15),
     pressor_type == "dopamine" ~ vaso_rate,
-    pressor_type == "norepinephrine" ~ vaso_rate*100,
-    pressor_type == "epinephrine" ~ vaso_rate*100,
-    pressor_type == "vasopressin" ~ vaso_rate*10000/60 ## that seems way too high
+    pressor_type == "norepinephrine" ~ vaso_rate,
+    pressor_type == "epinephrine" ~ vaso_rate
+    pressor_type == "vasopressin" ~ vaso_rate*2.5/60 #60 because dose here is U/h -> want to convert to U/min then NEE by multiplicating by 2.5
   )
 ) 
 
@@ -1285,8 +1323,52 @@ nee_24h <- mergedpressors2%>%group_by(subject_id)%>%
   summarise(nee = sum(nee))
 
                                                                                                     
+
+### NEE at 1 hour
+
+mergedpressors_firsthour3 <- mergedpressors_firsthour%>%mutate(
+  nee=case_when(
+    pressor_type == "phenyl" ~ vaso_rate*0.1
+    pressor_type == "milrinone" ~ 0, #data not available in MIMIC
+    pressor_type == "dobutamine" ~ vaso_rate*(0.1/15),
+    pressor_type == "dopamine" ~ vaso_rate,
+    pressor_type == "norepinephrine" ~ vaso_rate,
+    pressor_type == "epinephrine" ~ vaso_rate
+    pressor_type == "vasopressin" ~ vaso_rate*2.5/60 #60 because dose here is U/h -> want to convert to U/min then NEE by multiplicating by 2.5
+  )
+) 
+
+# VIS score summed up for patients on many pressors
+nee_first_hour <- mergedpressors_firsthour3%>%group_by(subject_id)%>%
+  summarise(vis = sum(vis))                                                                                                   
                                                                                                     
                                                                                                     
-                                                                                                    
-                                                                                                    
-                                                                                                    
+### Ethnicity
+
+ccu_query_25 <- "SELECT hadm_id,subject_id, ethnicity FROM `physionet-data.mimiciii_clinical.admissions` 
+WHERE hadm_id in 
+  (
+    SELECT hadm_id
+      FROM (
+      SELECT subject_id, hadm_id, intime, icustay_id, outtime, los, ROW_NUMBER() OVER(PARTITION BY subject_id ORDER BY intime) rn
+      FROM `physionet-data.mimiciii_clinical.icustays`
+      WHERE first_careunit = 'CCU'
+    ) 
+x
+WHERE rn = 1
+)"
+
+
+
+ccu_race <- run_query(ccu_query_25)
+ccu_race$ethnicity[grep("WHITE",ccu_race$ethnicity)] <- "WHITE"
+ccu_race$ethnicity[grep("HISPANIC",ccu_race$ethnicity)] <- "HISPANIC"
+ccu_race$ethnicity[grep("HISPANIC",ccu_race$ethnicity)] <- "HISPANIC"
+ccu_race$ethnicity[grep("BLACK",ccu_race$ethnicity)] <- "BLACK"
+ccu_race$ethnicity[grep("ASIAN",ccu_race$ethnicity)] <- "ASIAN"
+ccu_race[-which(ccu_race$ethnicity%in%c("WHITE","HISPANIC","BLACK","ASIAN")),]$ethnicity <- 'OTHER'
+
+# CCU race contains ethinicity of all CCU patients and subject_id
+ccu_race <- ccu_race%>%dplyr::select(-hadm_id)
+
+
