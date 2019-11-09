@@ -43,7 +43,7 @@ WHERE rn = 1
 "
 
 # Contains  hadm_id, subject_id and icd9 codes for all CCU patients
-ccu_diagnoses <- run_query(ccu_query_1)
+ccu_diagnoses3 <- run_query(ccu_query_1)
 
 # CCS classification dictionary table to ease ICD9 codes grouping (level 3 and level 4)
 ccsicd <- read_csv("./data/ccsicd.csv")
@@ -1172,5 +1172,121 @@ get_counts4 <-function(dataset){
 ccu_cabg_pci <- get_counts4(ccu_cabg_pci)
 wide_cabg_pci <- ccu_cabg_pci%>%spread(diagnosis, count, fill=0)
 
+#*************
+
+## BMI
+
+ccu_query_23 <- "SELECT * FROM `physionet-data.mimiciii_derived.heightweight` 
+WHERE icustay_id in
+(
+SELECT icustay_id
+FROM (
+    SELECT subject_id, hadm_id, intime, icustay_id, outtime, los, ROW_NUMBER() OVER(PARTITION BY subject_id ORDER BY intime) rn
+    FROM `physionet-data.mimiciii_clinical.icustays`
+    WHERE first_careunit = 'CCU'
+    ) 
+x
+WHERE rn = 1
+)
+"
 
 
+
+# Query did not work so exported the CSV file from BigQuery
+# ccu_bmi <- run_query(ccu_query_23)
+ccu_bmi <- read.csv("./data/bmi_ccu.csv")
+
+
+
+## ccu_bmi by icustay_id 
+ccu_bmi <- ccu_bmi%>%mutate(bmi = weight_first/((height_first)*0.01)^2)%>%
+  select(-c("weight_first","weight_min", "weight_max","height_first","height_min", "height_max"))
+
+
+## Charlson Index
+
+install.packages("comorbidity")      
+library(comorbidity)
+
+charlson <- run_query(ccu_query_1)%>%dplyr::select(-hadm_id)
+# Assigning Charlson index per id
+charlson9 <- comorbidity(x = charlson, id = "subject_id", code = "ICD9_code", score = "charlson", icd = "icd9", assign0 = FALSE)
+charlson9 <- charlson9%>%select(subject_id, score)
+
+
+#VIS score at 24 hour
+mergedpressors2 <- bind_rows(dobutamine_ccu_24 , dopamine_ccu_24, epi_ccu_24, milri_ccu_24, norepi_ccu_24, vasopressin_ccu_24, phenyl_ccu_24)%>%
+  select(-c("hadm_id", "icustay_id")) %>%
+  group_by(subject_id, pressor_type) %>% 
+  summarise(
+    starttime = min(starttime), 
+    endtime = max(endtime),
+    duration_hours = sum(duration_hours),
+    vaso_rate = mean(vaso_rate),
+    vaso_amount = sum(vaso_amount))%>%
+  dplyr::select(-c("starttime","endtime","duration_hours","vaso_amount"))
+
+
+# Convert all vasopressin doses at same unit (some are in U/min and some in U/h)
+mergedpressors2[which(mergedpressors2$pressor_type=="vasopressin"),] <- mergedpressors2[which(mergedpressors2$pressor_type=="vasopressin"),]%>%
+  mutate(vaso_rate = ifelse(vaso_rate<= 0.2, vaso_rate*60, vaso_rate))
+
+# VIS score for each pressor
+# MIMIC does not have the rates for milrinone, thus the 0 value
+mergedpressors2 <- mergedpressors2%>%mutate(
+  vis=case_when(
+    pressor_type == "phenyl" ~ vaso_rate*10,
+    pressor_type == "milrinone" ~ 0,
+    pressor_type == "dobutamine" ~ vaso_rate,
+    pressor_type == "dopamine" ~ vaso_rate,
+    pressor_type == "norepinephrine" ~ vaso_rate*100,
+    pressor_type == "epinephrine" ~ vaso_rate*100,
+    pressor_type == "vasopressin" ~ vaso_rate*10000/60 ## that seems way too high # if you copy this remove the division by 60 if U/min
+  )
+) 
+
+# VIS score summed up for patients on many pressors
+vis_24h <- mergedpressors2%>%group_by(subject_id)%>%
+  summarise(vis = sum(vis))
+  
+#NEE score at 24h
+mergedpressors2 <- bind_rows(dobutamine_ccu_24 , dopamine_ccu_24, epi_ccu_24, milri_ccu_24, norepi_ccu_24, vasopressin_ccu_24, phenyl_ccu_24)%>%
+  select(-c("hadm_id", "icustay_id")) %>%
+  group_by(subject_id, pressor_type) %>% 
+  summarise(
+    starttime = min(starttime), 
+    endtime = max(endtime),
+    duration_hours = sum(duration_hours),
+    vaso_rate = mean(vaso_rate),
+    vaso_amount = sum(vaso_amount))%>%
+  dplyr::select(-c("starttime","endtime","duration_hours","vaso_amount"))
+
+
+# Convert all vasopressin doses at same unit (some are in U/min and some in U/h)
+mergedpressors2[which(mergedpressors2$pressor_type=="vasopressin"),] <- mergedpressors2[which(mergedpressors2$pressor_type=="vasopressin"),]%>%
+  mutate(vaso_rate = ifelse(vaso_rate<= 0.2, vaso_rate*60, vaso_rate))
+
+# VIS score for each pressor
+# MIMIC does not have the rates for milrinone, thus the 0 value
+mergedpressors2 <- mergedpressors2%>%mutate(
+  nee=case_when(
+    pressor_type == "phenyl" ~ vaso_rate*10,
+    pressor_type == "milrinone" ~ 0,
+    pressor_type == "dobutamine" ~ vaso_rate,
+    pressor_type == "dopamine" ~ vaso_rate,
+    pressor_type == "norepinephrine" ~ vaso_rate*100,
+    pressor_type == "epinephrine" ~ vaso_rate*100,
+    pressor_type == "vasopressin" ~ vaso_rate*10000/60 ## that seems way too high
+  )
+) 
+
+# NEE score summed up for patients on many pressors
+nee_24h <- mergedpressors2%>%group_by(subject_id)%>%
+  summarise(nee = sum(nee))
+
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
