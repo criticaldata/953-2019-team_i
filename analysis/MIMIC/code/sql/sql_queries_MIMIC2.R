@@ -1248,7 +1248,7 @@ mergedpressors2 <- mergedpressors2%>%mutate(
 
 # VIS score summed up for patients on many pressors
 vis_24h <- mergedpressors2%>%group_by(subject_id)%>%
-  summarise(vis = sum(vis))
+  summarise(vis_24h = sum(vis))
 
 
 ##### VIS at 1 hour
@@ -1283,7 +1283,7 @@ mergedpressors_firsthour2 <- mergedpressors_firsthour%>%mutate(
 
 # VIS score summed up for patients on many pressors
 vis_first_hour <- mergedpressors_firsthour2%>%group_by(subject_id)%>%
-  summarise(vis = sum(vis))
+  summarise(vis_first_hour = sum(vis))
 
 
 #NEE
@@ -1323,7 +1323,7 @@ mergedpressors3 <- mergedpressors3%>%mutate(
 
 # NEE score summed up for patients on many pressors
 nee_24h <- mergedpressors3%>%group_by(subject_id)%>%
-  summarise(nee = sum(nee))
+  summarise(nee_24h = sum(nee))
 
                                                                                                     
 
@@ -1344,7 +1344,7 @@ mergedpressors_firsthour3 <- mergedpressors_firsthour%>%mutate(
 
 # VIS score summed up for patients on many pressors
 nee_first_hour <- mergedpressors_firsthour3%>%group_by(subject_id)%>%
-  summarise(nee = sum(nee))                                                                                                   
+  summarise(nee_first_hour = sum(nee))                                                                                                   
                                                                                                     
                                                                                                     
 ### Ethnicity

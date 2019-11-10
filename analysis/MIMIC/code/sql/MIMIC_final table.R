@@ -59,7 +59,7 @@ ccu_analysis2$any_pressor_first_hour <- replace_na(ccu_analysis2$any_pressor_fir
 ccu_analysis2$phenyl<- replace_na(ccu_analysis2$phenyl, 0)
 ccu_analysis2$phenyl_first_hour<- replace_na(ccu_analysis2$phenyl_first_hour, 0)
 #
-ccu_analysis2$vis_24h<- replace_na(ccu_analysis2vis_24h_first_hour, 0)
+ccu_analysis2$vis_24h<- replace_na(ccu_analysis2$vis_24h, 0)
 ccu_analysis2$vis_first_hour <- replace_na(ccu_analysis2$vis_first_hour, 0)
 ccu_analysis2$nee_24h<- replace_na(ccu_analysis2$nee_24h, 0)
 ccu_analysis2$nee_first_hour<- replace_na(ccu_analysis2$nee_first_hour, 0)
@@ -67,6 +67,7 @@ ccu_analysis2$nee_first_hour<- replace_na(ccu_analysis2$nee_first_hour, 0)
 # Last check of patient
 
 str(ccu_analysis2, list.len = 150)
+sort(colnames(ccu_analysis2))
 ccu_analysis2 <- ccu_analysis2%>%select(-c("icustay_id_x_x_x_x", "icustay_id_x"))
 
 
