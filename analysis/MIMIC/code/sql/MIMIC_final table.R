@@ -2,25 +2,10 @@ source("./code/sql/sql_queries_MIMIC2.R")
 
 tablelist <- list(wide_ccu_dx, ccu_vitals, ccu_labs, ccu_patients_id_los, ccu_demographics_dob_gender_death,
                   ccu_uo_24h, ccu_RRT24h, ccu_vent, wide_procedures_24, wide_pressors, wide_pressors_firsthour,
-                  ccu_gcs, ccu_sofa, ccu_oasis, wide_cabg_pci, ccu_mortality)
+                  ccu_gcs, ccu_sofa, ccu_oasis, wide_cabg_pci, ccu_mortality, charlson9, vis_24h, vis_first_hour, nee_24h,
+                  nee_first_hour, ccu_race)
+# ccu_bmi must be joined by icu_stay
 
-
-#remove_unecessary_index <- function(dflist){
-  dflist2 <- list(c())
-  j <- 1
-  for (i in dflist){
-    if ("hadm_id" %in% colnames(i)){
-      i <- i%>%select(-hadm_id)
-    }
-    if ("icustay_id" %in% colnames(i)){
-      i <- i%>%select(-icustay_id)
-    }
-  dflist2[j] <- data_frame(i)
-  j <- j+1
-  }
-  return(dflist2)
-}
-#tablelist2 <- remove_unecessary_index(tablelist)
 
 
 
@@ -28,26 +13,9 @@ tablelist <- list(wide_ccu_dx, ccu_vitals, ccu_labs, ccu_patients_id_los, ccu_de
 library(purrr)
 ccu_analysis_table <- tablelist %>% purrr::reduce (left_join, by = "subject_id")
 
+ccu_analysis_table <- ccu_analysis_table%>%
+  left_join(ccu_bmi, by=c("icustay_id.x"="icustay_id"))
 
-### Manual merge approach 
-#ccu_analysis2 <- wide_ccu_dx%>%
-  #left_join(ccu_vitals, by="subject_id")%>%
- # left_join(ccu_patients_id_los, by="subject_id")%>%
-  #left_join(ccu_demographics_dob_gender_death, by="subject_id")%>%
-  #left_join(ccu_labs, by="subject_id")%>%
- # left_join(ccu_uo_24h, by="subject_id")%>%
-  #we removed RRT of hospital stay not relevant 
-  #left_join(ccu_RRT, by="subject_id")%>%
- # left_join(ccu_RRT24h, by="subject_id")%>%
- # left_join(ccu_vent, by="subject_id")%>%
-  #left_join(wide_procedures_24, by="subject_id")%>%
- # left_join(ccu_mortality, by="subject_id")%>%
-  #left_join(ccu_gcs, by="subject_id")%>%
- # left_join(ccu_sofa, by="subject_id")%>%
-#  left_join(ccu_oasis, by="subject_id")%>%
- # left_join(wide_cabg_pci, by="subject_id")%>$%
- # left_join(wide_pressors, by="subject_id")%>$%
-#left_join(wide_pressors_firsthour, by="subject_id")
 
 ### FINAL CLEANING
 # Removing identifiers
@@ -90,6 +58,11 @@ ccu_analysis2$total_pressors_first_hour <- replace_na(ccu_analysis2$total_presso
 ccu_analysis2$any_pressor_first_hour <- replace_na(ccu_analysis2$any_pressor_first_hour, 0)
 ccu_analysis2$phenyl<- replace_na(ccu_analysis2$phenyl, 0)
 ccu_analysis2$phenyl_first_hour<- replace_na(ccu_analysis2$phenyl_first_hour, 0)
+#
+ccu_analysis2$vis_24h<- replace_na(ccu_analysis2vis_24h_first_hour, 0)
+ccu_analysis2$vis_first_hour <- replace_na(ccu_analysis2$vis_first_hour, 0)
+ccu_analysis2$nee_24h<- replace_na(ccu_analysis2$nee_24h, 0)
+ccu_analysis2$nee_first_hour<- replace_na(ccu_analysis2$nee_first_hour, 0)
 
 # Last check of patient
 

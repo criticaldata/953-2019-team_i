@@ -282,7 +282,8 @@ ORDER BY pvt.subject_id, pvt.hadm_id, pvt.icustay_id;"
 # hadm_id, short_title, long_title
 ccu_labs <- run_query(ccu_query_3)
 ccu_labs <- ccu_labs%>%
-  mutate(Delta_creat_0.3 = ifelse(abs(CREATININE_max-CREATININE_min) >= 0.3, 1, 0))
+  mutate(Delta_creat_0.3 = ifelse(abs(CREATININE_max-CREATININE_min) >= 0.3, 1, 0))%>%
+  mutate(Doubled_creat = ifelse(abs(CREATININE_max/CREATININE_min) >= 1.5, 1, 0))
 
 
 ## CCU  24 hours vital signs
@@ -1200,7 +1201,7 @@ ccu_bmi <- read.csv("./data/bmi_ccu.csv")
 
 ## ccu_bmi by icustay_id 
 ccu_bmi <- ccu_bmi%>%mutate(bmi = weight_first/((height_first)*0.01)^2)%>%
-  select(-c("weight_first","weight_min", "weight_max","height_first","height_min", "height_max"))
+  dplyr::select(-c("weight_first","weight_min", "weight_max","height_first","height_min", "height_max"))
 
 
 ## Charlson Index
@@ -1211,7 +1212,7 @@ library(comorbidity)
 charlson <- run_query(ccu_query_1)%>%dplyr::select(-hadm_id)
 # Assigning Charlson index per id
 charlson9 <- comorbidity(x = charlson, id = "subject_id", code = "ICD9_code", score = "charlson", icd = "icd9", assign0 = FALSE)
-charlson9 <- charlson9%>%select(subject_id, score)
+charlson9 <- charlson9%>%dplyr::select(subject_id, score)%>%rename(charlson_score=score)
 
 
 #VIS score at 24 hour
@@ -1260,7 +1261,7 @@ mergedpressors_firsthour <- bind_rows(dobutamine_ccu_1 , dopamine_ccu_1, epi_ccu
     duration_hours = sum(duration_hours),
     vaso_rate = mean(vaso_rate),
     vaso_amount = sum(vaso_amount))%>%
-  select(-c("starttime","endtime","duration_hours","vaso_rate","vaso_amount"))
+  select(-c("starttime","endtime","duration_hours","vaso_amount"))
 
 # Convert all vasopressin doses at same unit (some are in U/min and some in U/h)
 mergedpressors_firsthour[which(mergedpressors2$pressor_type=="vasopressin"),] <- mergedpressors_firsthour[which(mergedpressors_firsthour$pressor_type=="vasopressin"),]%>%
@@ -1301,25 +1302,27 @@ mergedpressors3 <- bind_rows(dobutamine_ccu_24 , dopamine_ccu_24, epi_ccu_24, mi
 
 
 # Convert all vasopressin doses at same unit (some are in U/min and some in U/h)
-mergedpressors3[which(mergedpressors2$pressor_type=="vasopressin"),] <- mergedpressors3[which(mergedpressors2$pressor_type=="vasopressin"),]%>%
+mergedpressors3[which(mergedpressors3$pressor_type=="vasopressin"),] <- mergedpressors3[which(mergedpressors3$pressor_type=="vasopressin"),]%>%
   mutate(vaso_rate = ifelse(vaso_rate<= 0.2, vaso_rate*60, vaso_rate))
 
 # VIS score for each pressor
 # MIMIC does not have the rates for milrinone, thus the 0 value
-mergedpressors2 <- mergedpressors2%>%mutate(
+mergedpressors3 <- mergedpressors3%>%mutate(
   nee=case_when(
-    pressor_type == "phenyl" ~ vaso_rate*0.1
+    pressor_type == "phenyl" ~ vaso_rate*0.1,
     pressor_type == "milrinone" ~ 0, #data not available in MIMIC
-    pressor_type == "dobutamine" ~ vaso_rate*(0.1/15),
+    pressor_type == "dobutamine" ~ vaso_rate*0.1/15,
     pressor_type == "dopamine" ~ vaso_rate,
     pressor_type == "norepinephrine" ~ vaso_rate,
-    pressor_type == "epinephrine" ~ vaso_rate
+    pressor_type == "epinephrine" ~ vaso_rate,
     pressor_type == "vasopressin" ~ vaso_rate*2.5/60 #60 because dose here is U/h -> want to convert to U/min then NEE by multiplicating by 2.5
   )
 ) 
 
+
+
 # NEE score summed up for patients on many pressors
-nee_24h <- mergedpressors2%>%group_by(subject_id)%>%
+nee_24h <- mergedpressors3%>%group_by(subject_id)%>%
   summarise(nee = sum(nee))
 
                                                                                                     
@@ -1328,19 +1331,20 @@ nee_24h <- mergedpressors2%>%group_by(subject_id)%>%
 
 mergedpressors_firsthour3 <- mergedpressors_firsthour%>%mutate(
   nee=case_when(
-    pressor_type == "phenyl" ~ vaso_rate*0.1
+    pressor_type == "phenyl" ~ vaso_rate*0.1,
     pressor_type == "milrinone" ~ 0, #data not available in MIMIC
-    pressor_type == "dobutamine" ~ vaso_rate*(0.1/15),
+    pressor_type == "dobutamine" ~ vaso_rate*0.1/15,
     pressor_type == "dopamine" ~ vaso_rate,
     pressor_type == "norepinephrine" ~ vaso_rate,
-    pressor_type == "epinephrine" ~ vaso_rate
+    pressor_type == "epinephrine" ~ vaso_rate,
     pressor_type == "vasopressin" ~ vaso_rate*2.5/60 #60 because dose here is U/h -> want to convert to U/min then NEE by multiplicating by 2.5
   )
 ) 
 
+
 # VIS score summed up for patients on many pressors
 nee_first_hour <- mergedpressors_firsthour3%>%group_by(subject_id)%>%
-  summarise(vis = sum(vis))                                                                                                   
+  summarise(nee = sum(nee))                                                                                                   
                                                                                                     
                                                                                                     
 ### Ethnicity
