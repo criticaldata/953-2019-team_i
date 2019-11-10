@@ -23,6 +23,35 @@ WHERE rn = 1
 "
 )
 
+ccu_demographics <- run_query(
+  " SELECT *
+    FROM `physionet-data.eicu_crd_derived.basic_demographics` 
+    WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+
+"
+)
+
+ccu_gender_age <- run_query(
+  " SELECT patientunitstayid, gender, age
+    FROM `physionet-data.eicu_crd.patient` 
+    WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+
+"
+)
+
+ccu_mortality <- run_query(
+  
+  " 
+  SELECT ap.patientunitstayid, ap.actualicumortality, ap.actualhospitalmortality
+  FROM `physionet-data.eicu_crd.apachepatientresult` ap
+  #SELECT pt.unitDischargeStatus, pt.hospitalDischargeStatus, ap.actualicumortality, ap. actualhospitalmortality
+  #FROM `physionet-data.eicu_crd.patient` pt, `physionet-data.eicu_crd.apachepatientresult` ap
+  WHERE ap.patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  GROUP BY patientunitstayid  
+     
+"
+)
+
 
 ccu_diagnoses <- run_query(
 "SELECT patientunitstayid, diagnosisid, diagnosisoffset, diagnosisstring, icd9code
@@ -156,20 +185,6 @@ GROUP BY pvt.uniquepid, pvt.patienthealthsystemstayid, pvt.patientunitstayid
 ORDER BY pvt.uniquepid, pvt.patienthealthsystemstayid, pvt.patientunitstayid;
 "
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -524,6 +539,18 @@ AND chartoffset <= 1440
 "
 )
 
+#Is the urine cumulative?
+urine24 <- run_query(
+  "
+SELECT patientunitstayid, max(urineoutput) as urineoutput
+FROM `physionet-data.eicu_crd_derived.pivoted_uo`
+WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+AND chartoffset <= 1440
+GROUP BY patientunitstayid
+ORDER BY patientunitstayid
+"
+)
+
 
 gcs <- run_query(
   "
@@ -545,14 +572,126 @@ raw_pressors <- run_query(
   ORDER by patientunitstayid
   
   "
-  
 )
 
-wide_pressors <- raw_pressors%>%spread(pressor_type, count, fill=0)%>% 
-  mutate(total_pressors = rowSums(.[4:10]))%>%
-  mutate(any_pressor = ifelse(total_pressors>= 1, 1, 0))
+sum_pressors <- run_query(
+  "
+  SELECT patientunitstayid, max(dopamine) as dopamine, max(dobutamine) as dobutamine, max(norepinephrine) as norepinephrine, max(epinephrine) as epinephrine, max(phenylephrine) as phenyl, max (vasopressin) as vasopressin, max(milrinone) as milrinone, max(heparin) as heparin, max(warfarin) as warfarin
+  FROM `physionet-data.eicu_crd_derived.pivoted_med`
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  AND chartoffset <= 1440 
+  #ORDER by patientunitstayid
+  GROUP by patientunitstayid
+  
+  
+  "
+)
+
+#look into icd9 codes use query22
+iabp <- run_query(
+  
+  "
+  SELECT *
+  FROM `physionet-data.eicu_crd.treatment` 
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  AND treatmentstring LIKE '%intraaortic balloon pump%' 
+  #AND treatmentstring LIKE '%ECMO%' 
+  "
+)
+
+any_pressor <- rowSums(sum_pressors[, -1])
+
+sum_pressor <- cbind(sum_pressors, any_pressor)
 
 #What happens in chart offset is very negative?
 
 #write.csv(ccu_labs1, file = "MyData.csv")
+
+
+ cats <- run_query(
+   "
+   SELECT *
+     FROM `physionet-data.eicu_crd_derived.treatment_categories`
+  "
+ )
+ 
+raw_icd9 <- run_query(
+  "
+  SELECT patientunitstayid, icd9code as ICD9_code
+  FROM `physionet-data.eicu_crd.diagnosis` 
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  ORDER BY patientunitstayid
+
+  "
+)
+
+raw_icd9 <- subset(raw_icd9,ICD9_code!="")
+
+# for (row in 1:nrow(raw_icd9)) {
+# #   if(all.equal(raw_icd9[row, 2], ""))
+# #   
+#   
+#   print(raw_icd9[row, 2])
+# }
+
+ccu_diagnoses <- separate_rows(raw_icd9,2,sep = ",")
+ccu_diagnoses$ICD9_code <- str_trim(ccu_diagnoses$ICD9_code)
+ccu_diagnoses$ICD9_code <- str_remove(ccu_diagnoses$ICD9_code, "[.]")
+
+clean_icd9 <- ccu_diagnoses
+#ccu_diagnoses$ICD9_code <- gsub(".","Q", ccu_diagnoses$ICD9_code)
+
+
+# CCS classification dictionary table to ease ICD9 codes grouping (level 3 and level 4)
+ccsicd <- read_csv("./data/ccsicd.csv")
+ccsicd$ICD9 <- gsub("'","\\1", ccsicd$ICD9)
+ccsicd$ICD9 <- str_trim(ccsicd$ICD9)
+ccsicd$CCS <- gsub("\\[.*","\\1", ccsicd$CCS)
+ccsicd$CCS <- str_trim(ccsicd$CCS)
+
+# List to visualize all the ICD9 diagnosis of the CCU patients
+dxlist <- sort(unique(ccu_diagnoses$CCS))
+# 
+# # Final diagnoses table
+ccu_diagnoses <- left_join(ccu_diagnoses, ccsicd, by=c("ICD9_code"="ICD9")) %>%
+  filter(CCS%in%c("Diabetes mellitus", "Anemia", "STEMI", "NSTEMI", "Acute renal failure", "Acute cerebrovascular disease", "Atrial fibrillation","Blood Malignancy",
+                  "Chronic obstructive pulmonary disease and bronchiectasis","Coronary atherosclerosis", "Chronic kidney disease", "Diabetes mellitus",
+                  "Heart valve disorders", "Hypertension","Neoplasms", "Shock NOS", "Shock Cardiogenic", "Shock Septic", "Septicemia"))%>%
+  select(-c("ICD9_code"))%>%
+  #This ensure that duplicates of values are only counted once
+  group_by(patientunitstayid, CCS)%>%
+  summarise()
+# 
+# # Function that cadds count of each dx in the
+get_counts <-function(dataset){
+  summary <- dataset %>% group_by(patientunitstayid,CCS) %>% dplyr::summarise(count=n())%>% arrange(desc(count))%>%ungroup(patientunitstayid)
+  return(summary)
+}
+
+# 
+# # Final wide dx table 
+# # 0 : no diagnosis 1: diagnosis
+narrow_ccu_dx <- get_counts(ccu_diagnoses)
+wide_ccu_dx <- narrow_ccu_dx%>%spread(CCS, count, fill=0)
+# 
+# ## Making sure that patients do not have STEMI and non STEMI
+wide_ccu_dx <- wide_ccu_dx %>%
+  mutate(NSTEMI=replace(NSTEMI, NSTEMI==1 & STEMI==1, 0))
+
+# test <- left_join(ccu_patients, wide_ccu_dx, by=c("patientunitstayid"))
+# 
+# for (row in 1:nrow(raw_icd9)) {
+#   if(clean_icd9[row, 2] ==  "G610")
+#     print("Hello")
+#     
+#   
+# 
+#   #print(clean_icd9[row, 2])
+# }
+
+#go through and add the diagnoses
+#add the VIS score via er
+#urine output should be over 24hrs
+#add BMI, maybe blood transfusion, blood pH
+
 
