@@ -19,13 +19,7 @@ library(infer) # stastical analysis with gg grammar
 
 
 # NULL values cleaning pre-analytics - this file is ready for analysis with only 5% of NULL
-mimic_analysis <- read_csv("./data/mimic_cardiogenic_shock_analysis_2.csv", col_names = TRUE)  %>%dplyr::select(-X1)
-
-
-# Create the knn imputation model on the dataset and replacing using KKN  
-mimic_analysis <- mimic_analysis%>%mutate(age=replace_na(mimic_analysis$age, 95))
-
-
+mimic_analysis <- read_csv("./data/mimic_cardiogenic_shock_analysis_selected.csv", col_names = TRUE) 
 
 preProcess_missingdata_model <-  preProcess(mimic_analysis, #[,c('Embarked', 'Sex')] if knnImpute and want to only select row/col
                                             method = "bagImpute",   # or *bagImpute* / *medianImpute*
@@ -42,11 +36,11 @@ preProcess_missingdata_model <-  preProcess(mimic_analysis, #[,c('Embarked', 'Se
 
 mimic_analysis <- predict(preProcess_missingdata_model, newdata = mimic_analysis)
 
+a2 <- skim_to_wide(mimic_analysis)
+
 mimic_analysis_processed <- mimic_analysis # saving at midstep
 
-mimic_analysis <- mimic_analysis%>%dplyr::select(-c("icu_mortality", "any_pressor", "delta_creat_0_3", "scai_shock"))
 
-a2 <- skim_to_wide(mimic_analysis)
 
 
 # Creating training/test data sets
@@ -91,6 +85,74 @@ trControl <- trainControl(method  = "cv",
                             ) # classProb T essential to specify classification alternative = transforme outcome as factor
 
 
+
+
+# Subset selection
+
+# Exploration of correlation
+library(mlbench)
+correlation_var <- cor(mimic_analysis_1,mimic_analysis_1$hospital_mortality)
+correlationMatrix <- cor(mimic_analysis_1[,-54])
+highlyCorrelated <- findCorrelation(correlationMatrix, cutoff=0.5)
+
+# Removing highly correlated
+
+#mimic_analysis_1 <- mimic_analysis_1[,-(51,28,58,23,32,15)]
+
+#Method1 - not Caret
+
+library(MASS)
+logistic_reg_model_sub <- logistic_reg_model$finalModel %>% stepAIC(trace = FALSE)
+#coef(logistic_reg_model_sub)
+
+#Method2 - Caret RFE
+
+subsets <- c(1, 5, 10, 20, 30, 40, 50, 60)
+
+library(randomForest)
+
+ctrl <- rfeControl(functions = rfFuncs,
+                   method = "cv",
+                   number = 3,
+                   verbose = FALSE)
+
+rfFuncs$summary <- twoClassSummary # did not work ?
+
+# Convert character to factor for RFE algorithm
+
+train=train %>% mutate_if(is.character, as.factor)
+lmProfile <- rfe(x=train[,-54], y=train[[54]],
+                 sizes = subsets,
+                 metric = "ROC",
+                 rfeControl = ctrl)
+
+#Method3 - bestglm
+
+library(bestglm)
+Xy <- cbind(train[,-54], train[,54])
+BestCV <- bestglm(Xy, IC="CV", t=10) # cross-validation
+summary(BestCV$BestModel)
+
+
+#Method4 - PCA
+library()
+mimic_analysis_1=mimic_analysis %>% mutate_if(is.factor, as.numeric)
+mimic.pca <- prcomp(mimic_analysis_1, scale = TRUE, center = TRUE)
+summary(mimic.pca)
+
+library(factoextra)
+
+fviz_pca_var(mimic.pca,
+             col.var = "contrib", # Color by 
+             #contribution to the PC
+             repel = TRUE     # Make sure 
+             #text doesn't overlap
+)
+
+
+
+
+
 #######------------ Logistic Models --------- ######
 
 
@@ -99,6 +161,33 @@ logistic_reg_model <- train(hospital_mortality ~ .,
                             metric     = "ROC",
                             trControl  = trControl,
                             data       = train)
+
+
+logistic_reg_model_sub <- train(hospital_mortality ~ cardiac_arrest_and_ventricular_fibrillation + shock_index + vent + sp_o2_mean + bun_max + charlson_score ,
+                            method     = "glm",
+                            metric     = "ROC",
+                            trControl  = trControl,
+                            data       = train)
+
+#Method 5
+logistic_reg_model_sub_back <- train(hospital_mortality ~ ., data= train,
+                     trControl = trControl,
+                     method = "glmStepAIC",
+                     family=binomial(link="logit"),
+                     na.action = na.omit)
+
+logistic_reg_model_sub_back$finalModel$coefficients
+
+
+logistic_reg_model_sub_step <- train(hospital_mortality ~ acute_cerebrovascular_disease + anemia + blood_malignancy + cardiac_arrest_and_ventricular_fibrillation +
+                                        + coronary_atherosclerosis  + heart_valve_disorders  + neoplasms +
+                                       septicemia + heart_rate_mean + dias_bp_mean + mean_bp_mean + sp_o2_mean + temp_c_mean + aniongap_max + bun_max + ph_min + vent + age + charlson_score + shock_index  ,
+                            method     = "glm",
+                            metric     = "ROC",
+                            trControl  = trControl,
+                            data       = train)
+
+logistic_reg_model_sub_step
 
 # Probability threshold
 
@@ -117,39 +206,15 @@ ggplot(resample_stats, aes(x = prob_threshold, y = Sensitivity)) +
   geom_point(aes(y = Specificity), col = "red")
 
 
-# Subset selection
-
-
-#Method1 - not Caret
-
-#library(MASS)
-#logistic_reg_model_sub <- logistic_reg_model$finalModel %>% stepAIC(trace = FALSE)
-#coef(logistic_reg_model_sub)
-
-#Method2 - Caret
-
-subsets <- c(1, 10, 20, 30, 40, 50, 60)
-
-library(randomForest)
-
-ctrl <- rfeControl(functions = rfFuncs,
-                   method = "cv",
-                   number = 3,
-                   verbose = FALSE)
-
-rfFuncs$summary <- twoClassSummary # did not work ?
-
-lmProfile <- rfe(x=train[,-61], y=train[[61]],
-                 sizes = subsets,
-                 metric = "ROC",
-                 rfeControl = ctrl)
-
 #######------------ Model Metrics --------- ######
 
 summary(logistic_reg_model)
 confusionMatrix(logistic_reg_model)
 varImp(logistic_reg_model)
 plot(varImp(logistic_reg_model))
+
+summary(logistic_reg_model_sub)
+confusionMatrix(logistic_reg_model_sub)
 
 #######------------ Test Data Evaluation --------- ######
 
@@ -158,7 +223,12 @@ levels(predictions) <- c("0", "1") # to make sure levels are the same to allow f
 levels(test$hospital_mortality) <- c("0", "1")
 accuracy_lreg_test   <- mean(predictions == test$hospital_mortality)
 
-M <- confusionMatrix(reference = test$hospital_mortality, data = predictions)
+test_confusion_M <- confusionMatrix(reference = test$hospital_mortality, data = predictions)
+
+
+predictions_sub <- predict(logistic_reg_model_sub_step, test)
+test_confusion_M_sub <- confusionMatrix(reference = test$hospital_mortality, data = predictions_sub)
+
 
 #######------------ Other Models --------- ######
 
@@ -201,7 +271,7 @@ gbm_model <- train(hospital_mortality ~ .,
 
 
 models_compare <- resamples(
-  list(knn = knn_model, glm = logistic_reg_model , glmnet = lasso_model, gbm = gbm_model)) # Must read on resampling for comparison
+  list(glm = logistic_reg_model , glmnet = lasso_model, gbm = gbm_model)) # Must read on resampling for comparison
 
 summary(models_compare) # NB this only compares on the traning sets.
 
