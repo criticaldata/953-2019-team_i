@@ -42,15 +42,44 @@ ccu_gender_age <- run_query(
 ccu_mortality <- run_query(
   
   " 
-  SELECT ap.patientunitstayid, ap.actualicumortality, ap.actualhospitalmortality
+SELECT ap.patientunitstayid
+, min(CASE WHEN ap.actualicumortality LIKE '%ALIVE%' THEN  1 else 0 END) as icu_mortality
+, min(CASE WHEN ap.actualhospitalmortality LIKE '%ALIVE%' THEN  1 else 0 END) as hospital_mortality
   FROM `physionet-data.eicu_crd.apachepatientresult` ap
   #SELECT pt.unitDischargeStatus, pt.hospitalDischargeStatus, ap.actualicumortality, ap. actualhospitalmortality
   #FROM `physionet-data.eicu_crd.patient` pt, `physionet-data.eicu_crd.apachepatientresult` ap
   WHERE ap.patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
-  GROUP BY patientunitstayid  
-     
+ group by patientunitstayid
+ order BY patientunitstayid  
 "
 )
+
+ccu_mortality <- left_join(ccu_mortality, ccu_gender_age, by=c("patientunitstayid"="patientunitstayid"))
+
+
+#ccu_mortality <- lapply(ccu_mortality, gsub, pattern = "> 89", replacement = "89", fixed = TRUE)
+
+ccu_mortality <- ccu_mortality %>%
+  mutate(
+    #age = ifelse(age > 89, NA_character_ , age),
+    age_group = case_when(
+      age == "> 89" ~ '89+',
+      age < 11 ~ "< 11",
+      age < 20 ~ "11-20",
+      age < 30 ~ "20-29",
+      age < 40 ~ "30-39",
+      age < 50 ~ "40-49",
+      age < 60 ~ "50-59",
+      age < 70 ~ "60-69",
+      age < 80 ~ "70-79",
+      age < 90 ~ "80-89",
+      age < 100 ~ "90-99",
+      age < 120 ~ "100+",
+      
+      age == NA_character_ ~ NA_character_ 
+    )
+  )
+
 
 
 ccu_diagnoses <- run_query(
@@ -74,6 +103,7 @@ WHERE rn = 1
 
 ccu_labs1 <- run_query(
 "
+
 SELECT
   pvt.uniquepid, pvt.patienthealthsystemstayid, pvt.patientunitstayid
   , min(CASE WHEN labname = 'anion gap' THEN labresult ELSE null END) as ANIONGAP_min
@@ -116,6 +146,10 @@ SELECT
   , max(CASE WHEN labname = 'BUN' THEN labresult ELSE null end) as BUN_max
   , min(CASE WHEN labname = 'WBC x 1000' THEN labresult ELSE null end) as WBC_min
   , max(CASE WHEN labname = 'WBC x 1000' THEN labresult ELSE null end) as WBC_max
+  , min(CASE WHEN labname = 'troponin - I' THEN labresult ELSE null end) as troponinI_min
+  , max(CASE WHEN labname = 'troponin - I' THEN labresult ELSE null end) as troponinI_max
+  , min(CASE WHEN labname = 'troponin - T' THEN labresult ELSE null end) as troponinT_min
+  , max(CASE WHEN labname = 'troponin - T' THEN labresult ELSE null end) as troponinT_max
 
 
 FROM
@@ -146,6 +180,8 @@ FROM
      WHEN labname = 'sodium' and le.labresult >   200 THEN null -- mEq/L == mmol/L 'SODIUM'
      WHEN labname = 'BUN' and le.labresult >   300 THEN null -- 'BUN'
      WHEN labname = 'WBC x 1000' and le.labresult >  1000 THEN null -- 'WBC'
+     WHEN labname = 'troponin - I' and le.labresult >  1000 THEN null -- 'Troponin I'
+     WHEN labname = 'troponin - T' and le.labresult >  1000 THEN null -- 'Troponin T'
    ELSE le.labresult
    END AS labresult
 
@@ -175,7 +211,9 @@ FROM
     	'PT',
     	'sodium',
     	'BUN',
-    	'WBC x 1000'
+    	'WBC x 1000',
+    	'troponin - I',
+    	'troponin - T'
     )
     AND labresult IS NOT null AND labresult > 0 -- lab values cannot be 0 and cannot be negative
 ) pvt
@@ -539,9 +577,36 @@ AND chartoffset <= 1440
 "
 )
 
+
+#This gets all the true intake/output from he database using a search
+#Only returns ~23k patients, sin't work using
+
+urinev2 <- run_query(
+  
+  "
+SELECT *
+FROM `physionet-data.eicu_crd.intakeoutput`
+WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+AND intakeoutputoffset <= 1440 AND (celllabel LIKE "%urine%" or celllabel LIKE "%Urine%")
+#GROUP BY patientunitstayid
+"
+)
+
+urinedaily <- run_query(
+  "
+SELECT patientunitstayid, chartoffset, urineoutput 
+FROM `physionet-data.eicu_crd_derived.pivoted_uo`
+WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+AND chartoffset <= 1440
+#GROUP BY patientunitstayid
+ORDER BY patientunitstayid
+"
+)
+
+
 #Is the urine cumulative?
 urine24 <- run_query(
-  "
+"
 SELECT patientunitstayid, max(urineoutput) as urineoutput
 FROM `physionet-data.eicu_crd_derived.pivoted_uo`
 WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
@@ -552,7 +617,7 @@ ORDER BY patientunitstayid
 )
 
 
-gcs <- run_query(
+ccu_gcs <- run_query(
   "
   SELECT min(gcs)as GCS_min, patientunitstayid
   FROM `physionet-data.eicu_crd_derived.pivoted_score`
@@ -563,18 +628,8 @@ gcs <- run_query(
   "
 )
 
-raw_pressors <- run_query(
-  "
-  SELECT *
-  FROM `physionet-data.eicu_crd_derived.pivoted_med`
-  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
-  AND chartoffset <= 1440 
-  ORDER by patientunitstayid
-  
-  "
-)
 
-sum_pressors <- run_query(
+wide_pressors <- run_query(
   "
   SELECT patientunitstayid, max(dopamine) as dopamine, max(dobutamine) as dobutamine, max(norepinephrine) as norepinephrine, max(epinephrine) as epinephrine, max(phenylephrine) as phenyl, max (vasopressin) as vasopressin, max(milrinone) as milrinone, max(heparin) as heparin, max(warfarin) as warfarin
   FROM `physionet-data.eicu_crd_derived.pivoted_med`
@@ -583,29 +638,61 @@ sum_pressors <- run_query(
   #ORDER by patientunitstayid
   GROUP by patientunitstayid
   
+  "
+)
+
+any_pressor <- apply(wide_pressors[, -1], 1, max)
+total_pressors = rowSums(wide_pressors[, -1])
+wide_pressors <- cbind(sum_pressors, any_pressor, total_pressors)
+
+wide_pressors_firsthour <- run_query(
+  "
+  SELECT patientunitstayid, max(dopamine) as dopamine_first_hour, max(dobutamine) as dobutamine_first_hour, max(norepinephrine) as norepinephrine_first_hour, max(epinephrine) as epinephrine_first_hour, max(phenylephrine) as phenyl_first_hour, max (vasopressin) as vasopressin_first_hour, max(milrinone) as milrinone_first_hour, max(heparin) as heparin_first_hour, max(warfarin) as warfarin_first_hour
+  FROM `physionet-data.eicu_crd_derived.pivoted_med`
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  AND chartoffset <= 60 
+  #ORDER by patientunitstayid
+  GROUP by patientunitstayid
   
   "
 )
+any_pressor_firsthour <- apply(wide_pressors_firsthour[, -1], 1, max)
+total_pressors_firsthour <- rowSums(wide_pressors_firsthour[, -1])
+wide_pressors_firsthour <- cbind(wide_pressors_firsthour, total_pressors_firsthour, any_pressor_firsthour)
+
+
 
 #look into icd9 codes use query22
-iabp <- run_query(
+wide_procedures_24 <- run_query(
   
   "
-  SELECT *
+SELECT patientunitstayid
+, max(CASE WHEN LOWER(treatmentstring) LIKE '%intraaortic balloon pump%'  THEN 1 else 0 END) as iabp
+, max(CASE WHEN LOWER(treatmentstring) LIKE '%impella%'  THEN 1 else 0 END) as impella
+, max(CASE WHEN LOWER(treatmentstring) LIKE '%ECMO%'  THEN 1 else 0 END) as ecmo
   FROM `physionet-data.eicu_crd.treatment` 
   WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
-  AND treatmentstring LIKE '%intraaortic balloon pump%' 
-  #AND treatmentstring LIKE '%ECMO%' 
+  AND treatmentoffset <= 1440
+  Group by patientunitstayid
+  
+  
   "
 )
 
-any_pressor <- rowSums(sum_pressors[, -1])
+procedure_list <- run_query(
+  
+  "
+  SELECT DISTINCT treatmentstring
+  FROM `physionet-data.eicu_crd.treatment` 
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  AND treatmentstring LIKE '%oxygenation%'
+#Group by patientunitstayid
+  group by treatmentstring
+  
 
-sum_pressor <- cbind(sum_pressors, any_pressor)
+  "
+)
 
-#What happens in chart offset is very negative?
-
-#write.csv(ccu_labs1, file = "MyData.csv")
 
 
  cats <- run_query(
@@ -654,13 +741,15 @@ dxlist <- sort(unique(ccu_diagnoses$CCS))
 # 
 # # Final diagnoses table
 ccu_diagnoses <- left_join(ccu_diagnoses, ccsicd, by=c("ICD9_code"="ICD9")) %>%
-  filter(CCS%in%c("Diabetes mellitus", "Anemia", "STEMI", "NSTEMI", "Acute renal failure", "Acute cerebrovascular disease", "Atrial fibrillation","Blood Malignancy",
+  filter(CCS%in%c("Diabetes mellitus", "Anemia", "STEMI", "NSTEMI", "Acute renal failure", "Acute cerebrovascular disease", "Atrial fibrillation","Blood Malignancy", 
                   "Chronic obstructive pulmonary disease and bronchiectasis","Coronary atherosclerosis", "Chronic kidney disease", "Diabetes mellitus",
-                  "Heart valve disorders", "Hypertension","Neoplasms", "Shock NOS", "Shock Cardiogenic", "Shock Septic", "Septicemia"))%>%
+                  "Heart valve disorders","Cardiac arrest and ventricular fibrillation", "Hypertension","Neoplasms", "Shock NOS", "Shock Cardiogenic", "Shock Septic", "Septicemia"))%>%
   select(-c("ICD9_code"))%>%
   #This ensure that duplicates of values are only counted once
   group_by(patientunitstayid, CCS)%>%
   summarise()
+
+
 # 
 # # Function that cadds count of each dx in the
 get_counts <-function(dataset){
@@ -694,4 +783,92 @@ wide_ccu_dx <- wide_ccu_dx %>%
 #urine output should be over 24hrs
 #add BMI, maybe blood transfusion, blood pH
 
+shock_index = data.frame(ccu_vitals$patientunitstayid, ccu_vitals$MeanBP_Mean/ccu_vitals$HeartRate_Mean)
+colnames(shock_index) = c("patientunitstayid", "shock_index")
 
+
+#approx 3320 patients have it missing
+library(DataExplorer)
+plot_missing(shock_index)
+plot_bar(shock_index)
+
+vent_raw <- run_query(
+  
+  "
+  SELECT patientunitstayid
+  FROM `physionet-data.eicu_crd_derived.ventilation_events`
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  GROUP BY patientunitstayid
+  
+  "
+)
+
+vent_raw$vent = 1
+
+ccu_vent <- left_join(ccu_patients, vent_raw, by=c("patientunitstayid"="patientunitstayid"))
+ccu_vent$vent <- replace_na(ccu_vent$vent, 0)
+
+
+
+install.packages("comorbidity")      
+library(comorbidity)
+
+charlson <- clean_icd9
+# Assigning Charlson index per id
+charlson9 <- comorbidity(x = charlson, id = "patientunitstayid", code = "ICD9_code", score = "charlson", icd = "icd9", assign0 = FALSE)
+charlson9 <- charlson9%>%dplyr::select(patientunitstayid, score)%>%rename(charlson_score=score)
+
+#Admission contains for all patients, but it's ahrd to process
+admissionV1 = run_query(
+  "
+  SELECT *
+  FROM `physionet-data.eicu_crd.admissiondx`
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  
+  "
+  
+)
+
+ccu_patients_id_los <- run_query(
+  "
+  SELECT patientunitstayid, icu_los_hours as los_hours, hospitaladmitoffset AS intime, hospitaldischargeoffset as outtime
+  FROM `physionet-data.eicu_crd_derived.icustay_detail`
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  "
+  
+)
+
+
+ccu_demographics_dob_gender_death <- run_query(
+  
+  "
+  SELECT patientunitstayid, (CASE WHEN gender = 'Female' THEN 'F' else 'M' END) as gender
+  FROM `physionet-data.eicu_crd.patient`
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  
+  "
+)
+
+#Not sure if this is fully accurate
+#ccu_uo_24h <- 
+
+ccu_RRT24h <- run_query(
+  "
+  SELECT patientunitstayid, max(dialysis) as RRT
+  FROM `physionet-data.eicu_crd.apacheapsvar`
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  group by patientunitstayid
+  "
+  
+)
+
+ccu_race <- run_query(
+  
+  "
+  SELECT patientunitstayid, ethnicity
+  FROM `physionet-data.eicu_crd.patient`
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  #group by patientunitstayid
+  "
+  
+)
