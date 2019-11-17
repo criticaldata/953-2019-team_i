@@ -101,7 +101,7 @@ WHERE rn = 1
 #GROUP BY patientunitstayid, diagnosisid, diagnosisoffset, diagnosisstring, icd9code
 
 
-ccu_labs1 <- run_query(
+ccu_labs <- run_query(
 "
 
 SELECT
@@ -150,6 +150,8 @@ SELECT
   , max(CASE WHEN labname = 'troponin - I' THEN labresult ELSE null end) as troponinI_max
   , min(CASE WHEN labname = 'troponin - T' THEN labresult ELSE null end) as troponinT_min
   , max(CASE WHEN labname = 'troponin - T' THEN labresult ELSE null end) as troponinT_max
+  , avg(CASE WHEN labname = 'pH' THEN labresult ELSE null end) as pH_mean
+
 
 
 FROM
@@ -182,6 +184,8 @@ FROM
      WHEN labname = 'WBC x 1000' and le.labresult >  1000 THEN null -- 'WBC'
      WHEN labname = 'troponin - I' and le.labresult >  1000 THEN null -- 'Troponin I'
      WHEN labname = 'troponin - T' and le.labresult >  1000 THEN null -- 'Troponin T'
+     WHEN labname = 'pH' and le.labresult <= 6.5 and le.labresult >= 8.5 THEN null -- 'pH'
+
    ELSE le.labresult
    END AS labresult
 
@@ -213,7 +217,8 @@ FROM
     	'BUN',
     	'WBC x 1000',
     	'troponin - I',
-    	'troponin - T'
+    	'troponin - T',
+      'pH'
     )
     AND labresult IS NOT null AND labresult > 0 -- lab values cannot be 0 and cannot be negative
 ) pvt
@@ -634,7 +639,7 @@ wide_pressors <- run_query(
   SELECT patientunitstayid, max(dopamine) as dopamine, max(dobutamine) as dobutamine, max(norepinephrine) as norepinephrine, max(epinephrine) as epinephrine, max(phenylephrine) as phenyl, max (vasopressin) as vasopressin, max(milrinone) as milrinone, max(heparin) as heparin, max(warfarin) as warfarin
   FROM `physionet-data.eicu_crd_derived.pivoted_med`
   WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
-  AND chartoffset <= 1440 
+  AND chartoffset <= 1440 AND chartoffset >= 0
   #ORDER by patientunitstayid
   GROUP by patientunitstayid
   
@@ -650,7 +655,7 @@ wide_pressors_firsthour <- run_query(
   SELECT patientunitstayid, max(dopamine) as dopamine_first_hour, max(dobutamine) as dobutamine_first_hour, max(norepinephrine) as norepinephrine_first_hour, max(epinephrine) as epinephrine_first_hour, max(phenylephrine) as phenyl_first_hour, max (vasopressin) as vasopressin_first_hour, max(milrinone) as milrinone_first_hour, max(heparin) as heparin_first_hour, max(warfarin) as warfarin_first_hour
   FROM `physionet-data.eicu_crd_derived.pivoted_med`
   WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
-  AND chartoffset <= 60 
+  AND chartoffset <= 60 AND chartoffset >= 0
   #ORDER by patientunitstayid
   GROUP by patientunitstayid
   
@@ -697,7 +702,6 @@ SELECT patientunitstayid
   WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
   AND treatmentoffset <= 1440
   Group by patientunitstayid
-  
   
   "
 )
@@ -811,9 +815,28 @@ colnames(shock_index) = c("patientunitstayid", "shock_index")
 
 
 #approx 3320 patients have it missing
-library(DataExplorer)
-plot_missing(shock_index)
-plot_bar(shock_index)
+# library(DataExplorer)
+# plot_missing(shock_index)
+# plot_bar(shock_index)
+# 
+# 
+# wide_cabg_pci <- c('patientunitstayid','cabg','pci')
+# #for pci and cabg
+# for (row in 1:nrow(clean_icd9)) {
+#     icd9 <- raw_icd9[row, 2]
+#     #print(icd9)
+#     if(icd9 == "66" ||  icd9 == "3604" ||  icd9 == "3606" ||  icd9 == "3607"||  icd9 == "3609") {
+#          #wide_cabg_pci.data <- (clean_icd9[row, 1], 1, 0)
+#           #print('cabg')
+#     } 
+#     
+#     if(icd9 == "3610" ||  icd9 == "3611" ||  icd9 == "3612" ||  icd9 == "3613"||  icd9 == "3614" ||  icd9 == "3615" ||  icd9 == "3616") {
+#       #wide_cabg_pci.data <- (clean_icd9[row, 1], 1, 0)
+#       print('pci')
+#     } 
+#     
+#     
+#     }
 
 
 #The below code enables th data collection from the ventilation events table, but only has about 2k unique patients
