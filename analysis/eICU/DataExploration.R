@@ -43,8 +43,8 @@ ccu_mortality <- run_query(
   
   " 
 SELECT ap.patientunitstayid
-, min(CASE WHEN ap.actualicumortality LIKE '%ALIVE%' THEN  1 else 0 END) as icu_mortality
-, min(CASE WHEN ap.actualhospitalmortality LIKE '%ALIVE%' THEN  1 else 0 END) as hospital_mortality
+, min(CASE WHEN ap.actualicumortality LIKE '%ALIVE%' THEN 0 else 1 END) as icu_mortality
+, min(CASE WHEN ap.actualhospitalmortality LIKE '%ALIVE%' THEN 0 else 1 END) as hospital_mortality
   FROM `physionet-data.eicu_crd.apachepatientresult` ap
   #SELECT pt.unitDischargeStatus, pt.hospitalDischargeStatus, ap.actualicumortality, ap. actualhospitalmortality
   #FROM `physionet-data.eicu_crd.patient` pt, `physionet-data.eicu_crd.apachepatientresult` ap
@@ -592,13 +592,13 @@ AND intakeoutputoffset <= 1440 AND (celllabel LIKE "%urine%" or celllabel LIKE "
 "
 )
 
-urinedaily <- run_query(
+ccu_uo_24h <- run_query(
   "
-SELECT patientunitstayid, chartoffset, urineoutput 
+SELECT patientunitstayid, max(urineoutput) as urineoutput
 FROM `physionet-data.eicu_crd_derived.pivoted_uo`
 WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
-AND chartoffset <= 1440
-#GROUP BY patientunitstayid
+AND chartoffset <= 1440 and chartoffset >= 0 
+GROUP BY patientunitstayid
 ORDER BY patientunitstayid
 "
 )
@@ -643,7 +643,7 @@ wide_pressors <- run_query(
 
 any_pressor <- apply(wide_pressors[, -1], 1, max)
 total_pressors = rowSums(wide_pressors[, -1])
-wide_pressors <- cbind(sum_pressors, any_pressor, total_pressors)
+wide_pressors <- cbind(wide_pressors, any_pressor, total_pressors)
 
 wide_pressors_firsthour <- run_query(
   "
@@ -662,12 +662,35 @@ wide_pressors_firsthour <- cbind(wide_pressors_firsthour, total_pressors_firstho
 
 
 
+
+
+drug <- run_query(
+  "
+  SELECT patientunitstayid, drugrate as vaso_rate, drugamount as vaso_amount, infusionoffset
+    #DISTINCT drugname
+    FROM `physionet-data.eicu_crd.infusiondrug` 
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  AND LOWER(drugname) LIKE '%dobutamine%'
+  "
+)
+
+
+
+
+
+
+
+
+
+
+
+
 #look into icd9 codes use query22
 wide_procedures_24 <- run_query(
   
   "
 SELECT patientunitstayid
-, max(CASE WHEN LOWER(treatmentstring) LIKE '%intraaortic balloon pump%'  THEN 1 else 0 END) as iabp
+, max(CASE WHEN LOWER(treatmentstring) LIKE '%intraaortic balloon%'  THEN 1 else 0 END) as iabp
 , max(CASE WHEN LOWER(treatmentstring) LIKE '%impella%'  THEN 1 else 0 END) as impella
 , max(CASE WHEN LOWER(treatmentstring) LIKE '%ECMO%'  THEN 1 else 0 END) as ecmo
   FROM `physionet-data.eicu_crd.treatment` 
@@ -685,7 +708,7 @@ procedure_list <- run_query(
   SELECT DISTINCT treatmentstring
   FROM `physionet-data.eicu_crd.treatment` 
   WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
-  AND treatmentstring LIKE '%oxygenation%'
+  AND treatmentstring LIKE '%cardio%'
 #Group by patientunitstayid
   group by treatmentstring
   
@@ -792,16 +815,28 @@ library(DataExplorer)
 plot_missing(shock_index)
 plot_bar(shock_index)
 
-vent_raw <- run_query(
-  
-  "
-  SELECT patientunitstayid
-  FROM `physionet-data.eicu_crd_derived.ventilation_events`
+
+#The below code enables th data collection from the ventilation events table, but only has about 2k unique patients
+# vent_raw <- run_query(
+#   
+#   "
+#   SELECT patientunitstayid
+#   FROM `physionet-data.eicu_crd_derived.ventilation_events`
+#   WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+#   GROUP BY patientunitstayid
+#   
+#   "
+# )
+
+vent_raw <- run_query("
+SELECT patientunitstayid
+#DISTINCT drugname
+  FROM `physionet-data.eicu_crd.treatment` 
   WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
-  GROUP BY patientunitstayid
-  
-  "
-)
+  AND LOWER(treatmentstring) LIKE '%mechanical%'
+  AND treatmentoffset <= 1440 
+   group by patientunitstayid
+  order by patientunitstayid   ")
 
 vent_raw$vent = 1
 
@@ -858,9 +893,19 @@ ccu_RRT24h <- run_query(
   FROM `physionet-data.eicu_crd.apacheapsvar`
   WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
   group by patientunitstayid
+  order by patientunitstayid
   "
   
 )
+
+
+RRTTreatment <- run_query( "SELECT patientunitstayid
+  FROM `physionet-data.eicu_crd.treatment` 
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  AND LOWER(treatmentstring) LIKE '%dialysis%'
+  AND treatmentoffset <= 1440 
+   group by patientunitstayid
+  order by patientunitstayid  ")
 
 ccu_race <- run_query(
   
