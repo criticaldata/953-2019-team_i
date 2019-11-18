@@ -156,7 +156,7 @@ SELECT
 
 FROM
 ( -- begin query that extracts the data
-  SELECT p.uniquepid, p.patienthealthsystemstayid, p.patientunitstayid, le.labname
+  SELECT p.uniquepid, p.patienthealthsystemstayid, p.patientunitstayid, le.labname, le.labresultoffset
 
   -- add in some sanity checks on the values; same checks from original MIMIC version
   -- the where clause below requires all labresult to be > 0, so these are only upper limit checks
@@ -184,7 +184,7 @@ FROM
      WHEN labname = 'WBC x 1000' and le.labresult >  1000 THEN null -- 'WBC'
      WHEN labname = 'troponin - I' and le.labresult >  1000 THEN null -- 'Troponin I'
      WHEN labname = 'troponin - T' and le.labresult >  1000 THEN null -- 'Troponin T'
-     WHEN labname = 'pH' and le.labresult <= 6.5 and le.labresult >= 8.5 THEN null -- 'pH'
+     WHEN labname = 'pH' and le.labresult <= 5.5 and le.labresult >= 9.5 THEN null -- 'pH'
 
    ELSE le.labresult
    END AS labresult
@@ -220,10 +220,10 @@ FROM
     	'troponin - T',
       'pH'
     )
-    AND labresult IS NOT null AND labresult > 0 -- lab values cannot be 0 and cannot be negative
+    AND labresult IS NOT null AND labresult > 0 AND labresultoffset <=1440 -- lab values cannot be 0 and cannot be negative
 ) pvt
 WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY   patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
-
+AND labresultoffset <=1440
 GROUP BY pvt.uniquepid, pvt.patienthealthsystemstayid, pvt.patientunitstayid
 ORDER BY pvt.uniquepid, pvt.patienthealthsystemstayid, pvt.patientunitstayid;
 "
@@ -259,6 +259,9 @@ SELECT patientunitstayid
 , min(spo2) as SpO2_Min
 , max(spo2) as SpO2_Max
 , avg(spo2) as SpO2_Mean
+, avg(nibp_systolic) as SysBP_Mean
+, (avg(nibp_systolic) + 2*avg(nibp_diastolic))/3 as Mean_BP_Calc
+
 
 
 FROM
@@ -401,6 +404,7 @@ FROM
   OR ibp_diastolic IS NOT NULL
   OR ibp_mean IS NOT NULL
   AND patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY   patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  AND nursingchartentryoffset <= 1440
   group by patientunitstayid, nursingchartoffset, nursingchartentryoffset
   order by patientunitstayid, nursingchartoffset, nursingchartentryoffset)
   WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )

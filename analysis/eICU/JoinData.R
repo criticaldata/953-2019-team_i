@@ -101,7 +101,7 @@ str(ccu_analysis2, list.len = 150)
 
 
 ## Table is final for all MIMIC CCU patients
-write.csv(ccu_analysis2, file="eICU_CCUdata_Nov18.csv")
+write.csv(ccu_analysis2, file="eICU_CCUdata_Nov18V2.csv")
 
 library(DataExplorer)
 plot_missing(ccu_analysis2)
