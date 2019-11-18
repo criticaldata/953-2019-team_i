@@ -73,7 +73,7 @@ ccu_analysis2$ecmo <- replace_na(ccu_analysis2$ecmo, 0)
 ccu_analysis2$impella <- replace_na(ccu_analysis2$impella, 0)
 #ccu_analysis2$cabg <- replace_na(ccu_analysis2$cabg, 0)
 #ccu_analysis2$pci <- replace_na(ccu_analysis2$pci, 0)
-#ccu_analysis2$iabp <- replace_na(ccu_analysis2$iabp, 0)
+ccu_analysis2$iabp <- replace_na(ccu_analysis2$iabp, 0)
 ccu_analysis2$dobutamine <- replace_na(ccu_analysis2$dobutamine, 0)
 ccu_analysis2$dopamine <- replace_na(ccu_analysis2$dopamine, 0)
 ccu_analysis2$epinephrine <- replace_na(ccu_analysis2$epinephrine, 0)
@@ -101,4 +101,9 @@ str(ccu_analysis2, list.len = 150)
 
 
 ## Table is final for all MIMIC CCU patients
-write.csv(ccu_analysis_table, file="eICU_CCUdata_V2.csv")
+write.csv(ccu_analysis2, file="eICU_CCUdata_Nov18.csv")
+
+library(DataExplorer)
+plot_missing(ccu_analysis2)
+plot_bar(ccu_analysis2)
+# 

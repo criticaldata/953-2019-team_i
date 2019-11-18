@@ -661,6 +661,7 @@ wide_pressors_firsthour <- run_query(
   
   "
 )
+
 any_pressor_firsthour <- apply(wide_pressors_firsthour[, -1], 1, max)
 total_pressors_firsthour <- rowSums(wide_pressors_firsthour[, -1])
 wide_pressors_firsthour <- cbind(wide_pressors_firsthour, total_pressors_firsthour, any_pressor_firsthour)
