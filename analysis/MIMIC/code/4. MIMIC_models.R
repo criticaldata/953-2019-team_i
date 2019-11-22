@@ -19,7 +19,7 @@ library(infer) # stastical analysis with gg grammar
 
 
 # NULL values cleaning pre-analytics - this file is ready for analysis with only 5% of NULL
-mimic_analysis <- read_csv("./data/mimic_cardiogenic_shock_analysis_selected.csv", col_names = TRUE) 
+eicu_analysis <- read_csv("./eICU_CCUdata_V2", col_names = TRUE) 
 
 preProcess_missingdata_model <-  preProcess(mimic_analysis, #[,c('Embarked', 'Sex')] if knnImpute and want to only select row/col
                                             method = "bagImpute",   # or *bagImpute* / *medianImpute*

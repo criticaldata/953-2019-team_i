@@ -15,7 +15,7 @@ library(RANN)
 
 ## Data loading 
 
-mimic <- read_csv("./data/FINAL_MIMIC_all_CCU_patients.csv", col_names = TRUE) %>% select(-X1)
+mimic <- read_csv("../MIMIC/data/FINAL_MIMIC_all_CCU_patients.csv", col_names = TRUE) %>%dplyr::select(-X1)
 
 ## Replacing appropriate ages
 
@@ -36,7 +36,9 @@ mimic <- mimic%>%mutate(
 )
 
 # Non-shock table to verify that non-shock patients were not forgotten by mistake
-non_shock <- mimic[-which(mimic$scai_shock=="NO"),]  #table(mimic$scai_shock)
+non_shock_m <- mimic[which(mimic$scai_shock=="NO"),]  #table(mimic$scai_shock)
+shock_m <- mimic[-which(mimic$scai_shock=="NO"),]  #
+table(shock_m$hospital_mortality)
 
 
 # Adding two variables
