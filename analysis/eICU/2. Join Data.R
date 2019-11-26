@@ -2,7 +2,7 @@
 
 tablelist <- list(wide_ccu_dx, ccu_vitals, ccu_labs, ccu_patients_id_los, ccu_demographics_dob_gender_death,
                   ccu_uo_24h, ccu_RRT24h, ccu_vent, wide_procedures_24, wide_pressors, wide_pressors_firsthour,
-                  ccu_gcs, ccu_mortality)
+                  ccu_gcs, ccu_mortality, ccu_bmi, charlson9, ccu_race)
 
 #tablelist <- list(ccu_vitals, sum_pressor, ccu_demographics, ccu_diagnoses, ccu_gender_age, ccu_labs1)
 #remove_unecessary_index <- function(dflist){
@@ -101,7 +101,7 @@ str(ccu_analysis2, list.len = 150)
 
 
 ## Table is final for all MIMIC CCU patients
-write.csv(ccu_analysis2, file="eICU_CCUdata_Nov18V2.csv")
+write.csv(ccu_analysis2, file="eICU_Joined_Nov25V1.csv")
 
 library(DataExplorer)
 plot_missing(ccu_analysis2)

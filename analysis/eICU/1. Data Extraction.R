@@ -945,3 +945,14 @@ ccu_race <- run_query(
   "
   
 )
+
+
+
+ccu_bmi <- run_query(
+  "
+  SELECT patientunitstayid 
+  , (CASE WHEN admissionheight > 20  THEN (admissionweight/POW(admissionheight/100,2)) else Null END) as bmi
+  FROM `physionet-data.eicu_crd_derived.icustay_detail`
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  "
+)
