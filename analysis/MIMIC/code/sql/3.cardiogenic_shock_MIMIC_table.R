@@ -28,7 +28,7 @@ mimic <- mimic%>%mutate(age=replace_na(mimic$age, 95))
 
 mimic <- mimic%>%mutate(
   scai_shock = case_when(
-    lactate_max > 2   ~ "C", #| | urine_output < 720 ~ "C", #doubled_creat == 1, & delta_creat_0_3 == 1
+    lactate_max > 2 & doubled_creat == 1 ~ "C", #| | urine_output < 720 ~ "C", #doubled_creat == 1, & delta_creat_0_3 == 1
     any_pressor >= 1 | total_pressors > total_pressors_first_hour ~ "D",
     any_pressor_first_hour >= 2 | iabp == 1 ~ "E",
     TRUE ~ "NO"
@@ -70,5 +70,6 @@ mimic_analysis <- mimic_shock%>%
             "delta_creat_0_3", "scai_shock"))
 
 
+write.csv(mimic_analysis, file="mimic_cardiogenic_shock_selected.csv")
 
 

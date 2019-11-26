@@ -15,7 +15,7 @@ library(RANN)
 
 ## Data loading 
 
-eicu <- read_csv("./eICU_CCU_pre.csv", col_names = TRUE)
+eicu <- read_csv("./eICU_Joined_Nov25V1.csv", col_names = TRUE)
 
 
 ## Removing duplicate columns
@@ -61,14 +61,14 @@ eicu <- eicu%>%rename(
 # 1. bmi
 # 2. pci
 # 3. cabg
-# 4. ethnicity
-# 5. charlson_score
+# 4. ethnicity V
+# 5. charlson_score V
 # 6. sofa
 # 7. vis, nee
 # 8. ecmo
-# 9. creatinine dummies (delta_creat_0_3, doubled_creat)
+# 9. creatinine dummies (delta_creat_0_3, doubled_creat) V
 
-eicu <- eicu%>%drop_na(age)
+# eicu <- eicu%>%drop_na(age)
 
 eicu <- eicu%>%mutate(
   doubled_creat = ifelse(abs(creatinine_max/creatinine_min) >= 1.5, 1, 0),
@@ -85,7 +85,7 @@ eicu <- eicu%>%mutate(
   scai_shock = case_when(
     lactate_max > 2 & doubled_creat == 1 ~ "C",
     any_pressor >= 1  ~ "D", #| total_pressors > total_pressors_first_hour 
-    any_pressor_first_hour >= 2 | iabp == 1 ~ "E",
+    any_pressor_firsthour >= 2 | iabp == 1 ~ "E",
     TRUE ~ "NO"
   )
 )
@@ -125,7 +125,7 @@ write.csv(eicu, file="eicu_ccu_clean_v1.csv")
 eicu_shock <- eicu%>%filter(scai_shock%in%c("C","D","E"))
 
 
-# Final Cardiogenic Shock MIMIC population
+# Final Cardiogenic Shock eICU population
 write.csv(eicu_shock, file="eicu_cardiogenic_shock.csv")
 
 
@@ -133,11 +133,11 @@ write.csv(eicu_shock, file="eicu_cardiogenic_shock.csv")
 
 eicu <- eicu_shock%>%
   dplyr::select(-c("patientunitstayid", "intime", "outtime", "los_hours", "dobutamine_first_hour", "dopamine_first_hour","epinephrine_first_hour", "milrinone_first_hour", 
-            "norepinephrine_first_hour","phenyl_first_hour","vasopressin_first_hour","total_pressors_first_hour",
-            "any_pressor_first_hour", "age_group","icu_mortality", "any_pressor", "scai_shock"))
+            "norepinephrine_first_hour","phenyl_first_hour","vasopressin_first_hour","total_pressors_firsthour",
+            "any_pressor_firsthour", "age_group","icu_mortality", "any_pressor", "scai_shock"))
 
 # Additional cleaning has been done in excel to obtain only the final variables included in the analysis
-write.csv(eicu, file="eicu_cardiogenic_shock.csv")
+write.csv(eicu, file="eicu_cardiogenic_shock_selected.csv")
 
 # Must verify age - it seems that age group was included here
 
