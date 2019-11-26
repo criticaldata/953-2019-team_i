@@ -22,38 +22,48 @@ library(infer) # stastical analysis with gg grammar
 
 
 # NULL values cleaning pre-analytics - this file is ready for analysis with only 5% of NULL
-eicu <- read_csv("./eicu_cardiogenic_shock_selected.csv", col_names = TRUE) 
-mimic <- read_csv("./mimic_cardiogenic_shock_analysis_selected.csv", col_names = TRUE) 
+eicu <- read_csv("./eicu_cardiogenic_shock_selected.csv", col_names = TRUE)%>%dplyr::select(-c("X1"))
+mimic <- read_csv("./mimic_cardiogenic_shock_selected.csv", col_names = TRUE)%>%dplyr::select(-"X1")
 
 
 #Variable transformation
 
-colnames <- colnames(eicu)
-eicu <- eicu%>%mutate_at(colnames[1:19], function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
-mimic <- mimic%>%mutate_at(colnames[49], function(x){as.factor(x)}) #gender
-eicu <- eicu%>%mutate_at(colnames[51:55], function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
-eicu <- eicu%>%mutate_at(colnames[57], function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
-eicu <- eicu%>%mutate_at(colnames[59], function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
-eicu <- eicu%>%mutate_at(colnames[61], function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
+#paste0(c[44:55], collapse="','")
 
 
-colnames <- colnames(mimic)
-d <- as.data.frame(colnames)
-mimic <- mimic%>%mutate_at(colnames[1:19], function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
-mimic <- mimic%>%mutate_at(colnames[41], function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
-mimic <- mimic%>%mutate_at(colnames[42], function(x){as.factor(x)}) #gender
-mimic <- mimic%>%mutate_at(colnames[44:49], function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
-mimic <- mimic%>%mutate_at(colnames[52:54], function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
-mimic <- mimic%>%mutate_at(colnames[56:57], function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
-mimic <- mimic%>%mutate_at(colnames[60], function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
+eicu <- eicu%>%mutate_at(c('acute_cerebrovascular_disease','acute_renal_failure','anemia','atrial_fibrillation','blood_malignancy',
+'cardiac_arrest_and_ventricular_fibrillation','chronic_kidney_disease','chronic_obstructive_pulmonary_disease_and_bronchiectasis',
+'coronary_atherosclerosis','diabetes_mellitus','heart_valve_disorders','hypertension','neoplasms','nstemi','septicemia',
+'shock_cardiogenic','shock_nos','shock_septic','stemi'), function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
+eicu <- eicu%>%mutate_at('gender', function(x){as.factor(x)}) 
+eicu <- eicu%>%mutate_at(c("rrt",'vent','iabp','impella','dopamine','dobutamine','norepinephrine','epinephrine','phenyl','vasopressin','milrinone','total_pressors'), 
+                         function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
+eicu <- eicu%>%mutate_at(c("hospital_mortality","doubled_creat","delta_creat_0_3", "any_inotrope"), function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
+eicu <- eicu%>%mutate_at("ethnicity", function(x){as.factor(x)})
 
 
+
+mimic <- mimic%>%mutate_at(c('acute_cerebrovascular_disease','acute_renal_failure','anemia','atrial_fibrillation','blood_malignancy',
+                           'cardiac_arrest_and_ventricular_fibrillation','chronic_kidney_disease','chronic_obstructive_pulmonary_disease_and_bronchiectasis',
+                           'coronary_atherosclerosis','diabetes_mellitus','heart_valve_disorders','hypertension','neoplasms','nstemi','septicemia',
+                           'shock_cardiogenic','shock_nos','shock_septic','stemi'), function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
+mimic <- mimic%>%mutate_at('gender', function(x){as.factor(x)}) 
+mimic <- mimic%>%mutate_at(c("rrt",'vent','iabp','impella','dopamine','dobutamine','norepinephrine','epinephrine','phenyl','vasopressin','milrinone','total_pressors',
+                             "doubled_creat", "cabg", "pci", "vis_24h", "vis_first_hour", "nee_24h", "nee_first_hour", "any_inotrope"), 
+                         function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
+mimic <- mimic%>%mutate_at("hospital_mortality", function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
+mimic <- mimic%>%mutate_at("ethnicity", function(x){as.factor(x)})
+
+
+
+eicu <- eicu%>%rename(
+  "ph_min"="p_h_mean",
+  "mean_bp_mean"="mean_bp_calc"
+  )
 
 
 
 # Null values imputation --------------------------------------------------
-skimmed <- skim_to_wide(eicu)
-skimmed2 <- skim_to_wide(mimic)
 
 
 # eICU a lot of data weirdly missing
@@ -62,7 +72,7 @@ skimmed2 <- skim_to_wide(mimic)
 # gcs,
 # creatinine
 
-eicu <- eicu%>%dplyr::select(-c("inr_min","inr_max", "pt_max", "pt_min", "ptt_max", "ptt_min", "ph_min"))
+# eicu <- eicu%>%dplyr::select(-c("inr_min","inr_max", "pt_max", "pt_min", "ptt_max", "ptt_min", "ph_min"))
 
 # MML imputation
 
@@ -74,7 +84,7 @@ mimic_m <- mice(mimic)
 mimic_analysis <- complete(mimic_m, 1)
 
 write.csv(eicu_analysis, file="imputed_eicu.csv")
-write.csv(mimic_analysis, file="imputed_mimiccsv")
+write.csv(mimic_analysis, file="imputed_mimic.csv")
 
 
 # Data partition ----------------------------------------------------------
