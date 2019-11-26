@@ -319,15 +319,18 @@ gbm_model <- train(hospital_mortality ~ .,
 
 # Validation set testing --------------------------------------------------
 
-
+# Gotta figure out how to measure ROC on test set?! 
 predictions <- predict(logistic_reg_model, mimic_analysis)
 accuracy_lreg_test   <- mean(predictions == mimic_analysis$hospital_mortality, na.rm=F)
 test_confusion_M <- confusionMatrix(reference = mimic_analysis$hospital_mortality, data = predictions)
 library(ROCR)
 library(pROC)
 perf_AUC=performance(logistic_reg_model, mimic_analysis,"auc")
-auc(mimic_analysis, predictions)
+auc(roc(predictions,mimic_analysis))
 result.roc <- pROC::roc(mimic_analysis, predictions) # Draw ROC curve.
+
+pred_ROCR <- prediction(logistic_reg_model_final$finalModel$y, mimic_analysis$hospital_mortality)
+
 
 
 #######------------ Model comparison graphs--------- ######
