@@ -75,6 +75,7 @@ eicu <- eicu%>%rename(
 # eicu <- eicu%>%dplyr::select(-c("inr_min","inr_max", "pt_max", "pt_min", "ptt_max", "ptt_min", "ph_min"))
 
 # MML imputation
+library(mice)
 
 eicu_m <- mice(eicu)
 eicu_analysis <- complete(eicu_m, 1)
