@@ -1,0 +1,10 @@
+"","logistic_reg_model_newest_cat$finalModel$coefficients"
+"(Intercept)",-3.62730758507029
+"cardiac_arrest_and_ventricular_fibrillationyes",1.83115679112204
+"`I(shock_index > 1.35)TRUE`",1.47525577071093
+"acute_cerebrovascular_diseaseyes",0.470731584209973
+"ventyes",1.03224611991418
+"`I(bun_max > 36)TRUE`",0.747226176603841
+"`I(aniongap_max > 19)TRUE`",0.625712239348219
+"`I(age > 75)TRUE`",0.727752573730195
+"`I(sp_o2_mean < 92)TRUE`",2.25411179844737

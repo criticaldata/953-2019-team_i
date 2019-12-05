@@ -8,7 +8,8 @@ install_or_load_pack <- function(pack){
 
 # Packages used
 
-pack <- c("bigrquery","plotly","scales","RColorBrewer","data.table","tidyverse","knitr","corrplot","Hmisc","stats", "janitor", "lubridate", "testthat", "magrittr", "purrr")
+pack <- c("bigrquery","plotly","scales","RColorBrewer","data.table","tidyverse","knitr","corrplot","Hmisc","stats", "janitor", "lubridate", "testthat", "magrittr",
+          "purrr", "healthcareai")
 
 # Loading the pack
 install_or_load_pack(pack)
