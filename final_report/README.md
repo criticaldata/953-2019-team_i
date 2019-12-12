@@ -77,11 +77,7 @@ SCAI Shock class E (any of):
 - Number of vasoactives during ﬁrst 1 h >1 and IABP during the ﬁrst 24 h  
 - Admission lactate >10 mmol/l
 
-
-
 *VIS : VIS ¼ dobutamine þ dopamine þ (10 * phenylephrine þ milrinone) þ (100 *[epinephrine þ norepinephrine]) þ (10,000 * units/kg/min vasopressin)*
-
-
 
 *NEE :  NEE is calculated using the dose equivalency as follows: 0.1 mg/kg/min norepinephrine ¼ 0.1 mg/kg/min epinephrine ¼ 15 mg/kg/min dopamine ¼ 1 mg/kg/ min phenylephrine ¼ 0.04 U/min vasopressin*
 
@@ -102,8 +98,6 @@ SCAI Shock class E  :
 - IABP 
 
 Using those criterias, we obtained 6626 patients in eICU (training cohort) and 2300 patients in MIMIC-III(validation cohort).
-
-
 
 **c) Data Extraction and Analysis**
 
@@ -133,19 +127,19 @@ For each variable of interest, we used the R cut-point package that automatizes 
 
 The final logistic regression model is shown in figure 1.
 
-![](/Users/eyamga/Library/Application Support/marktext/images/2019-12-11-21-50-51-image.png)
+**![](https://lh3.googleusercontent.com/JyPkEPu6pzGpoTs-1IjHWvXaeVk4kXdbkQxN8yTDftTnyXy52MjQtKbVL0rod5rTwI1bx1Shhru1OpzU7IlXkralFyKS6cxlomHLGUSdt9bEHqPSESoXQ6QdOw0d7ZOitxh0RkxL34A)**
 
-*Figure 1 *
+*Figure 1*
 
 It includes clinically relevant risk factors that can be divided in three categories : comorbidities (stroke, cardiac arrest, age), vital signs (shock index, saturation), labs (anion gap, BUN) and therapies (mechanical ventilation).
 
 The performance of the model is shown in table 2. 
 
-** 
+
 
 <table><colgroup><col width="93px"><col width="84px"><col width="67px"><col width="56px"><col width="42px"></colgroup><tbody><tr><th>&nbsp;</th><th><span><span>Accuracy</span></span></th><th><span><span>ROC</span></span></th><th><span><span>Se</span></span></th><th><span><span>Sp</span></span></th></tr><tr><td><span><span>5-CV (training)</span></span></td><td><span><span>86,8</span></span></td><td><span><span>85,5</span></span></td><td><span><span>96,7</span></span></td><td><span><span>38</span></span></td></tr><tr><td><span><span>MIMIC-III</span><span>&lt;br&gt;</span><span>(validation)</span></span></td><td><span><span>81,2</span></span></td><td><span><span>80,7</span></span></td><td><span><span>97,4</span></span></td><td><span><span>27</span></span></td></tr></tbody></table>
 
-**
+
 
 *Table 2*
 
