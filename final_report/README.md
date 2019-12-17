@@ -165,21 +165,36 @@ In terms of performance on cross-validation (Figure 2 and Figure 3), ROC is slig
 
 # Discussion
 
+## Findings
 
+Overall, our model is the best-performing predictive mortality model that currently exists for cardiogenic shock patients. 
 
-* Are the findings summarised?
-* Are limitations of study discussed?
-* Does the paper defend potential criticism if applicable?
-* Is the clinical relevance of the findings discussed?
-* Discuss eICU vs MIMIC differences in the population
+Our logistic regression model uses a combination of 7 readily-available vital signs and lab values (SpO2, Age, Anion Gap, BUN, Mechanical Ventilation, Stroke, Shock Index, and Cardiac Arrest) to predict mortality. We trained our model on a subset of the eICU dataset, and we saw a strong ROC of .86 when performing validation on the eICU dataset. We also cross-validated our model on the MIMIC dataset, and achieved an ROC of .81.
+
+When considering the differences in the eICU and MIMIC patient populations, this drop in cross-validation accuracy makes sense. The MIMIC population is derived from a single-center dataset at a tertiary care facility in Boston, MA. The eICU population is derived from a much more diverse multicenter dataset from hospitals all over the country. Our exploratory data analysis revealed that the MIMIC population has higher mortality (17% in eICU vs 23% in MIMIC), and has higher use of inotropes (14% in eICU vs 49% in MIMIC) and ventilation (32% in eICU vs 58% in MIMIC). These metrics indicate that the MIMIC population has sicker patients in a more serious condition than those patients in the eICU dataset, and this difference in patient populations helps to explain the difference in eICU validation versus MIMIC cross-validation accuracy.
+
+As discussed earlier, cardiogenic shock patients still face mortality of over ~30% and our risk-prediction model could be used at both the bedside and in research. In clinical care, it could be used to inform physicians of whether or not to escalate care. Clinical trial coordinators could also use this tool to stratify patient populations to ensure the control and treatment arms have similar characteristics.
+
+Currently available models are not specifically designed to predict mortality in cardiogenic shock, and their performance is still weak. The IABP Shock II trial's prediction model was trained on only 480 patients, and has a poor AUC of .73. Similarly, the recently-published CCU mortality score from researchers at the Mayo Clinic has a 12,000 patient cohort and an internal validation ROC of 0.87 (which is similar to our eICU validation of 0.86), but has no external validation cohort.
+
+So, our model performs similarly or better than current risk prediction models and is the first risk prediction model specifically for patients in cardiogenic shock.
+
+## Limitations
+
+One of the key limitations with our model is that it may not be fully generalizable to all patient populations while maintaining the same predictive power. We experienced a 6-point drop in ROC when moving to from internal validation in the eICU dataset to external validation on the MIMIC dataset. We hope to increase our model's generalizability and accuracy by using more advanced modeling strategies.
+
+Additionally, a possible criticism of our approach to stratifying patients into cardiogenic shock class C, D, and E is that we only used a subset of the SCAI consensus clinical definition of cardiogenic shock criteria. Due to limitations with the dataset, we were unable to extract data for the dosage of vasopressors, urine output, and other variables. Therefore, we were required to revise our inclusion criteria to ensure compatibility with the data we had available.
+
+## Future Work
+
+We are planning to work throughout January and February on improving the accuracy and performance of our model. As discussed in the results section, we are currently using a logistic regression model. We hope to work on improving our modeling strategy by testing and evaluating a variety of more advance modeling techniques. Furthermore, the MIMIC-IV dataset will be released in February 2020 and all our code will be intercompatible with the new database. We are going to rerun our training and validation on the MIMIC-IV dataset once it's released to increase our sample size.
+
 
 # Reproducibility
 
 All code used to generate the analyses is available in the team i github repository, and is both fully commented and readily executable. The code is in the 'analysis' folder, and the eICU and MIMIC-specific code are in subfolders. Our code for probing both databases is organized into three key R files. The first script (1. Data Extraction) uses BigQuery and extracts all the relevant data from MIMIC and eICU, and all variables are loaded into the R workspace memory. The second script (2. Join Data) joins all the data by a unique patient identifier into a csv file and exports the csv file. The third script (3. CS Patient Selection) goes through the variables and filters patients, determining whether or not they are experiencing cardiogenic shock and what class (C, D, or E) they're in. If the patient is in cardiogenic shock by our criteria, they are included in the csv file that is exported by this final third script.
 
 Both our eICU code and MIMIC code have this three-script structure to parse the database, extract information, and output the final .csv that is analyzed. Then, we used the script called '5. Modeling' under the 'Predictive Models' folder to develop the models we discussed above. All the models were trained and validated in the same script, and the model parameters and model types can be changed and rerun to perform future optimization. Comments are provided in the script to indicate how the model is trained and validated.
-
-* Is the code available and referenced in the paper?
 
 # Acknowledgements:
 
