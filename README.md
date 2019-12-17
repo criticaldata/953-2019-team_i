@@ -2,11 +2,11 @@
 
 # Predicting mortality in patients with cardiogenic shock
 
-Project Template
-
 ## Abstract
 
-Project Description
+We hypothesize will be able to develop a parsimonious risk prediction model among patients with cardiogenic shock in the cardiac ICU. Moreever, we hypothesize that this model will be able to achieve better discrimination than existing models.
+
+We've developed an accurate mortality prediction model for patients with CS and validated on eICU and MIMIC throughout the course of this semester.
 
 ## Project Repository
 This project repository will be an essential component of how your final project will be evaluated. It will be important for your entire team to be proactive in maintaining the all the documentation and code in this repository.  You have free reign to alter this repository for your needs, but suggest this standard directory structure for starters.
