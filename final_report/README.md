@@ -165,6 +165,8 @@ In terms of performance on cross-validation (Figure 2 and Figure 3), ROC is slig
 
 # Discussion
 
+
+
 * Are the findings summarised?
 * Are limitations of study discussed?
 * Does the paper defend potential criticism if applicable?
@@ -173,9 +175,11 @@ In terms of performance on cross-validation (Figure 2 and Figure 3), ROC is slig
 
 # Reproducibility
 
+All code used to generate the analyses is available in the team i github repository, and is both fully commented and readily executable. The code is in the 'analysis' folder, and the eICU and MIMIC-specific code are in subfolders. Our code for probing both databases is organized into three key R files. The first script (1. Data Extraction) uses BigQuery and extracts all the relevant data from MIMIC and eICU, and all variables are loaded into the R workspace memory. The second script (2. Join Data) joins all the data by a unique patient identifier into a csv file and exports the csv file. The third script (3. CS Patient Selection) goes through the variables and filters patients, determining whether or not they are experiencing cardiogenic shock and what class (C, D, or E) they're in. If the patient is in cardiogenic shock by our criteria, they are included in the csv file that is exported by this final third script.
+
+Both our eICU code and MIMIC code have this three-script structure to parse the database, extract information, and output the final .csv that is analyzed. Then, we used the script called '5. Modeling' under the 'Predictive Models' folder to develop the models we discussed above. All the models were trained and validated in the same script, and the model parameters and model types can be changed and rerun to perform future optimization. Comments are provided in the script to indicate how the model is trained and validated.
+
 * Is the code available and referenced in the paper?
-* Is the code executable without burden?
-* Is the code clear and well organised?
 
 # Acknowledgements:
 
