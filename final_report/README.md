@@ -121,6 +121,66 @@ For the logistic regression model, continuous variables were binned (converted t
 
 For each variable of interest, we used the R cut-point package that automatizes the process and determines the most appropriate cut-off point for a predetermined metric of choice.
 
+**Table 1:**
+
+| Diagnoses/Medications                       |             |             |             |
+|---------------------------------------------|-------------|-------------|-------------|
+| Variable Name                               | eICU        | MIMIC       | p-value     |
+| acute cerebrovascular disease               | 3.92%       | 3.79%       | 0.779050277 |
+| acute renal failure                         | 23.54%      | 36.84%      | 2.14E-35    |
+| anemia                                      | 5.51%       | 27.16%      | 7.68E-187   |
+| atrial fibrillation                         | 18.17%      | 39.71%      | 1.88E-99    |
+| blood malignancy                            | 0.83%       | 2.75%       | 4.16E-12    |
+| cardiac arrest and ventricular fibrillation | 14.14%      | 15.26%      | 0.189895865 |
+| chronic kidney disease                      | 20.89%      | 16.26%      | 1.54E-06    |
+| chronic obstructive pulmonary disease       | 11.21%      | 15.04%      | 1.38E-06    |
+| coronary atherosclerosis                    | 9.01%       | 56.80%      | 0           |
+| diabetes mellitus                           | 5.16%       | 34.79%      | 0           |
+| heart valve disorders                       | 6.31%       | 23.89%      | 2.31E-12    |
+| hypertension                                | 24.49%      | 57.50%      | 9.54E-19    |
+| neoplasms                                   | 3.76%       | 13.12%      | 6.45E-59    |
+| nstemi                                      | 8.24%       | 18.31%      | 3.50E-41    |
+| septicemia                                  | 17.11%      | 19.79%      | 0.003872368 |
+| shock cardiogenic                           | 7.08%       | 22.14%      | 3.36E-90    |
+| shock nos                                   | 4.32%       | 2.53%       | 0.000126006 |
+| shock septic                                | 5.46%       | 7.19%       | 0.002460714 |
+| stemi                                       | 8.98%       | 21.62%      | 6.68E-58    |
+| vent                                        | 0.318140658 | 0.577593723 | 2.53E-11    |
+| iabp                                        | 0.062481135 | 0.265475153 | 1.59E-15    |
+| total pressors                              | 1.25731965  | 1.157802964 | 4.85E-06    |
+| hospital mortality                          | 0.172620065 | 0.231037489 | 1.34E-09    |
+| age                                         | 65.58366091 | 69.82345248 | 3.64E-31    |
+| bmi                                         | 29.66292331 | 28.38716795 | 2.73E-07    |
+| charlson score                              | 0.927256263 | 2.309938971 | 0           |
+| shock index                                 | 1.085068515 | 0.793292034 | 5.31E-22    |
+| any inotrope                                | 0.141865379 | 0.49912816  | 9.28E-28    |
+
+
+| Labs and Vitals |             |             |             |
+|-----------------|-------------|-------------|-------------|
+| Variable Name   | eICU        | MIMIC       | p-value     |
+| heart rate mean | 85.1432836  | 84.42576915 | 0.051056286 |
+| dias bp mean    | 64.87104499 | 57.41271251 | 3.93E-17    |
+| resp rate mean  | 19.74364252 | 19.2885117  | 5.30E-07    |
+| temp c mean     | 36.72904554 | 36.75643814 | 0.109014925 |
+| sp o2 mean      | 96.45046255 | 96.76148088 | 7.56E-05    |
+| sys bp mean     | 119.3573355 | 109.1879363 | 2.86E-12    |
+| aniongap max    | 13.88322337 | 18.48812665 | 1.04E-17    |
+| albumin min     | 3.000669736 | 3.181930334 | 5.59E-17    |
+| bicarbonate min | 21.56475359 | 20.50285714 | 3.41E-15    |
+| chloride max    | 105.7378996 | 106.9719421 | 4.37E-14    |
+| hematocrit max  | 37.01914404 | 38.13734729 | 1.21E-12    |
+| hemoglobin min  | 10.53522902 | 10.15564304 | 4.24E-11    |
+| platelet max    | 228.1595301 | 269.3015734 | 9.97E-54    |
+| potassium max   | 4.707902045 | 5.035486687 | 1.50E-48    |
+| ptt max         | 44.98612372 | 73.42105503 | 9.85E-21    |
+| inr max         | 1.636463487 | 2.056786038 | 4.51E-29    |
+| pt max          | 17.92982352 | 19.15912807 | 2.50E-05    |
+| bun max         | 34.6044338  | 38.62292213 | 9.49E-11    |
+| wbc max         | 15.0145216  | 15.78574058 | 0.00206848  |
+
+(A Student's t-test was used to compute p-values).
+
 # Results
 
 **a)  Final model**
