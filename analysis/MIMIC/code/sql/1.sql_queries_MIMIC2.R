@@ -1,5 +1,5 @@
 #SQL databases queries for MIMIC-III
-
+#setwd("~/Documents/Bioinformatics/Classes/FALL/HST.953/Git_Files_Cardiogenic/953-2019-team_i/analysis/MIMIC")
 #Loading of libraries
 source("./code/library_load.R")
 source("./code/sql/sql_access.R")
@@ -103,7 +103,7 @@ ccu_demographics_dob_gender_death <- ccu_demographics_dob_gender_death%>%select(
 ## First 24 hours labs
 
 ccu_query_3 <- "SELECT
-  pvt.hadm_id, pvt.subject_id, pvt.icustay_id
+  pvt.hadm_id, pvt.subject_id
 
   , min(CASE WHEN label = 'ANION GAP' THEN valuenum ELSE null END) as ANIONGAP_min
   , max(CASE WHEN label = 'ANION GAP' THEN valuenum ELSE null END) as ANIONGAP_max
@@ -151,6 +151,8 @@ ccu_query_3 <- "SELECT
   , max(CASE WHEN label = 'NTproBNP' THEN valuenum ELSE null end) as NTproBNP_max
   , min(CASE WHEN label = 'PH' THEN valuenum ELSE null end) as PH_min
   , max(CASE WHEN label = 'PH' THEN valuenum ELSE null end) as PH_max
+  , min(CASE WHEN label = 'RDW' THEN valuenum ELSE null end) as RDW_min
+  , max(CASE WHEN label = 'RDW' THEN valuenum ELSE null end) as RDW_max
 FROM
 ( -- begin query that extracts the data
   SELECT ie.subject_id, ie.hadm_id, ie.icustay_id
@@ -185,8 +187,10 @@ FROM
         WHEN itemid = 51301 THEN 'WBC'
         WHEN itemid = 51002 THEN 'TROPONIN I'
         WHEN itemid = 51003 THEN 'TROPONIN T'
-        WHEN itemid = 50820 THEn 'PH'
-        WHEN itemid = 50831 THEn 'PH'
+        WHEN itemid = 50963 THEn 'NTproBNP'
+        WHEN itemid = 50820 THEN 'PH'
+        WHEN itemid = 50831 THEN 'PH'
+        WHEN itemid = 51277 THEN 'RDW'
       ELSE null
     END AS label
   , -- add in some sanity checks on the values
@@ -259,16 +263,15 @@ FROM
       51002,  -- TROPONIN I
       51003,  -- TROPONIN T
       50963,  -- NTproBNP
-      50820, -- 'PH'
-      50831  --'PH'
+      51277 -- 'RDW'
     )
     AND valuenum IS NOT null AND valuenum > 0 -- lab values cannot be 0 and cannot be negative
 ) pvt
-WHERE pvt.icustay_id in
+WHERE pvt.subject_id in
 (
-SELECT icustay_id
+SELECT subject_id
 FROM (
-    SELECT subject_id, hadm_id, intime, icustay_id, outtime, los, ROW_NUMBER() OVER(PARTITION BY subject_id ORDER BY intime) rn
+    SELECT subject_id, hadm_id, intime, outtime, los, ROW_NUMBER() OVER(PARTITION BY hadm_id ORDER BY intime) rn
     FROM `physionet-data.mimiciii_clinical.icustays`
     WHERE first_careunit = 'CCU'
     ) 
@@ -276,14 +279,16 @@ x
 WHERE rn = 1
 )
 GROUP BY pvt.subject_id, pvt.hadm_id, pvt.icustay_id
-ORDER BY pvt.subject_id, pvt.hadm_id, pvt.icustay_id;"
+ORDER BY pvt.subject_id, pvt.hadm_id, pvt.icustay_id;
 
+"
 
 # hadm_id, short_title, long_title
 ccu_labs <- run_query(ccu_query_3)
 ccu_labs <- ccu_labs%>%
   mutate(Delta_creat_0.3 = ifelse(abs(CREATININE_max-CREATININE_min) >= 0.3, 1, 0))%>%
   mutate(Doubled_creat = ifelse(abs(CREATININE_max/CREATININE_min) >= 1.5, 1, 0))
+ccu_labs <- ccu_labs%>%select(-hadm_id)
 
 
 ## CCU  24 hours vital signs

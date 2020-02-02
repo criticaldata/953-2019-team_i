@@ -19,7 +19,7 @@ mimic <- read_csv("../MIMIC/data/FINAL_MIMIC_all_CCU_patients.csv", col_names = 
 
 ## Replacing appropriate ages
 
-mimic <- mimic%>%mutate(age=replace_na(mimic$age, 95))
+mimic <- mimic%>%mutate(age=replace_na(mimic$age, 90))
 
 ## Creating Shock Groups
 
@@ -38,6 +38,9 @@ mimic <- mimic%>%mutate(
 # Non-shock table to verify that non-shock patients were not forgotten by mistake
 non_shock_m <- mimic[which(mimic$scai_shock=="NO"),]  #table(mimic$scai_shock)
 shock_m <- mimic[-which(mimic$scai_shock=="NO"),]  #
+table(mimic_shock$scai_shock)
+#shock_m <- shock_m%>%select(subject_id) Only the index of patients in shock
+#write.csv(shock_m, file="mimic_cardiogenic_shock_id.csv")
 table(shock_m$hospital_mortality)
 
 
@@ -62,14 +65,36 @@ write.csv(mimic_shock, file="mimic_cardiogenic_shock.csv")
 
 
 
-### We did pre cleaning of the columns in excel
+### Variables selection
 mimic_analysis <- mimic_shock%>%
-  select(-c("subject_id", "intime", "outtime", "los", "dobutamine_first_hour", "dopamine_first_hour","epinephrine_first_hour", "milrinone_first_hour", 
-            "norepinephrine_first_hour","phenyl_first_hour","vasopressin_first_hour","total_pressors_first_hour",
-            "any_pressor_first_hour", "thirty_day_mortality", "age_group","icu_mortality", "any_pressor", 
-            "delta_creat_0_3", "scai_shock"))
+  select(-c("intime", "outtime", "los", "dobutamine_first_hour", "dopamine_first_hour","epinephrine_first_hour", "milrinone_first_hour", 
+            "norepinephrine_first_hour","phenyl_first_hour","vasopressin_first_hour", "any_pressor_first_hour", "thirty_day_mortality", 
+            "age_group","icu_mortality", "delta_creat_0_3"))
+
+#colnames(mimic_analysis)
+
+# Removing duplicate vitals and labs
+mimic_analysis <- mimic_analysis%>%select(-c("heart_rate_min","heart_rate_max", "sys_bp_min","sys_bp_max", "dias_bp_max", "dias_bp_min",
+                                             "mean_bp_min", "mean_bp_max", "resp_rate_min", "resp_rate_max", "temp_c_min", "temp_c_max",
+                                             "sp_o2_min", "sp_o2_max", "glucose_min", "glucose_max", "bands_min", "bands_max", "aniongap_min",
+                                             "chloride_min", "tropo_i_max",
+                                             "bilirubin_min", "bilirubin_max","albumin_min", "albumin_max", "bicarbonate_max", "creatinine_min",
+                                             "creatinine_max", "glucose_min_2", "glucose_max_2", "hematocrit_min", "hemoglobin_max","lactate_min",
+                                             "lactate_max", "platelet_min", "potassium_min", "ptt_min", "inr_min", "pt_min", "sodium_max", "bun_min",
+                                             "wbc_min", "tropo_i_max", "tropo_i_min", "tropo_t_max", "tropo_t_max", "tropo_t_min", "n_tpro_bnp_max", "n_tpro_bnp_min",
+                                             "ph_max", "rdw_min"))
+
+# Removing some pressors variables
+mimic_analysis <- mimic_analysis%>%select(-c("dobutamine","dopamine","epinephrine", "milrinone","norepinephrine","phenyl", "vasopressin", "total_pressors_first_hour", 
+                         "vis_first_hour","nee_first_hour"))
+
+# Removing some identification variables 
+mimic_analysis <- mimic_analysis%>%select(-c("subject_id", "icustay_id", "hadm_id", "scai_shock"))
 
 
-write.csv(mimic_analysis, file="mimic_cardiogenic_shock_selected.csv")
+# Must add here the NLP variable for cardiac arrest
+
+# Final MIMIC cardiogenic shock ready for analysis
+write.csv(mimic_analysis, file="mimic_cardiogenic_shock_analysis.csv")
 
 

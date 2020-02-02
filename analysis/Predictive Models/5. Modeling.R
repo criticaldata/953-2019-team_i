@@ -81,6 +81,7 @@ eicu <- eicu%>%mutate_at(c("rrt",'vent','iabp','impella','dopamine','dobutamine'
                          function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
 eicu <- eicu%>%mutate_at(c("hospital_mortality","doubled_creat","delta_creat_0_3", "any_inotrope"), function(x){fct_recode(as.factor(x),"yes"="1", "no"="0")})
 eicu <- eicu%>%mutate_at("ethnicity", function(x){as.factor(x)})
+#eicu <- eicu%>%dplyr::select(-c("delta_creat_0_3", "gender")) 
 eicu <- eicu%>%dplyr::select(-c("delta_creat_0_3", "gender","ethnicity")) 
 eicu <- eicu%>%dplyr::select(-impella)
 
@@ -191,7 +192,7 @@ test  <- anti_join(eicu_analysis , train, by = "id")
 
 #Method2 - Recursive Feature Elimination
 
-subsets <- c(30, 40, 50)
+subsets <- c(8,30)
 
 library(randomForest)
 
@@ -202,9 +203,10 @@ ctrl <- rfeControl(functions = rfFuncs,
 
 rfFuncs$summary <- twoClassSummary # did not work ?
 
+mimic <- mimic%>%select(-c("vis_24h", "vis_first_hour", "nee_24h", "nee_first_hour"))
 # Convert character to factor for RFE algorithm
 
-lmProfile <- rfe(x=eicu[,-57], y=eicu[[57]],
+lmProfile <- rfe(x=mimic[,-65], y=mimic[[65]],
                  sizes = subsets,
                  metric = "ROC",
                  rfeControl = ctrl)
@@ -367,12 +369,7 @@ logistic_reg_model_newest2 <- train(hospital_mortality ~ cardiac_arrest_and_vent
                                    data       = eicu_analysis)
 
 
-logistic_reg_model_newest_cat <- train(hospital_mortality ~ cardiac_arrest_and_ventricular_fibrillation + I(shock_index>1.35) + acute_cerebrovascular_disease  + vent +
-                                      I(bun_max > 36) + I(aniongap_max>19) +  I(age>75) + I(sp_o2_mean < 92),
-                                    method     = "glm",
-                                    metric     = "ROC",
-                                    trControl  = trControl,
-                                    data       = eicu_balanced)
+
 library
 cp <- cutpointr(eicu, sp_o2_mean, hospital_mortality, 
                 method = maximize_metric, metric = cohens_kappa, pos_class = "yes")
@@ -553,6 +550,13 @@ logistic_final_mayo<- caret::train(hospital_mortality ~ cardiac_arrest_and_ventr
                                           trControl  = trControl,
                                           data       = eicu)
 
+
+logistic_reg_model_newest_cat <- caret::train(hospital_mortality ~ cardiac_arrest_and_ventricular_fibrillation + I(shock_index>1.35) + acute_cerebrovascular_disease  + vent +
+                                         I(bun_max > 36) + I(aniongap_max>19) +  I(age>75) + I(sp_o2_mean < 92),
+                                       method     = "glm",
+                                       metric     = "ROC",
+                                       trControl  = trControl,
+                                       data       = eicu)
 
 
 #######------------ Other Models - Not balanced --------- ######
