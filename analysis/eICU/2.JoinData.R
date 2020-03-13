@@ -101,4 +101,4 @@ str(ccu_analysis2, list.len = 150)
 
 
 ## Table is final for all MIMIC CCU patients
-write.csv(ccu_analysis_table, file="eICU_CCUdata_V2.csv")
+write.csv(ccu_analysis_table, file="eICU_CCUdata_March13.csv")

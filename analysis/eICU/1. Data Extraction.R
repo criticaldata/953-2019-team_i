@@ -85,7 +85,7 @@ ccu_mortality <- ccu_mortality %>%
 ccu_diagnoses <- run_query(
 "SELECT patientunitstayid, diagnosisid, diagnosisoffset, diagnosisstring, icd9code
 FROM `physionet-data.eicu_crd.diagnosis` d
-WHERE patientunitstayid in 
+WHERE diagnosisoffset < 1440 AND patientunitstayid in 
 (SELECT patientunitstayid
 FROM (
      SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn	
@@ -95,8 +95,7 @@ FROM (
     ) 
 x
 WHERE rn = 1
-)
-"
+)"
 )
 #GROUP BY patientunitstayid, diagnosisid, diagnosisoffset, diagnosisstring, icd9code
 
@@ -151,7 +150,8 @@ SELECT
   , min(CASE WHEN labname = 'troponin - T' THEN labresult ELSE null end) as troponinT_min
   , max(CASE WHEN labname = 'troponin - T' THEN labresult ELSE null end) as troponinT_max
   , avg(CASE WHEN labname = 'pH' THEN labresult ELSE null end) as pH_mean
-
+  , min(CASE WHEN labname = 'RDW' THEN labresult ELSE null END) as rdw_min
+  , max(CASE WHEN labname = 'RDW' THEN labresult ELSE null END) as rdw_max
 
 
 FROM
@@ -185,7 +185,8 @@ FROM
      WHEN labname = 'troponin - I' and le.labresult >  1000 THEN null -- 'Troponin I'
      WHEN labname = 'troponin - T' and le.labresult >  1000 THEN null -- 'Troponin T'
      WHEN labname = 'pH' and le.labresult <= 5.5 and le.labresult >= 9.5 THEN null -- 'pH'
-
+     WHEN labname = 'RDW' and le.labresult <=0 THEN null -- 'rdw'
+     
    ELSE le.labresult
    END AS labresult
 
@@ -218,7 +219,8 @@ FROM
     	'WBC x 1000',
     	'troponin - I',
     	'troponin - T',
-      'pH'
+      'pH',
+      'RDW'
     )
     AND labresult IS NOT null AND labresult > 0 AND labresultoffset <=1440 -- lab values cannot be 0 and cannot be negative
 ) pvt
@@ -736,9 +738,9 @@ procedure_list <- run_query(
  
 raw_icd9 <- run_query(
   "
-  SELECT patientunitstayid, icd9code as ICD9_code
+  SELECT patientunitstayid, icd9code as ICD9_code, diagnosisoffset
   FROM `physionet-data.eicu_crd.diagnosis` 
-  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  WHERE diagnosisoffset < 1440 AND patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
   ORDER BY patientunitstayid
 
   "
@@ -957,5 +959,37 @@ ccu_bmi <- run_query(
   "
 )
 
+
+
+## Below code is for notes
+
+raw_notes <- run_query(
+"
+SELECT patientunitstayid 
+, notetext
+FROM `physionet-data.eicu_crd.note`
+WHERE noteoffset < 1440 AND patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+
+"
+)
+
+extract_arrest<- function(text)
+{
+  arrestregex <- regex("therapeutic hypothermia|return of spontaneous circulation|\\brosc\\b|cardiac arrest|defilbrillated|\\bcpr\\b|[1-3][0-9][0][J]|vfib|ventricular fibrillation", ignore_case = TRUE) 
+  #vfib not added because higher risk of antecedent diagnosis
+  match <- str_detect(text, arrestregex)
+  return(as.numeric(match))
+}
+
+
+tsum= 0
+
+for (row in 1:nrow(raw_notes)) {
+  
+  note <- raw_notes[row, "notetext"]
+  
+  tsum = extract_arrest(note) + tsum
+  
+}
 
 

@@ -15,7 +15,7 @@ library(RANN)
 
 ## Data loading 
 
-eicu <- read_csv("./eICU_Joined_Nov25V1.csv", col_names = TRUE)
+eicu <- read_csv("./eICU_CCUdata_March13.csv", col_names = TRUE)
 
 
 ## Removing duplicate columns
@@ -118,7 +118,7 @@ eicu <- eicu%>%mutate(
 
 # All CCU patients table
 
-write.csv(eicu, file="eicu_ccu_clean_v1.csv")
+write.csv(eicu, file="eICU_March13_ALL.csv")
 
 ## Final dataset ready for analysis
 
@@ -126,7 +126,7 @@ eicu_shock <- eicu%>%filter(scai_shock%in%c("C","D","E"))
 
 
 # Final Cardiogenic Shock eICU population
-write.csv(eicu_shock, file="eicu_cardiogenic_shock.csv")
+write.csv(eicu_shock, file="eICU_March13_CS_selected.csv")
 
 
 # Removing more variables for data modeling 
@@ -137,7 +137,7 @@ eicu <- eicu_shock%>%
             "any_pressor_firsthour", "age_group","icu_mortality", "any_pressor", "scai_shock"))
 
 # Additional cleaning has been done in excel to obtain only the final variables included in the analysis
-write.csv(eicu, file="eicu_cardiogenic_shock_selected.csv")
+#write.csv(eicu, file="eICU_March13_CS_selected_trimmmed.csv")
 
 # Must verify age - it seems that age group was included here
 
