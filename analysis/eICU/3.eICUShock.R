@@ -15,7 +15,7 @@ library(RANN)
 
 ## Data loading 
 
-eicu <- read_csv("./eICU_CCUdata_March13.csv", col_names = TRUE)
+eicu <- read_csv("./eICU_CCUdata_March13V2.csv", col_names = TRUE)
 
 
 ## Removing duplicate columns
@@ -118,7 +118,7 @@ eicu <- eicu%>%mutate(
 
 # All CCU patients table
 
-write.csv(eicu, file="eICU_March13_ALL.csv")
+write.csv(eicu, file="eICU_March13_ALLV2.csv")
 
 ## Final dataset ready for analysis
 
@@ -126,7 +126,7 @@ eicu_shock <- eicu%>%filter(scai_shock%in%c("C","D","E"))
 
 
 # Final Cardiogenic Shock eICU population
-write.csv(eicu_shock, file="eICU_March13_CS_selected.csv")
+write.csv(eicu_shock, file="eICU_March13_CS_selectedV2.csv")
 
 
 # Removing more variables for data modeling 
