@@ -74,13 +74,10 @@ mimic_analysis <- mimic_shock%>%
 #colnames(mimic_analysis)
 
 # Removing duplicate vitals and labs
-mimic_analysis <- mimic_analysis%>%select(-c("heart_rate_min","heart_rate_max", "sys_bp_min","sys_bp_max", "dias_bp_max", "dias_bp_min",
-                                             "mean_bp_min", "mean_bp_max", "resp_rate_min", "resp_rate_max", "temp_c_min", "temp_c_max",
-                                             "sp_o2_min", "sp_o2_max", "glucose_min", "glucose_max", "bands_min", "bands_max", "aniongap_min",
-                                             "chloride_min", "tropo_i_max",
-                                             "bilirubin_min", "bilirubin_max","albumin_min", "albumin_max", "bicarbonate_max", "creatinine_min",
+mimic_analysis <- mimic_analysis%>%select(-c("temp_c_min", "temp_c_max","sp_o2_max", "glucose_max", "bands_min", "bands_max", "aniongap_min",
+                                             "chloride_min", "tropo_i_max","bilirubin_min", "bilirubin_max","albumin_min", "albumin_max", "bicarbonate_max", "creatinine_min",
                                              "creatinine_max", "glucose_min_2", "glucose_max_2", "hematocrit_min", "hemoglobin_max","lactate_min",
-                                             "lactate_max", "platelet_min", "potassium_min", "ptt_min", "inr_min", "pt_min", "sodium_max", "bun_min",
+                                             "lactate_max", "potassium_min", "ptt_min", "inr_min", "pt_min", "sodium_max", "bun_min",
                                              "wbc_min", "tropo_i_max", "tropo_i_min", "tropo_t_max", "tropo_t_max", "tropo_t_min", "n_tpro_bnp_max", "n_tpro_bnp_min",
                                              "ph_max", "rdw_min"))
 
@@ -91,10 +88,61 @@ mimic_analysis <- mimic_analysis%>%select(-c("dobutamine","dopamine","epinephrin
 # Removing some identification variables 
 mimic_analysis <- mimic_analysis%>%select(-c("subject_id", "icustay_id", "hadm_id", "scai_shock"))
 
+# Removing variables deemeed not useful
+mimic_analysis <- mimic_analysis%>%select(-c("shock_cardiogenic", "shock_nos", "shock_septic", "ecmo", "impella", "nee_24h", "vis_24h"))
+mimic_analysis <- mimic_analysis%>%select(-c("ph_min"))
+mimic_analysis <- mimic_analysis%>%select(-c("cardiac_arrest_and_ventricular_fibrillation"))
 
-# Must add here the NLP variable for cardiac arrest
-
-# Final MIMIC cardiogenic shock ready for analysis
+# Final MIMIC cardiogenic shock ready for analysis + table one
 write.csv(mimic_analysis, file="mimic_cardiogenic_shock_analysis.csv")
 
+# Missing data imputation
+
+# MML imputation
+library(mice)
+mimic_m <- mice::mice(mimic_analysis)
+mimic_imputed <- complete(mimic_m, 1)
+
+# Binning -----------------------------------------------------------------
+library(rbin)
+library(hablar)
+library(rlang)
+# m <-  retype(mimic_imputed)
+
+# Verify which columns should be converted to categorical
+categorical <- sapply(mimic_imputed, function(x){(length(unique(x)))})
+# Small function converting numeric columns to categorical if <= 13 unique values
+mimic_imputed <- mimic_imputed%>%mutate_if(function(x){(length(unique(x)) <= 13)}, function(x){as.factor(x)})
+# Adding a random variable for the purpose of the rbin function
+mimic_imputed <- mimic_imputed%>%mutate(y=0)
+
+binning_data <- function(df){
+  final <- df
+  list <- c()
+  for (i in colnames(df[,1:90])){
+    # transforming dynamic variable into string
+    colName = paste0(quo_name(i)) 
+    if (is.numeric(df[,i])){
+      # store list of names of continuous columns as those will be deleted and we'll keep only the binned columns
+      list[i] = colName
+      # Using rbin package to create quantiles of the variables of interest
+      bins <- rbin_quantiles(df, y, i,5)
+      # Using those quantiles to create dummy variable 1 hot encoding
+      f <- rbin_create(df, i, bins)
+      # Create the aggregate dataframe
+      final <- merge(final, f)
+    }
+  }
+  # Removing initial continuous columns
+  final <- final%>%select(-list)
+  return(final)
+}
+
+# Using function to compute binnarization
+
+mimic_imputed <- binning_data(mimic_imputed)
+
+
+# Saving the data
+write.csv(mimic_imputed, file="mimic_cardiogenic_shock_final_analysis.csv")
 

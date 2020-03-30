@@ -1,8 +1,11 @@
 #SQL databases queries for MIMIC-III
-#setwd("~/Documents/Bioinformatics/Classes/FALL/HST.953/Git_Files_Cardiogenic/953-2019-team_i/analysis/MIMIC")
+setwd("~/Documents/Bioinformatics/Classes/FALL/HST.953/Git_Files_Cardiogenic/953-2019-team_i/analysis/MIMIC")
 #Loading of libraries
 source("./code/library_load.R")
 source("./code/sql/sql_access.R")
+
+
+# We should modify the script to join everything by HADMID and not Subject ID if possible!!! (except for demographics)
 
 ##CCU query
 
@@ -57,9 +60,9 @@ dxlist <- sort(unique(ccu_diagnoses$CCS))
 
 # Final diagnoses table
 ccu_diagnoses <- left_join(ccu_diagnoses, ccsicd, by=c("ICD9_code"="ICD9")) %>%
-  filter(CCS%in%c("Diabetes mellitus", "Anemia", "STEMI", "NSTEMI", "Acute renal failure", "Acute cerebrovascular disease", "Atrial fibrillation","Blood Malignancy", 
+  filter(CCS%in%c("Diabetes mellitus", "Anemia", "STEMI", "NSTEMI", "Acute renal failure", "Acute cerebrovascular disease", "Atrial fibrillation", 
                   "Chronic obstructive pulmonary disease and bronchiectasis","Coronary atherosclerosis", "Chronic kidney disease", "Diabetes mellitus",
-                  "Heart valve disorders","Cardiac arrest and ventricular fibrillation", "Hypertension","Neoplasms", "Shock NOS", "Shock Cardiogenic", "Shock Septic", "Septicemia"))%>%
+                  "Heart valve disorders","Cardiac arrest and ventricular fibrillation", "Hypertension", "Shock NOS", "Shock Cardiogenic", "Shock Septic", "Septicemia"))%>%
   dplyr::select(-c("ICD9_code","hadm_id"))%>%
   #This ensure that duplicates of values are only counted once
   group_by(subject_id, CCS)%>%
@@ -80,6 +83,15 @@ wide_ccu_dx <- narrow_ccu_dx%>%spread(CCS, count, fill=0)
 wide_ccu_dx <- wide_ccu_dx %>%
   mutate(NSTEMI=replace(NSTEMI, NSTEMI==1 & STEMI==1, 0))
 
+
+# Elixhauser
+library(comorbidity)
+
+# Assigning Elixhauser index per id
+elix <- run_query(ccu_query_1)%>%dplyr::select(-hadm_id)
+elix_table <- comorbidity(x = elix, id = "subject_id", code = "ICD9_code", score = "elixhauser", icd = "icd9", assign0 = TRUE)
+elix_table <- elix_table%>%dplyr::select(-c("wscore_ahrq","wscore_vw","windex_ahrq","windex_vw"))
+elix_table <- elix_table%>%dplyr::select(-c("carit","chf","valv","hypunc", "hypc", "cpd", "diabc", "diabunc", "rf", "blane", "dane", "score", "index"))
 
 ##Demographics
 ccu_query_2 <- "SELECT subject_id, dob, dod, gender, expire_flag
@@ -1211,13 +1223,13 @@ ccu_bmi <- ccu_bmi%>%mutate(bmi = weight_first/((height_first)*0.01)^2)%>%
 
 ## Charlson Index
 
-install.packages("comorbidity")      
 library(comorbidity)
 
 charlson <- run_query(ccu_query_1)%>%dplyr::select(-hadm_id)
 # Assigning Charlson index per id
 charlson9 <- comorbidity(x = charlson, id = "subject_id", code = "ICD9_code", score = "charlson", icd = "icd9", assign0 = FALSE)
 charlson9 <- charlson9%>%dplyr::select(subject_id, score)%>%rename(charlson_score=score)
+
 
 
 #VIS score at 24 hour

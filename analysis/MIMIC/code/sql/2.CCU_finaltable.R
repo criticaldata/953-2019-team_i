@@ -3,7 +3,7 @@ source("./code/sql/sql_queries_MIMIC2.R")
 tablelist <- list(wide_ccu_dx, ccu_vitals, ccu_labs, ccu_patients_id_los, ccu_demographics_dob_gender_death,
                   ccu_uo_24h, ccu_RRT24h, ccu_vent, wide_procedures_24, wide_pressors, wide_pressors_firsthour,
                   ccu_gcs, ccu_sofa, ccu_oasis, wide_cabg_pci, ccu_mortality, charlson9, vis_24h, vis_first_hour, nee_24h,
-                  nee_first_hour, ccu_race)
+                  nee_first_hour, ccu_race, elix_table)
 
 
 # ccu_bmi must be joined by icu_stay
