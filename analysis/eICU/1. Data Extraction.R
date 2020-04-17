@@ -640,6 +640,33 @@ ccu_gcs <- run_query(
 )
 
 
+ccu_gcs_first <- run_query(
+  "
+  SELECT gcs as GCS, patientunitstayid, chartoffset
+  FROM `physionet-data.eicu_crd_derived.pivoted_score`
+  WHERE patientunitstayid in (SELECT patientunitstayid FROM ( SELECT patientunitstayid, patienthealthsystemstayid, hospitalAdmitOffset, hospitaladmittime24, hospitaldischargetime24,ROW_NUMBER() OVER(PARTITION BY      patienthealthsystemstayid ORDER BY hospitalAdmitOffset) rn FROM `physionet-data.eicu_crd.patient` WHERE unittype = 'Cardiac ICU' OR unittype = 'CTICU' OR unittype = 'CICU' OR unittype = 'CCU-CTICU' ) x WHERE rn = 1 )
+  AND chartoffset <= 1440 
+  
+  "
+)
+
+gcs_patients <- unique(ccu_gcs_first$patientunitstayid)
+
+gcs_vals <- vector()
+
+for (x in gcs_patients){
+
+  s <- subset(ccu_gcs_first, patientunitstayid == x) %>% drop_na("GCS")
+  s2 <- s[order(s$chartoffset),]$GCS
+  gcs_vals = c(gcs_vals, s2[1])
+  
+}
+
+
+gcs_first <- data.frame("patientunitstayid" = gcs_patients, 'gcs_first' = gcs_vals)
+
+
+
 wide_pressors <- run_query(
   "
   SELECT patientunitstayid, max(dopamine) as dopamine, max(dobutamine) as dobutamine, max(norepinephrine) as norepinephrine, max(epinephrine) as epinephrine, max(phenylephrine) as phenyl, max (vasopressin) as vasopressin, max(milrinone) as milrinone, max(heparin) as heparin, max(warfarin) as warfarin
