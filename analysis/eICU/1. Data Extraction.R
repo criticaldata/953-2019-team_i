@@ -185,7 +185,7 @@ FROM
      WHEN labname = 'troponin - I' and le.labresult >  1000 THEN null -- 'Troponin I'
      WHEN labname = 'troponin - T' and le.labresult >  1000 THEN null -- 'Troponin T'
      WHEN labname = 'pH' and le.labresult <= 5.5 and le.labresult >= 9.5 THEN null -- 'pH'
-     WHEN labname = 'RDW' and le.labresult <=0 THEN null -- 'rdw'
+     WHEN labname = 'RDW' and le.labresult <=0 THEN null -- 'RDW'
      
    ELSE le.labresult
    END AS labresult
@@ -827,6 +827,18 @@ wide_ccu_dx <- narrow_ccu_dx%>%spread(CCS, count, fill=0)
 # ## Making sure that patients do not have STEMI and non STEMI
 wide_ccu_dx <- wide_ccu_dx %>%
   mutate(NSTEMI=replace(NSTEMI, NSTEMI==1 & STEMI==1, 0))
+
+
+
+# Elixhauser
+library(comorbidity)
+
+# Assigning Elixhauser index per id
+elix <- raw_icd9
+elix_table <- comorbidity(x = elix, id = "patientunitstayid", code = "ICD9_code", score = "elixhauser", icd = "icd9", assign0 = TRUE)
+elix_table <- elix_table%>%dplyr::select(-c("wscore_ahrq","wscore_vw","windex_ahrq","windex_vw"))
+elix_table <- elix_table%>%dplyr::select(-c("carit","chf","valv","hypunc", "hypc", "cpd", "diabc", "diabunc", "rf", "blane", "dane", "score", "index"))
+
 
 # test <- left_join(ccu_patients, wide_ccu_dx, by=c("patientunitstayid"))
 # 
