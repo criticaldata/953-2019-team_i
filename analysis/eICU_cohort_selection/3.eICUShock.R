@@ -1,4 +1,4 @@
-setwd("~/Documents/Bioinformatics/Classes/FALL/HST.953/Git_Files_Cardiogenic/953-2019-team_i/analysis/eICU")
+setwd("~/Documents/Bioinformatics/Classes/FALL/HST.953/Git_Files_Cardiogenic/953-2019-team_i/analysis/eICU_cohort_selection")
 
 
 
@@ -15,14 +15,12 @@ library(RANN)
 
 ## Data loading 
 
-eicu <- read_csv("./eICU_Joined_Nov25V1.csv", col_names = TRUE)
+eicu <- read_csv("./eICU_allCCU.csv", col_names = TRUE)%>%dplyr::select(-X1)
 
 
 ## Removing duplicate columns
 
 eicu <- eicu[!duplicated(as.list(eicu))]
-eicu <- eicu%>%dplyr::select(-c("gender.x", "uniquepid", "X1", "MeanBP_Mean", "MeanBP_Max", "MeanBP_Min", "patienthealthsystemstayid"))
-skimmed2 <- skim_to_wide(eicu)
 
 # Cleaning names
 
@@ -30,26 +28,22 @@ eicu <- eicu%>%clean_names(case="snake")
 
 # Identifying unmatched columns
 
-#mimic <- read_csv("../MIMIC/data/FINAL_MIMIC_all_CCU_patients.csv", col_names = TRUE) %>%dplyr::select(-X1)
-m <- sort(colnames(mimic))
-e <- sort(colnames(eicu))
-unmatched <- e[-which(e%in%m)]
-unmatched1 <- m[-which(m%in%e)]
+
+
+eicu <- eicu%>%select(-c("hco3_max", "hco3_min", "gcs_min", "intime", "outtime", "blood_malignancy", "heparin", "heparin_first_hour", "mean_bp_calc", "neoplasms", "patienthealthsystemstayid", "patientunitstayid", 
+                         "ph_mean", "warfarin", "warfarin_first_hour", "gender_1", "uniquepid"))
+
+compared <- compare_df_cols(eicu,mimic)
 
 eicu <- eicu%>%rename(
-  "age"="age_x",
-  "mean_bp_mean"="mean_bp_calc",
-  "total_pressors_first_hour"="total_pressors_firsthour",
-  "any_pressor_first_hour"="any_pressor_firsthour",
-  "tropo_i_max"="troponin_i_max",
-  "tropo_i_min"="troponin_i_min",
-  "tropo_t_max"="troponin_t_min",
-  "gcs"="gcs_min",
-  "urine_output"="urineoutput",
-  "ph_min"="p_h_mean",
-  
-)
-
+#   "tropo_i_max"="troponin_i_max",
+#   "tropo_i_min"="troponin_i_min",
+#   "tropo_t_max"="troponin_t_min",
+#   "gcs"="gcs_min",
+#   "urine_output"="urineoutput",
+#   "ph_min"="p_h_mean",
+# 
+  )
 ## Replacing NULL values
 
 # 1. Age ?? Not sure that it is like MIMIC - in MIMIC all AGE > 200 was basically patients > 90. In eICU what do does NULL value mean?
@@ -85,7 +79,7 @@ eicu <- eicu%>%mutate(
   scai_shock = case_when(
     lactate_max > 2 & doubled_creat == 1 ~ "C",
     any_pressor >= 1  ~ "D", #| total_pressors > total_pressors_first_hour 
-    any_pressor_firsthour >= 2 | iabp == 1 ~ "E",
+    any_pressor_first_hour >= 2 | iabp == 1 ~ "E",
     TRUE ~ "NO"
   )
 )
@@ -116,30 +110,38 @@ eicu <- eicu%>%mutate(
   any_inotrope = ifelse(dobutamine== 1 | dopamine == 1| milrinone == 1 ,1, 0)
   )
 
+# Cleaning up variables 
+
+eicu <- eicu%>%
+  dplyr::select(-c("dobutamine_first_hour", "dopamine_first_hour","epinephrine_first_hour", "milrinone_first_hour", 
+                   "norepinephrine_first_hour","phenyl_first_hour","vasopressin_first_hour",
+                   "any_pressor_first_hour", "age_group","icu_mortality", "los", "tropo_t_min"))
+
+# Cleaning up Ethnicities to match MIMIC format
+
+eicu$ethnicity[eicu$ethnicity=="African American"] <- "BLACK"
+eicu$ethnicity[eicu$ethnicity=="Asian"] <- "ASIAN"
+eicu$ethnicity[eicu$ethnicity=="Caucasian"] <- "WHITE"
+eicu$ethnicity[eicu$ethnicity=="Hispanic"] <- "HISPANIC"
+eicu[-which(eicu$ethnicity%in%c("WHITE","HISPANIC","BLACK","ASIAN")),]$ethnicity <- 'OTHER'
+
+
+# ## # # # FROM NOW ON AND BELOW ARE ALL THE VARIABLES AVAILABLE IN BOTH DATASETS 
+# ### ###  WE WILL BE LOOKING AT ALL AVAILABLE DATASETS
+
+
 # All CCU patients table
 
-write.csv(eicu, file="eicu_ccu_clean_v1.csv")
+write.csv(eicu, file="eicu_ccu_clean.csv")
 
 ## Final dataset ready for analysis
 
 eicu_shock <- eicu%>%filter(scai_shock%in%c("C","D","E"))
 
 
-# Final Cardiogenic Shock eICU population
+# Final Cardiogenic Shock eICU population with all variables
 write.csv(eicu_shock, file="eicu_cardiogenic_shock.csv")
 
-
-# Removing more variables for data modeling 
-
-eicu <- eicu_shock%>%
-  dplyr::select(-c("patientunitstayid", "intime", "outtime", "los_hours", "dobutamine_first_hour", "dopamine_first_hour","epinephrine_first_hour", "milrinone_first_hour", 
-            "norepinephrine_first_hour","phenyl_first_hour","vasopressin_first_hour","total_pressors_firsthour",
-            "any_pressor_firsthour", "age_group","icu_mortality", "any_pressor", "scai_shock"))
-
-# Additional cleaning has been done in excel to obtain only the final variables included in the analysis
-write.csv(eicu, file="eicu_cardiogenic_shock_selected.csv")
-
-# Must verify age - it seems that age group was included here
 
 
 

@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>body{background-color:white;}</style>
+<style type="text/css">.Rtable1 table, table.Rtable1 {font-family: "Arial", Arial, sans-serif;font-size: 10pt;border-collapse: collapse;padding: 0px;margin: 0px;}.Rtable1 td {white-space:nowrap;}.Rtable1 th, .Rtable1 td {border: 0;text-align: center;padding: 0.5ex 1.5ex;margin: 0px;}.Rtable1 thead>tr:first-child>th {border-top: 2pt solid black;}.Rtable1 thead>tr:last-child>th {border-bottom: 1pt solid black;}.Rtable1 tbody>tr:last-child>td {border-bottom: 2pt solid black;}.Rtable1 th.grouplabel {padding-left: 0;padding-right: 0;}.Rtable1 th.grouplabel>div {margin-left: 1.5ex;margin-right: 1.5ex;border-bottom: 1pt solid black;}.Rtable1 th.grouplabel:last-child>div {margin-right: 0;}.Rtable1 .rowlabel {text-align: left;padding-left: 2.5ex;}.Rtable1 .firstrow.rowlabel {padding-left: 0.5ex;font-weight: bold;}.Rtable1-zebra tbody tr:nth-child(odd) {background-color: #eee;}table.Rtable1-times {font-family: "Times New Roman", Times, serif;}.Rtable1-shade th {background-color: #ccc;}.Rtable1-grid th, .Rtable1-grid td {border-left: 1pt solid black;border-right: 1pt solid black;}.Rtable1-grid thead>tr:first-child>th {border-top: 1pt solid black;}.Rtable1-grid thead>tr:last-child>th {border-bottom: 1pt solid black;}.Rtable1-grid tbody>tr:last-child>td {border-bottom: 1pt solid black;}.Rtable1-grid .firstrow, .Rtable1-grid .firstrow ~ td {border-top: 1pt solid black;}.Rtable1-grid th.grouplabel>div {margin-left: 0;margin-right: 0;border-bottom: 0;}.Rtable1-center td.rowlabel, .Rtable1-center td.firstrow.rowlabel {font-weight: bold;text-align: center;padding: 0.5ex 1.5ex;}.Rtable1-footnote {font-size: smaller;padding: 0px;margin: 0px;}</style>
+
+</head>
+<body>
+<div class="Rtable1"><table class="Rtable1">
+<thead>
+<tr>
+<th class="rowlabel firstrow lastrow"></th>
+<th class="firstrow lastrow"><span class="stratlabel">eicu<br><span class="stratn">(N=6376)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">mimic<br><span class="stratn">(N=2288)</span></span></th>
+<th class="firstrow lastrow"><span class="stratlabel">Overall<br><span class="stratn">(N=8664)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Stroke</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6161 (96.6%)</td>
+<td>2201 (96.2%)</td>
+<td>8362 (96.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">215 (3.4%)</td>
+<td class="lastrow">87 (3.8%)</td>
+<td class="lastrow">302 (3.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">AKI</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5123 (80.3%)</td>
+<td>1443 (63.1%)</td>
+<td>6566 (75.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">1253 (19.7%)</td>
+<td class="lastrow">845 (36.9%)</td>
+<td class="lastrow">2098 (24.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Anemia</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6119 (96.0%)</td>
+<td>1665 (72.8%)</td>
+<td>7784 (89.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">257 (4.0%)</td>
+<td class="lastrow">623 (27.2%)</td>
+<td class="lastrow">880 (10.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Atrial Fibrillation</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5393 (84.6%)</td>
+<td>1377 (60.2%)</td>
+<td>6770 (78.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">983 (15.4%)</td>
+<td class="lastrow">911 (39.8%)</td>
+<td class="lastrow">1894 (21.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Chronic Kidney Disease</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5110 (80.1%)</td>
+<td>1915 (83.7%)</td>
+<td>7025 (81.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">1266 (19.9%)</td>
+<td class="lastrow">373 (16.3%)</td>
+<td class="lastrow">1639 (18.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">COPD</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5687 (89.2%)</td>
+<td>1943 (84.9%)</td>
+<td>7630 (88.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">689 (10.8%)</td>
+<td class="lastrow">345 (15.1%)</td>
+<td class="lastrow">1034 (11.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">CAD</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5828 (91.4%)</td>
+<td>985 (43.1%)</td>
+<td>6813 (78.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">548 (8.6%)</td>
+<td class="lastrow">1303 (56.9%)</td>
+<td class="lastrow">1851 (21.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Diabetes Mellitus II</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6047 (94.8%)</td>
+<td>1490 (65.1%)</td>
+<td>7537 (87.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">329 (5.2%)</td>
+<td class="lastrow">798 (34.9%)</td>
+<td class="lastrow">1127 (13.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Heart valve disorders</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5992 (94.0%)</td>
+<td>1740 (76.0%)</td>
+<td>7732 (89.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">384 (6.0%)</td>
+<td class="lastrow">548 (24.0%)</td>
+<td class="lastrow">932 (10.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Hypertension</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>4880 (76.5%)</td>
+<td>969 (42.4%)</td>
+<td>5849 (67.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">1496 (23.5%)</td>
+<td class="lastrow">1319 (57.6%)</td>
+<td class="lastrow">2815 (32.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">NSTEMI</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5884 (92.3%)</td>
+<td>1868 (81.6%)</td>
+<td>7752 (89.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">492 (7.7%)</td>
+<td class="lastrow">420 (18.4%)</td>
+<td class="lastrow">912 (10.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Septicemia</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5364 (84.1%)</td>
+<td>1834 (80.2%)</td>
+<td>7198 (83.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">1012 (15.9%)</td>
+<td class="lastrow">454 (19.8%)</td>
+<td class="lastrow">1466 (16.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">STEMI</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5804 (91.0%)</td>
+<td>1792 (78.3%)</td>
+<td>7596 (87.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">572 (9.0%)</td>
+<td class="lastrow">496 (21.7%)</td>
+<td class="lastrow">1068 (12.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Heart Rate (min)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>62.6 (15.6)</td>
+<td>66.3 (16.8)</td>
+<td>63.7 (16.0)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>62.0 [25.0, 150]</td>
+<td>66.0 [0.350, 128]</td>
+<td>63.0 [0.350, 150]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">422 (6.6%)</td>
+<td class="lastrow">13 (0.6%)</td>
+<td class="lastrow">435 (5.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Heart Rate (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>117 (26.4)</td>
+<td>108 (24.0)</td>
+<td>114 (26.1)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>114 [52.0, 225]</td>
+<td>106 [46.0, 211]</td>
+<td>111 [46.0, 225]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">422 (6.6%)</td>
+<td class="lastrow">13 (0.6%)</td>
+<td class="lastrow">435 (5.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Heart Rate (mean)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>85.1 (14.5)</td>
+<td>84.4 (16.4)</td>
+<td>84.9 (15.1)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>84.2 [42.6, 155]</td>
+<td>83.2 [38.3, 146]</td>
+<td>84.0 [38.3, 155]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">422 (6.6%)</td>
+<td class="lastrow">13 (0.6%)</td>
+<td class="lastrow">435 (5.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Systolic BP (min)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>84.8 (20.8)</td>
+<td>78.1 (16.9)</td>
+<td>82.9 (20.0)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>84.0 [25.0, 201]</td>
+<td>79.0 [3.00, 142]</td>
+<td>82.0 [3.00, 201]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">574 (9.0%)</td>
+<td class="lastrow">14 (0.6%)</td>
+<td class="lastrow">588 (6.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Systolic BP (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>159 (29.9)</td>
+<td>145 (25.3)</td>
+<td>155 (29.4)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>157 [47.0, 250]</td>
+<td>143 [45.0, 323]</td>
+<td>153 [45.0, 323]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">574 (9.0%)</td>
+<td class="lastrow">14 (0.6%)</td>
+<td class="lastrow">588 (6.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Diastolic BP (min)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>42.9 (13.6)</td>
+<td>37.6 (11.3)</td>
+<td>41.4 (13.2)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>43.0 [1.00, 118]</td>
+<td>38.0 [5.00, 83.0]</td>
+<td>42.0 [1.00, 118]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">578 (9.1%)</td>
+<td class="lastrow">15 (0.7%)</td>
+<td class="lastrow">593 (6.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Diastolic BP (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>96.8 (23.1)</td>
+<td>83.2 (16.8)</td>
+<td>93.0 (22.3)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>94.0 [10.0, 200]</td>
+<td>82.0 [25.0, 220]</td>
+<td>91.0 [10.0, 220]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">578 (9.1%)</td>
+<td class="lastrow">15 (0.7%)</td>
+<td class="lastrow">593 (6.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Diastolic BP (mean)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>64.9 (10.9)</td>
+<td>57.4 (10.1)</td>
+<td>62.8 (11.2)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>64.3 [10.0, 127]</td>
+<td>56.5 [14.5, 104]</td>
+<td>62.4 [10.0, 127]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">578 (9.1%)</td>
+<td class="lastrow">15 (0.7%)</td>
+<td class="lastrow">593 (6.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">MAP (min)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>56.9 (16.3)</td>
+<td>51.1 (13.9)</td>
+<td>55.2 (15.8)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>56.0 [1.00, 147]</td>
+<td>52.0 [1.00, 95.0]</td>
+<td>55.0 [1.00, 147]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1044 (16.4%)</td>
+<td class="lastrow">13 (0.6%)</td>
+<td class="lastrow">1057 (12.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">MAP (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>112 (24.6)</td>
+<td>107 (29.2)</td>
+<td>110 (26.1)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>109 [28.0, 241]</td>
+<td>101 [31.0, 299]</td>
+<td>106 [28.0, 299]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1044 (16.4%)</td>
+<td class="lastrow">13 (0.6%)</td>
+<td class="lastrow">1057 (12.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">MAP (mean)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>80.5 (13.4)</td>
+<td>74.9 (10.7)</td>
+<td>78.8 (12.9)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>79.0 [28.0, 156]</td>
+<td>73.8 [17.4, 133]</td>
+<td>77.4 [17.4, 156]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1044 (16.4%)</td>
+<td class="lastrow">13 (0.6%)</td>
+<td class="lastrow">1057 (12.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Respiratory Rate (min)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>10.4 (5.45)</td>
+<td>12.0 (3.72)</td>
+<td>10.8 (5.08)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>11.0 [0, 35.0]</td>
+<td>12.0 [1.00, 35.0]</td>
+<td>11.0 [0, 35.0]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">611 (9.6%)</td>
+<td class="lastrow">13 (0.6%)</td>
+<td class="lastrow">624 (7.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Respiratory Rate (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>32.2 (9.33)</td>
+<td>28.8 (7.25)</td>
+<td>31.2 (8.92)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>30.0 [2.00, 60.0]</td>
+<td>27.0 [12.0, 69.0]</td>
+<td>29.0 [2.00, 69.0]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">611 (9.6%)</td>
+<td class="lastrow">13 (0.6%)</td>
+<td class="lastrow">624 (7.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Respiratory Rate (mean)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>19.7 (3.58)</td>
+<td>19.3 (3.98)</td>
+<td>19.6 (3.70)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>19.2 [2.00, 40.0]</td>
+<td>18.6 [11.0, 42.5]</td>
+<td>19.0 [2.00, 42.5]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">611 (9.6%)</td>
+<td class="lastrow">13 (0.6%)</td>
+<td class="lastrow">624 (7.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Temperature (mean)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>36.7 (0.652)</td>
+<td>36.8 (0.826)</td>
+<td>36.7 (0.702)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>36.8 [28.9, 40.3]</td>
+<td>36.8 [30.6, 39.7]</td>
+<td>36.8 [28.9, 40.3]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">170 (2.7%)</td>
+<td class="lastrow">59 (2.6%)</td>
+<td class="lastrow">229 (2.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">SpO2 (min)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>83.5 (17.5)</td>
+<td>88.6 (12.2)</td>
+<td>85.0 (16.4)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>90.0 [0, 100]</td>
+<td>92.0 [1.00, 100]</td>
+<td>90.0 [0, 100]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">659 (10.3%)</td>
+<td class="lastrow">23 (1.0%)</td>
+<td class="lastrow">682 (7.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">SpO2 (mean)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>96.4 (3.03)</td>
+<td>96.8 (3.64)</td>
+<td>96.5 (3.22)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>96.8 [45.1, 100]</td>
+<td>97.3 [31.4, 100]</td>
+<td>96.9 [31.4, 100]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">659 (10.3%)</td>
+<td class="lastrow">23 (1.0%)</td>
+<td class="lastrow">682 (7.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Systolic BP (mean)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>119 (18.2)</td>
+<td>109 (14.9)</td>
+<td>117 (17.9)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>117 [47.0, 201]</td>
+<td>108 [29.2, 183]</td>
+<td>114 [29.2, 201]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">574 (9.0%)</td>
+<td class="lastrow">14 (0.6%)</td>
+<td class="lastrow">588 (6.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Anion Gap (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>14.0 (6.70)</td>
+<td>18.5 (5.37)</td>
+<td>15.3 (6.66)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>13.0 [1.00, 67.0]</td>
+<td>17.0 [6.00, 56.0]</td>
+<td>15.0 [1.00, 67.0]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1253 (19.7%)</td>
+<td class="lastrow">20 (0.9%)</td>
+<td class="lastrow">1273 (14.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Bicarbonate (min)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>21.5 (5.64)</td>
+<td>20.5 (5.20)</td>
+<td>21.3 (5.55)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>22.0 [2.00, 53.0]</td>
+<td>21.0 [5.00, 50.0]</td>
+<td>22.0 [2.00, 53.0]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">206 (3.2%)</td>
+<td class="lastrow">19 (0.8%)</td>
+<td class="lastrow">225 (2.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Chloride (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>106 (6.87)</td>
+<td>107 (6.22)</td>
+<td>106 (6.73)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>106 [64.0, 171]</td>
+<td>107 [79.0, 135]</td>
+<td>106 [64.0, 171]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">143 (2.2%)</td>
+<td class="lastrow">13 (0.6%)</td>
+<td class="lastrow">156 (1.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Glucose (min)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>123 (53.9)</td>
+<td>110 (42.6)</td>
+<td>119 (51.4)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>111 [3.00, 688]</td>
+<td>105 [0.850, 485]</td>
+<td>109 [0.850, 688]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">146 (2.3%)</td>
+<td class="lastrow">42 (1.8%)</td>
+<td class="lastrow">188 (2.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Hematocrit (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>37.0 (6.79)</td>
+<td>38.1 (5.45)</td>
+<td>37.3 (6.48)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>37.0 [16.2, 68.7]</td>
+<td>37.8 [17.4, 63.0]</td>
+<td>37.2 [16.2, 68.7]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">104 (1.6%)</td>
+<td class="lastrow">2 (0.1%)</td>
+<td class="lastrow">106 (1.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Hemoglobin (min)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>10.6 (2.44)</td>
+<td>10.2 (2.15)</td>
+<td>10.4 (2.37)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>10.5 [0.900, 18.8]</td>
+<td>10.0 [1.90, 17.8]</td>
+<td>10.3 [0.900, 18.8]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">117 (1.8%)</td>
+<td class="lastrow">8 (0.3%)</td>
+<td class="lastrow">125 (1.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Platelet (min)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>184 (92.2)</td>
+<td>190 (86.7)</td>
+<td>185 (90.8)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>172 [4.00, 1100]</td>
+<td>180 [5.00, 948]</td>
+<td>174 [4.00, 1100]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">153 (2.4%)</td>
+<td class="lastrow">6 (0.3%)</td>
+<td class="lastrow">159 (1.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Platelet (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>229 (106)</td>
+<td>269 (113)</td>
+<td>239 (109)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>212 [13.0, 1390]</td>
+<td>250 [32.0, 1120]</td>
+<td>223 [13.0, 1390]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">153 (2.4%)</td>
+<td class="lastrow">6 (0.3%)</td>
+<td class="lastrow">159 (1.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Potassium (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>4.71 (0.898)</td>
+<td>5.04 (0.978)</td>
+<td>4.80 (0.931)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>4.50 [2.30, 10.1]</td>
+<td>4.80 [1.60, 11.4]</td>
+<td>4.60 [1.60, 11.4]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">72 (1.1%)</td>
+<td class="lastrow">3 (0.1%)</td>
+<td class="lastrow">75 (0.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">INR (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>1.64 (1.15)</td>
+<td>2.05 (1.98)</td>
+<td>1.77 (1.47)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>1.28 [0.800, 15.8]</td>
+<td>1.50 [0.900, 43.1]</td>
+<td>1.30 [0.800, 43.1]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1521 (23.9%)</td>
+<td class="lastrow">88 (3.8%)</td>
+<td class="lastrow">1609 (18.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">PT (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>17.9 (10.8)</td>
+<td>19.1 (12.1)</td>
+<td>18.3 (11.2)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>14.5 [9.00, 120]</td>
+<td>15.4 [10.0, 150]</td>
+<td>14.9 [9.00, 150]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1531 (24.0%)</td>
+<td class="lastrow">92 (4.0%)</td>
+<td class="lastrow">1623 (18.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Sodium (min)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>135 (5.52)</td>
+<td>135 (5.12)</td>
+<td>135 (5.41)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>136 [95.0, 167]</td>
+<td>136 [97.0, 152]</td>
+<td>136 [95.0, 167]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">141 (2.2%)</td>
+<td class="lastrow">10 (0.4%)</td>
+<td class="lastrow">151 (1.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">BUN (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>34.7 (25.4)</td>
+<td>38.6 (26.2)</td>
+<td>35.8 (25.6)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>27.0 [2.00, 285]</td>
+<td>31.0 [5.00, 197]</td>
+<td>28.0 [2.00, 285]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">145 (2.3%)</td>
+<td class="lastrow">8 (0.3%)</td>
+<td class="lastrow">153 (1.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">WBC (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>15.0 (10.8)</td>
+<td>15.8 (9.18)</td>
+<td>15.2 (10.4)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>13.1 [0.100, 361]</td>
+<td>14.0 [0.400, 173]</td>
+<td>13.3 [0.100, 361]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">142 (2.2%)</td>
+<td class="lastrow">12 (0.5%)</td>
+<td class="lastrow">154 (1.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">RDW (min)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>15.2 (2.34)</td>
+<td>14.6 (1.89)</td>
+<td>15.0 (2.24)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>14.6 [10.9, 35.5]</td>
+<td>14.1 [11.1, 28.2]</td>
+<td>14.4 [10.9, 35.5]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">409 (6.4%)</td>
+<td class="lastrow">15 (0.7%)</td>
+<td class="lastrow">424 (4.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">RDW (max)</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>15.6 (2.51)</td>
+<td>15.2 (2.22)</td>
+<td>15.5 (2.44)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>14.9 [11.4, 36.6]</td>
+<td>14.6 [11.4, 28.2]</td>
+<td>14.9 [11.4, 36.6]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">409 (6.4%)</td>
+<td class="lastrow">15 (0.7%)</td>
+<td class="lastrow">424 (4.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Gender</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">F</td>
+<td>2630 (41.2%)</td>
+<td>953 (41.7%)</td>
+<td>3583 (41.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">M</td>
+<td class="lastrow">3746 (58.8%)</td>
+<td class="lastrow">1335 (58.3%)</td>
+<td class="lastrow">5081 (58.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Renal Replacement Therapy</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5986 (93.9%)</td>
+<td>2192 (95.8%)</td>
+<td>8178 (94.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">390 (6.1%)</td>
+<td class="lastrow">96 (4.2%)</td>
+<td class="lastrow">486 (5.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Mechanical Ventilation</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>4375 (68.6%)</td>
+<td>966 (42.2%)</td>
+<td>5341 (61.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">2001 (31.4%)</td>
+<td class="lastrow">1322 (57.8%)</td>
+<td class="lastrow">3323 (38.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">IABP</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5113 (80.2%)</td>
+<td>1679 (73.4%)</td>
+<td>6792 (78.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel">1</td>
+<td>394 (6.2%)</td>
+<td>609 (26.6%)</td>
+<td>1003 (11.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">869 (13.6%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">869 (10.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Impella</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6376 (100%)</td>
+<td>2287 (100.0%)</td>
+<td>8663 (100.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">1 (0.0%)</td>
+<td class="lastrow">1 (0.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Any pressor</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>775 (12.2%)</td>
+<td>528 (23.1%)</td>
+<td>1303 (15.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">5601 (87.8%)</td>
+<td class="lastrow">1760 (76.9%)</td>
+<td class="lastrow">7361 (85.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Total pressors</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>775 (12.2%)</td>
+<td>528 (23.1%)</td>
+<td>1303 (15.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">1</td>
+<td>3937 (61.7%)</td>
+<td>1185 (51.8%)</td>
+<td>5122 (59.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel">2</td>
+<td>1162 (18.2%)</td>
+<td>363 (15.9%)</td>
+<td>1525 (17.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">3</td>
+<td>354 (5.6%)</td>
+<td>130 (5.7%)</td>
+<td>484 (5.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">4</td>
+<td>101 (1.6%)</td>
+<td>65 (2.8%)</td>
+<td>166 (1.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel">5</td>
+<td>43 (0.7%)</td>
+<td>13 (0.6%)</td>
+<td>56 (0.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel">6</td>
+<td>3 (0.0%)</td>
+<td>3 (0.1%)</td>
+<td>6 (0.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">7</td>
+<td class="lastrow">1 (0.0%)</td>
+<td class="lastrow">1 (0.0%)</td>
+<td class="lastrow">2 (0.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Hospital Mortality</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>4653 (73.0%)</td>
+<td>1759 (76.9%)</td>
+<td>6412 (74.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">1</td>
+<td>972 (15.2%)</td>
+<td>529 (23.1%)</td>
+<td>1501 (17.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">751 (11.8%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">751 (8.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Age</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>64.7 (14.4)</td>
+<td>69.5 (14.0)</td>
+<td>66.1 (14.4)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>66.0 [16.0, 89.0]</td>
+<td>71.0 [19.0, 90.0]</td>
+<td>67.0 [16.0, 90.0]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">906 (14.2%)</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">906 (10.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Ethnicity</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">ASIAN</td>
+<td>83 (1.3%)</td>
+<td>43 (1.9%)</td>
+<td>126 (1.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel">BLACK</td>
+<td>1072 (16.8%)</td>
+<td>149 (6.5%)</td>
+<td>1221 (14.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel">HISPANIC</td>
+<td>323 (5.1%)</td>
+<td>39 (1.7%)</td>
+<td>362 (4.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel">OTHER</td>
+<td>350 (5.5%)</td>
+<td>440 (19.2%)</td>
+<td>790 (9.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">WHITE</td>
+<td class="lastrow">4548 (71.3%)</td>
+<td class="lastrow">1617 (70.7%)</td>
+<td class="lastrow">6165 (71.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Charlson Score</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>2302 (36.1%)</td>
+<td>162 (7.1%)</td>
+<td>2464 (28.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel">1</td>
+<td>2664 (41.8%)</td>
+<td>486 (21.2%)</td>
+<td>3150 (36.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel">2</td>
+<td>1029 (16.1%)</td>
+<td>703 (30.7%)</td>
+<td>1732 (20.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel">3</td>
+<td>300 (4.7%)</td>
+<td>526 (23.0%)</td>
+<td>826 (9.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel">4</td>
+<td>65 (1.0%)</td>
+<td>276 (12.1%)</td>
+<td>341 (3.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel">5</td>
+<td>15 (0.2%)</td>
+<td>97 (4.2%)</td>
+<td>112 (1.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel">7</td>
+<td>1 (0.0%)</td>
+<td>7 (0.3%)</td>
+<td>8 (0.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">6</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">31 (1.4%)</td>
+<td class="lastrow">31 (0.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">First GCS score</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>12.4 (4.14)</td>
+<td>14.6 (1.61)</td>
+<td>13.1 (3.68)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>15.0 [3.00, 15.0]</td>
+<td>15.0 [3.00, 15.0]</td>
+<td>15.0 [3.00, 15.0]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">1610 (25.3%)</td>
+<td class="lastrow">21 (0.9%)</td>
+<td class="lastrow">1631 (18.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Pulmonary Circulation Disorders</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6278 (98.5%)</td>
+<td>2021 (88.3%)</td>
+<td>8299 (95.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">98 (1.5%)</td>
+<td class="lastrow">267 (11.7%)</td>
+<td class="lastrow">365 (4.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">pvd</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6249 (98.0%)</td>
+<td>2001 (87.5%)</td>
+<td>8250 (95.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">127 (2.0%)</td>
+<td class="lastrow">287 (12.5%)</td>
+<td class="lastrow">414 (4.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Paralysis</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6371 (99.9%)</td>
+<td>2263 (98.9%)</td>
+<td>8634 (99.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">5 (0.1%)</td>
+<td class="lastrow">25 (1.1%)</td>
+<td class="lastrow">30 (0.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Other neurological disorders;s</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6045 (94.8%)</td>
+<td>2054 (89.8%)</td>
+<td>8099 (93.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">331 (5.2%)</td>
+<td class="lastrow">234 (10.2%)</td>
+<td class="lastrow">565 (6.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Hypothyroidism</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6135 (96.2%)</td>
+<td>2047 (89.5%)</td>
+<td>8182 (94.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">241 (3.8%)</td>
+<td class="lastrow">241 (10.5%)</td>
+<td class="lastrow">482 (5.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Liver Disease</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6192 (97.1%)</td>
+<td>2058 (89.9%)</td>
+<td>8250 (95.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">184 (2.9%)</td>
+<td class="lastrow">230 (10.1%)</td>
+<td class="lastrow">414 (4.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Peptic Ulcer Disease</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6344 (99.5%)</td>
+<td>2273 (99.3%)</td>
+<td>8617 (99.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">32 (0.5%)</td>
+<td class="lastrow">15 (0.7%)</td>
+<td class="lastrow">47 (0.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">AIDS/HIV</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6372 (99.9%)</td>
+<td>2267 (99.1%)</td>
+<td>8639 (99.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">4 (0.1%)</td>
+<td class="lastrow">21 (0.9%)</td>
+<td class="lastrow">25 (0.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Lymphoma</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6340 (99.4%)</td>
+<td>2257 (98.6%)</td>
+<td>8597 (99.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">36 (0.6%)</td>
+<td class="lastrow">31 (1.4%)</td>
+<td class="lastrow">67 (0.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Metastatic Cancer</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6335 (99.4%)</td>
+<td>2244 (98.1%)</td>
+<td>8579 (99.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">41 (0.6%)</td>
+<td class="lastrow">44 (1.9%)</td>
+<td class="lastrow">85 (1.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Pulmonary Circulation Disorders</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6178 (96.9%)</td>
+<td>2216 (96.9%)</td>
+<td>8394 (96.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">198 (3.1%)</td>
+<td class="lastrow">72 (3.1%)</td>
+<td class="lastrow">270 (3.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Rheumatoid Arthritis/Collagen Vascular Disease</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6347 (99.5%)</td>
+<td>2208 (96.5%)</td>
+<td>8555 (98.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">29 (0.5%)</td>
+<td class="lastrow">80 (3.5%)</td>
+<td class="lastrow">109 (1.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Coagulopathy</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6060 (95.0%)</td>
+<td>2020 (88.3%)</td>
+<td>8080 (93.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">316 (5.0%)</td>
+<td class="lastrow">268 (11.7%)</td>
+<td class="lastrow">584 (6.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Obesity</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6214 (97.5%)</td>
+<td>2186 (95.5%)</td>
+<td>8400 (97.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">162 (2.5%)</td>
+<td class="lastrow">102 (4.5%)</td>
+<td class="lastrow">264 (3.0%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Weight loss</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6104 (95.7%)</td>
+<td>2224 (97.2%)</td>
+<td>8328 (96.1%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">272 (4.3%)</td>
+<td class="lastrow">64 (2.8%)</td>
+<td class="lastrow">336 (3.9%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Fluid and Electrolyte Disorders</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5394 (84.6%)</td>
+<td>1554 (67.9%)</td>
+<td>6948 (80.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">982 (15.4%)</td>
+<td class="lastrow">734 (32.1%)</td>
+<td class="lastrow">1716 (19.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Alcohol Abuse</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6288 (98.6%)</td>
+<td>2183 (95.4%)</td>
+<td>8471 (97.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">88 (1.4%)</td>
+<td class="lastrow">105 (4.6%)</td>
+<td class="lastrow">193 (2.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Drug Abuse</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6372 (99.9%)</td>
+<td>2244 (98.1%)</td>
+<td>8616 (99.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">4 (0.1%)</td>
+<td class="lastrow">44 (1.9%)</td>
+<td class="lastrow">48 (0.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Psychoses</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6345 (99.5%)</td>
+<td>2264 (99.0%)</td>
+<td>8609 (99.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">31 (0.5%)</td>
+<td class="lastrow">24 (1.0%)</td>
+<td class="lastrow">55 (0.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Depression</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>6244 (97.9%)</td>
+<td>2140 (93.5%)</td>
+<td>8384 (96.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">132 (2.1%)</td>
+<td class="lastrow">148 (6.5%)</td>
+<td class="lastrow">280 (3.2%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Ratio Creatine 1.5</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>4733 (74.2%)</td>
+<td>1489 (65.1%)</td>
+<td>6222 (71.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel">1</td>
+<td>1506 (23.6%)</td>
+<td>792 (34.6%)</td>
+<td>2298 (26.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">137 (2.1%)</td>
+<td class="lastrow">7 (0.3%)</td>
+<td class="lastrow">144 (1.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Delta Creatine 0.3</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">1</td>
+<td>6239 (97.9%)</td>
+<td>1281 (56.0%)</td>
+<td>7520 (86.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>0 (0%)</td>
+<td>1000 (43.7%)</td>
+<td>1000 (11.5%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">137 (2.1%)</td>
+<td class="lastrow">7 (0.3%)</td>
+<td class="lastrow">144 (1.7%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Scai Shock category</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">C</td>
+<td>985 (15.4%)</td>
+<td>559 (24.4%)</td>
+<td>1544 (17.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel">D</td>
+<td>5215 (81.8%)</td>
+<td>1486 (64.9%)</td>
+<td>6701 (77.3%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">E</td>
+<td class="lastrow">176 (2.8%)</td>
+<td class="lastrow">243 (10.6%)</td>
+<td class="lastrow">419 (4.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Shock Index</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">Mean (SD)</td>
+<td>1.08 (0.402)</td>
+<td>0.793 (0.215)</td>
+<td>1.00 (0.382)</td>
+</tr>
+<tr>
+<td class="rowlabel">Median [Min, Max]</td>
+<td>1.00 [0.312, 4.09]</td>
+<td>0.761 [0.338, 2.37]</td>
+<td>0.927 [0.312, 4.09]</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">Missing</td>
+<td class="lastrow">577 (9.0%)</td>
+<td class="lastrow">15 (0.7%)</td>
+<td class="lastrow">592 (6.8%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Any inotrope</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">0</td>
+<td>5492 (86.1%)</td>
+<td>1145 (50.0%)</td>
+<td>6637 (76.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">884 (13.9%)</td>
+<td class="lastrow">1143 (50.0%)</td>
+<td class="lastrow">2027 (23.4%)</td>
+</tr>
+<tr>
+<td class="rowlabel firstrow"><span class="varlabel">Cohort</span></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+<td class="firstrow"></td>
+</tr>
+<tr>
+<td class="rowlabel">eicu</td>
+<td>6376 (100%)</td>
+<td>0 (0%)</td>
+<td>6376 (73.6%)</td>
+</tr>
+<tr>
+<td class="rowlabel lastrow">mimic</td>
+<td class="lastrow">0 (0%)</td>
+<td class="lastrow">2288 (100%)</td>
+<td class="lastrow">2288 (26.4%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>
