@@ -91,7 +91,8 @@ library(comorbidity)
 elix <- run_query(ccu_query_1)%>%dplyr::select(-hadm_id)
 elix_table <- comorbidity(x = elix, id = "subject_id", code = "ICD9_code", score = "elixhauser", icd = "icd9", assign0 = TRUE)
 elix_table <- elix_table%>%dplyr::select(-c("wscore_ahrq","wscore_vw","windex_ahrq","windex_vw"))
-elix_table <- elix_table%>%dplyr::select(-c("carit","chf","valv","hypunc", "hypc", "cpd", "diabc", "diabunc", "rf", "blane", "dane", "score", "index"))
+# chf added back
+elix_table <- elix_table%>%dplyr::select(-c("carit","valv","hypunc", "hypc", "cpd", "diabc", "diabunc", "rf", "blane", "dane", "score", "index"))
 
 ##Demographics
 ccu_query_2 <- "SELECT subject_id, dob, dod, gender, expire_flag
