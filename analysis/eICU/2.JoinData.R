@@ -2,7 +2,7 @@
 
 tablelist <- list(wide_ccu_dx, ccu_vitals, ccu_labs, ccu_patients_id_los, ccu_demographics_dob_gender_death,
                   ccu_uo_24h, ccu_RRT24h, ccu_vent, wide_procedures_24, wide_pressors, wide_pressors_firsthour,
-                  ccu_gcs, ccu_mortality, ccu_race, charlson9, ccu_bmi)
+                  ccu_gcs, ccu_mortality, ccu_race, charlson9, ccu_bmi, gcs_first, elix_table)
 
 #tablelist <- list(ccu_vitals, sum_pressor, ccu_demographics, ccu_diagnoses, ccu_gender_age, ccu_labs1)
 #remove_unecessary_index <- function(dflist){
@@ -20,7 +20,7 @@ tablelist <- list(wide_ccu_dx, ccu_vitals, ccu_labs, ccu_patients_id_los, ccu_de
 # }
 # return(dflist2)
 # }
-#tablelist2 <- remove_unecessary_index(tablelist)
+
 
 
 # 
@@ -93,13 +93,24 @@ ccu_analysis2$any_pressor_firsthour <- replace_na(ccu_analysis2$any_pressor_firs
 ccu_analysis2$phenyl<- replace_na(ccu_analysis2$phenyl, 0)
 ccu_analysis2$phenyl_first_hour<- replace_na(ccu_analysis2$phenyl_first_hour, 0)
 
-# Last check of patient
 
-str(ccu_analysis2, list.len = 150)
-#ccu_analysis2 <- ccu_analysis2%>%select(-c("icustay_id_x_x_x_x", "icustay_id_x"))
+mapping = read.csv('Mappingcolumns.csv', stringsAsFactor=FALSE)
+
+
+for (row in seq(1,length(mapping$M))){
+  #print(row)
+  print(mapping$M[row])
+  names(ccu_analysis2)[names(ccu_analysis2) == mapping$E[row]] <- mapping$M[row]
+ 
+}
+
+
 
 
 #Recently changed, we used to write ccu_analysis2
 
 ## Table is final for all MIMIC CCU patients
-write.csv(ccu_analysis2, file="eICU_CCUdata_March17V4.csv")
+write.csv(ccu_analysis2, file="eICU_CCUdata_Apr17_V3.csv")
+
+write.csv(colnames(ccu_analysis2), file = 'Mappingcolumns.csv')
+
