@@ -756,7 +756,7 @@ procedure_list <- run_query(
 
 
 
- cats <- run_query(
+cats <- run_query(
    "
    SELECT *
      FROM `physionet-data.eicu_crd_derived.treatment_categories`
@@ -783,6 +783,7 @@ raw_icd9 <- subset(raw_icd9,ICD9_code!="")
 # }
 
 ccu_diagnoses <- separate_rows(raw_icd9,2,sep = ",")
+
 ccu_diagnoses$ICD9_code <- str_trim(ccu_diagnoses$ICD9_code)
 ccu_diagnoses$ICD9_code <- str_remove(ccu_diagnoses$ICD9_code, "[.]")
 
@@ -837,7 +838,8 @@ library(comorbidity)
 elix <- raw_icd9
 elix_table <- comorbidity(x = elix, id = "patientunitstayid", code = "ICD9_code", score = "elixhauser", icd = "icd9", assign0 = TRUE)
 elix_table <- elix_table%>%dplyr::select(-c("wscore_ahrq","wscore_vw","windex_ahrq","windex_vw"))
-elix_table <- elix_table%>%dplyr::select(-c("carit","chf","valv","hypunc", "hypc", "cpd", "diabc", "diabunc", "rf", "blane", "dane", "score", "index"))
+elix_table <- elix_table%>%dplyr::select(-c("carit","valv","hypunc", "hypc", "cpd", "diabc", "diabunc", "rf", "blane", "dane", "score", "index"))
+
 
 
 # test <- left_join(ccu_patients, wide_ccu_dx, by=c("patientunitstayid"))
@@ -918,9 +920,13 @@ install.packages("comorbidity")
 library(comorbidity)
 
 charlson <- clean_icd9
+
+
 # Assigning Charlson index per id
-charlson9 <- comorbidity(x = charlson, id = "patientunitstayid", code = "ICD9_code", score = "charlson", icd = "icd9", assign0 = FALSE)
+charlson9 <- comorbidity(x = charlson, id = "patientunitstayid", code = "ICD9_code", score = "charlson", icd = "icd9", assign0 = FALSE, tidy.codes = TRUE)
 charlson9 <- charlson9%>%dplyr::select(patientunitstayid, score)%>%rename(charlson_score=score)
+
+plot(density(charlson9$charlson_score))
 
 #Admission contains for all patients, but it's ahrd to process
 admissionV1 = run_query(
