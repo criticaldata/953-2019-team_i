@@ -1,8 +1,12 @@
 #source("./code/sql/sql_queries_MIMIC2.R")
 
-tablelist <- list(wide_ccu_dx, ccu_vitals, ccu_labs, ccu_patients_id_los, ccu_demographics_dob_gender_death,
+new_comor = read.csv('comorbidities_may5th.csv', check.names = FALSE)
+charlson_com = read.csv('charlson_comorbidities_may6th.csv', check.names = FALSE)
+
+
+tablelist <- list(new_comor, charlson_com, ccu_vitals, ccu_labs, ccu_patients_id_los, ccu_demographics_dob_gender_death,
                   ccu_uo_24h, ccu_RRT24h, ccu_vent, wide_procedures_24, wide_pressors, wide_pressors_firsthour,
-                  ccu_gcs, ccu_mortality, ccu_race, charlson9, ccu_bmi, gcs_first, elix_table)
+                  ccu_gcs, ccu_mortality, ccu_race, ccu_bmi, gcs_first)
 
 #tablelist <- list(ccu_vitals, sum_pressor, ccu_demographics, ccu_diagnoses, ccu_gender_age, ccu_labs1)
 #remove_unecessary_index <- function(dflist){
@@ -20,8 +24,6 @@ tablelist <- list(wide_ccu_dx, ccu_vitals, ccu_labs, ccu_patients_id_los, ccu_de
 # }
 # return(dflist2)
 # }
-
-
 
 # 
 # ## Automated merge approach
@@ -110,7 +112,7 @@ for (row in seq(1,length(mapping$M))){
 #Recently changed, we used to write ccu_analysis2
 
 ## Table is final for all MIMIC CCU patients
-write.csv(ccu_analysis2, file="eICU_CCUdata_Apr17_V3.csv")
+write.csv(ccu_analysis2, file="eICU_CCUdata_May6thV2.csv")
 
-write.csv(colnames(ccu_analysis2), file = 'Mappingcolumns.csv')
+#write.csv(colnames(ccu_analysis2), file = 'Mappingcolumns.csv')
 
